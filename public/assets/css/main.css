@@ -1,0 +1,181 @@
+/* Abstract */
+@import url("https://fonts.googleapis.com/css?family=Sorts+Mill+Goudy&display=swap");
+:root {
+  --clr-theme-primary: var(--clr-white);
+  --clr-theme-secondary: var(--clr-white-2);
+  --clr-theme-text: var(--clr-text-dark);
+  --clr-brown: rgb(138, 86, 39);
+  --clr-brown-2: rgb(69, 53, 25);
+  --clr-text-light: #fff;
+  --clr-text-dark: #111;
+  --clr-white: rgb(249, 250, 244);
+  --clr-white-2: rgb(248, 231, 185);
+  --clr-blue: rgb(179, 206, 234);
+  --clr-blue-2: rgb(14, 104, 171);
+  --clr-black: rgb(166, 159, 157);
+  --clr-black-2: rgb(21, 11, 0);
+  --clr-red: rgb(235, 159, 130);
+  --clr-red-2: rgb(211, 32, 42);
+  --clr-green: rgb(196, 211, 202);
+  --clr-green-2: rgb(0, 115, 62);
+}
+
+/* Base */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  display: grid;
+  grid-template-rows: -webkit-max-content 1fr -webkit-max-content;
+  grid-template-rows: max-content 1fr max-content;
+  grid-template-areas: 'header' 'main-content' 'footer';
+  min-height: 100vh;
+}
+
+body {
+  font-family: "Sorts Mill Goudy", serif;
+  color: var(--clr-text-light);
+  background: var(--clr-brown-2);
+}
+
+/* Layout */
+.header {
+  grid-area: header;
+}
+
+.main {
+  grid-area: main-content;
+}
+
+.footer {
+  grid-area: footer;
+  padding-bottom: 0.5rem;
+}
+
+.footer .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer .byline {
+  text-transform: capitalize;
+  text-align: center;
+}
+
+.footer .disclamer {
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.container {
+  --margin: 0.5rem;
+  margin: 0 var(--margin);
+}
+
+@media screen and (min-width: 576px) {
+  .container {
+    --margin: 1rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    --margin: 2rem;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .container {
+    --margin: 4rem;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .container {
+    --margin: 10%;
+  }
+}
+
+/* Components */
+.btn {
+  cursor: pointer;
+  border: 2px solid var(--clr-theme-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: 15px;
+  background: var(--clr-theme-primary);
+  color: var(--clr-text-dark);
+  font-weight: bolder;
+  transition: all ease-in-out 250ms;
+}
+
+.btn:hover {
+  background: var(--clr-theme-secondary);
+}
+
+.card {
+  --bg: var(--clr-theme-primary);
+  --accent: var(--clr-theme-secondary);
+  --text: var(--clr-theme-text);
+  border-radius: 15px;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+  transition: all ease-in-out 250ms;
+  margin: 2rem 0;
+}
+
+.card:hover {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.card__title, .card__body {
+  padding: 1rem;
+}
+
+.card__title {
+  background: var(--accent);
+  border-radius: 15px;
+}
+
+.mana {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 1rem;
+}
+
+.mana__symbol {
+  font-size: 2.5rem;
+  --fa-primary-opacity: 1;
+  --fa-secondary-opacity: 0.7;
+}
+
+.mana__symbol.white {
+  --fa-primary-color: var(--clr-white);
+  --fa-secondary-color: var(--clr-white-2);
+}
+
+.mana__symbol.blue {
+  --fa-primary-color: var(--clr-blue);
+  --fa-secondary-color: var(--clr-blue-2);
+}
+
+.mana__symbol.black {
+  --fa-primary-color: var(--clr-black);
+  --fa-secondary-color: var(--clr-black-2);
+}
+
+.mana__symbol.red {
+  --fa-primary-color: var(--clr-red);
+  --fa-secondary-color: var(--clr-red-2);
+}
+
+.mana__symbol.green {
+  --fa-primary-color: var(--clr-green);
+  --fa-secondary-color: var(--clr-green-2);
+}

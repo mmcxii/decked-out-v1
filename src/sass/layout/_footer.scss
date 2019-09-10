@@ -1,0 +1,24 @@
+.footer {
+    grid-area: footer;
+    
+    padding-bottom: $spacing-xs;
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+       
+    }
+
+    .byline {
+        text-transform: capitalize;
+        text-align: center;
+    }
+
+    .disclamer {
+        text-align: center;
+        font-size: $fs-main * .8;
+    }
+}

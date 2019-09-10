@@ -1,0 +1,14 @@
+.btn {
+    cursor: pointer;
+    border: 2px solid var(--clr-theme-secondary);
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $rounded;
+    background: var(--clr-theme-primary);
+    color: var(--clr-text-dark);
+    font-weight: bolder;
+    transition: all ease-in-out 250ms;
+
+    &:hover {
+        background: var(--clr-theme-secondary);
+    }
+}

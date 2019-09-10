@@ -1,0 +1,6 @@
+body {
+    display: grid;
+    grid-template-rows: max-content 1fr max-content;
+    grid-template-areas: 'header' 'main-content' 'footer';
+    min-height: 100vh;
+}
