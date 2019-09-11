@@ -1,11 +1,14 @@
 require('dotenv').config();
-var express = require('express');
-var exphbs = require('express-handlebars');
+const express = require('express');
+const exphbs = require('express-handlebars');
 
-var db = require('./models');
+const db = require('./models');
 
-var app = express();
-var PORT = process.env.PORT || 3000;
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+//routers
+const authRoutes = require('./routes/authRoutes');
 
 // Middleware
 app.use(express.urlencoded({ extended: false }));
@@ -22,10 +25,9 @@ app.engine(
 app.set('view engine', 'handlebars');
 
 // Routes
-require('./routes/apiRoutes')(app);
-require('./routes/htmlRoutes')(app);
+app.use('/', authRoutes);
 
-var syncOptions = { force: false };
+const syncOptions = { force: false };
 
 // If running a test, set syncOptions.force to true
 // clearing the `testdb`
