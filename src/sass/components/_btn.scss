@@ -11,4 +11,13 @@
     &:hover {
         background: var(--clr-theme-secondary);
     }
+
+    &--trans {
+        cursor: pointer;
+        background: transparent;
+        border: none;
+        color: inherit;
+        font-family: inherit;
+        font-size: inherit;
+    }
 }

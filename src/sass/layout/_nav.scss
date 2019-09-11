@@ -1,0 +1,63 @@
+.nav {
+    background-color: rgba(0, 0, 0, 0.75);
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition-duration: 500ms;
+
+    &.hidden {
+        transform: translateX(-250%);
+    }
+
+    &__list {
+        padding: $spacing-xs $spacing-md;
+        list-style: none;
+        transform-origin: top;
+
+        &.hidden {
+            transform: scaleY(0);
+            transition-duration: 500ms;
+        }
+    }
+
+    &__item {
+        padding: $spacing-xs 0;
+    }
+
+    &__link {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    &__icon {
+        font-size: 1.5rem;
+        margin-right: $spacing-xs;
+
+        color: var(--clr-theme-primary);
+        --fa-primary-color: var(--clr-theme-primary);
+        --fa-secondary-color: var(--clr-theme-secondary);
+        --fa-secondary-opacity: 1;
+    }
+
+    &__btn {
+        &--close {
+            padding: $spacing-sm;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        &--open {
+            position: absolute;
+            top: 50%;
+            left: $spacing-xs;
+            transition-duration: 500ms;
+
+            &.hidden {
+                transform: translateX(-2000%);
+            }
+        }
+    }
+}

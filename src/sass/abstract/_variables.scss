@@ -19,7 +19,6 @@ $spacing-md: 1.5rem;
 $spacing-lg: 2rem;
 $spacing-xl: 2.5rem;
 
-//* Shadows
 $shadows: (
     0: inset 0 7px 9px -7px rgba(0, 0, 0, 0.7),
     1: 0 1px 3px rgba(0, 0, 0, 0.12),
@@ -36,8 +35,8 @@ $shadows: (
 
 :root {
     //* Theme Colors
-    --clr-theme-primary: var(--clr-white);
-    --clr-theme-secondary: var(--clr-white-2);
+    --clr-theme-primary: var(--clr-red);
+    --clr-theme-secondary: var(--clr-red-2);
     --clr-theme-text: var(--clr-text-dark);
 
     //* Background Colors
@@ -49,7 +48,6 @@ $shadows: (
     --clr-text-dark: #111;
 
     //* Mana Colors
-
     // White
     --clr-white: rgb(249, 250, 244);
     --clr-white-2: rgb(248, 231, 185);

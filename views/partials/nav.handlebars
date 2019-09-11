@@ -1,13 +1,69 @@
-<nav class="nav">
+<nav class="nav hidden" id="navbar">
     <ul class="nav__list">
         <li class="nav__item">
-            <a href="/" class="nav__link">New Game</a>
+            <a href="/" class="nav__link">
+                <i class="nav__icon fad fa-swords fa-swap-opacity"></i>
+                New Game
+            </a>
         </li>
+        <hr class="nav__divider" />
         <li class="nav__item">
-            <a href="/collection" class="nav__link">View Collection</a>
+            <a href="/collection" class="nav__link">
+                <i class="nav__icon fad fa-list"></i>
+                View Collection
+            </a>
         </li>
+        <hr class="nav__divider" />
         <li class="nav__item">
-            <a href="/decks" class="nav__link">View Decks</a>
+            <a href="/decks" class="nav__link">
+                <i class="nav__icon fad fa-align-justify"></i>
+                View Decks
+            </a>
+        </li>
+        <hr class="nav__divider" />
+        <li class="nav__item">
+            <button class="btn--trans nav__link" id="revealTeamBtn">
+                <i class="nav__icon fad fa-arrow-alt-down" id="revealTeamBtnIcon"></i>
+                Meet The Team
+            </button>
+            <ul class="nav__list hidden" id="teamMembersList">
+                <li class="nav__item">
+                    <a target="new" href="https://github.com/Munch-Z" class="nav__link">
+                        <i class="nav__icon fab fa-github"></i>
+                        Zach Murphy
+                    </a>
+                </li>
+                <li class="nav__item">
+                    <a target="new" href="https://github.com/Remet0" class="nav__link">
+                        <i class="nav__icon fab fa-github"></i>
+                        John Remetro
+                    </a>
+                </li>
+                <li class="nav__item">
+                    <a target="new" href="https://github.com/Jirafaro" class="nav__link">
+                        <i class="nav__icon fab fa-github"></i>
+                        Austin Robbins
+                    </a>
+                </li>
+                <li class="nav__item">
+                    <a target="new" href="https://github.com/mmcxii" class="nav__link">
+                        <i class="nav__icon fab fa-github"></i>
+                        Nich Secord
+                    </a>
+                </li>
+                <li class="nav__item">
+                    <a target="new" href="https://github.com/mmcxii/decked-out" class="nav__link">
+                        <i class="nav__icon fad fa-code-merge"></i>
+                        Project Repository
+                    </a>
+                </li>
+            </ul>
         </li>
     </ul>
+
+    <button class="btn--trans nav__btn--close" id="navbarBtnClose">
+        <i class="nav__icon fad fa-times"></i>
+    </button>
 </nav>
+
+<script src="assets/js/Navbar.js"></script>

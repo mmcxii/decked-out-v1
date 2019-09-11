@@ -1,8 +1,8 @@
 /* Abstract */
 @import url("https://fonts.googleapis.com/css?family=Sorts+Mill+Goudy&display=swap");
 :root {
-  --clr-theme-primary: var(--clr-white);
-  --clr-theme-secondary: var(--clr-white-2);
+  --clr-theme-primary: var(--clr-red);
+  --clr-theme-secondary: var(--clr-red-2);
   --clr-theme-text: var(--clr-text-dark);
   --clr-brown: rgb(138, 86, 39);
   --clr-brown-2: rgb(69, 53, 25);
@@ -44,6 +44,75 @@ body {
 /* Layout */
 .header {
   grid-area: header;
+}
+
+.header .container {
+  position: relative;
+}
+
+.header__title {
+  text-align: center;
+}
+
+.nav {
+  background-color: rgba(0, 0, 0, 0.75);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition-duration: 500ms;
+}
+
+.nav.hidden {
+  transform: translateX(-250%);
+}
+
+.nav__list {
+  padding: 0.5rem 1.5rem;
+  list-style: none;
+  transform-origin: top;
+}
+
+.nav__list.hidden {
+  transform: scaleY(0);
+  transition-duration: 500ms;
+}
+
+.nav__item {
+  padding: 0.5rem 0;
+}
+
+.nav__link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.nav__icon {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+  color: var(--clr-theme-primary);
+  --fa-primary-color: var(--clr-theme-primary);
+  --fa-secondary-color: var(--clr-theme-secondary);
+  --fa-secondary-opacity: 1;
+}
+
+.nav__btn--close {
+  padding: 1rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.nav__btn--open {
+  position: absolute;
+  top: 50%;
+  left: 0.5rem;
+  transition-duration: 500ms;
+}
+
+.nav__btn--open.hidden {
+  transform: translateX(-2000%);
 }
 
 .main {
@@ -115,6 +184,15 @@ body {
 
 .btn:hover {
   background: var(--clr-theme-secondary);
+}
+
+.btn--trans {
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
 }
 
 .card {
