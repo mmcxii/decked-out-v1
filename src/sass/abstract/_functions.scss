@@ -1,0 +1,11 @@
+@function bp($size) {
+    @return map-get($breakpoints, $size);
+}
+
+@function shadow($level) {
+    @if $level == 0 {
+        @return map-get($shadows, $level);
+    } @else {
+        @return map-get($shadows, $level), map-get($shadows, $level + 0.5);
+    }
+}

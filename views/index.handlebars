@@ -1,0 +1,40 @@
+<main class="main" id="home">
+  <div class="container">
+    <div class="card">
+      <h3 class="card__title">Enter a new thing</h3>
+      <div class="card__body">
+        <form action="POST">
+          <div>
+            <label for="example-text">Example Text</label>
+            <input type="text" id="example-text" aria-describedby="example-text" placeholder="Enter Example Text">
+          </div>
+          <div>
+            <label for="example-description">Example Description</label>
+            <textarea id="example-description" aria-describedby="example-description"
+              placeholder="Enter Example Description"></textarea>
+          </div>
+          <button id="submit" class="btn">Submit</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card__title">Examples:</h3>
+      <div class="card__body">
+        <ul id="example-list">
+          {{#each examples}}
+          <li data-id="{{this.id}}">
+            <a href="example/{{this.id}}">{{this.text}}</a>
+            <button class="btn">ｘ</button>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+
+
+  </div>
+</main>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/assets/js/index.js"></script>

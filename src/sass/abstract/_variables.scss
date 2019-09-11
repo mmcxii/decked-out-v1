@@ -1,0 +1,70 @@
+$breakpoints: (
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+);
+
+//* Fonts
+$ff-b: 'Sorts Mill Goudy', serif;
+$fs-main: 1rem;
+$fs-icon: 2.5rem;
+
+//* Style
+$rounded: 15px;
+
+$spacing-xs: 0.5rem;
+$spacing-sm: 1rem;
+$spacing-md: 1.5rem;
+$spacing-lg: 2rem;
+$spacing-xl: 2.5rem;
+
+$shadows: (
+    0: inset 0 7px 9px -7px rgba(0, 0, 0, 0.7),
+    1: 0 1px 3px rgba(0, 0, 0, 0.12),
+    1.5: 0 1px 2px rgba(0, 0, 0, 0.24),
+    2: 0 3px 6px rgba(0, 0, 0, 0.16),
+    2.5: 3px 6px rgba(0, 0, 0, 0.23),
+    3: 0 10px 20px rgba(0, 0, 0, 0.1),
+    3.5: 0 6px 6px rgba(0, 0, 0, 0.1),
+    4: 0 14px 28px rgba(0, 0, 0, 0.25),
+    4.5: 0 10px 10px rgba(0, 0, 0, 0.22),
+    5: 0 19px 38px rgba(0, 0, 0, 0.3),
+    5.5: 0 15px 12px rgba(0, 0, 0, 0.22),
+);
+
+:root {
+    //* Theme Colors
+    --clr-theme-primary: var(--clr-red);
+    --clr-theme-secondary: var(--clr-red-2);
+    --clr-theme-text: var(--clr-text-dark);
+
+    //* Background Colors
+    --clr-brown: rgb(138, 86, 39);
+    --clr-brown-2: rgb(69, 53, 25);
+
+    //* Text Colors
+    --clr-text-light: #fff;
+    --clr-text-dark: #111;
+
+    //* Mana Colors
+    // White
+    --clr-white: rgb(249, 250, 244);
+    --clr-white-2: rgb(248, 231, 185);
+
+    // Blue
+    --clr-blue: rgb(179, 206, 234);
+    --clr-blue-2: rgb(14, 104, 171);
+
+    // Black
+    --clr-black: rgb(166, 159, 157);
+    --clr-black-2: rgb(21, 11, 0);
+
+    // Red
+    --clr-red: rgb(235, 159, 130);
+    --clr-red-2: rgb(211, 32, 42);
+
+    // Green
+    --clr-green: rgb(196, 211, 202);
+    --clr-green-2: rgb(0, 115, 62);
+}
