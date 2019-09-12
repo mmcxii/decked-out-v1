@@ -8,7 +8,7 @@ router.post("/api/createuser", (req, res) => {
 
   db.User.findOne({
     where: {
-      username: req.body.username
+      username: req.body.username.toLowerCase()
     }
   })
     .then(user => {
@@ -18,7 +18,7 @@ router.post("/api/createuser", (req, res) => {
           if (err) throw err;
 
           const newUser = {
-            username: req.body.username,
+            username: req.body.username.toLowerCase(),
             password: hash,
             secret_answer: req.body.secret
           };
