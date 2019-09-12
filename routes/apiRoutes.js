@@ -1,43 +1,51 @@
-const db = require("../models");
-const express = require("express");
+const db = require('../models');
+const express = require('express');
 const router = express.Router();
-const bCrypt = require("bcrypt");
+const bCrypt = require('bcrypt');
+const path = require('path');
 
-router.post("/api/createuser", (req, res) => {
-  const password = req.body.password;
+router.use(express.static(path.join(__dirname, '../public/')));
 
-  db.User.findOne({
-    where: {
-      username: req.body.username.toLowerCase()
-    }
-  })
-    .then(user => {
-      console.log(user);
-      if (!user) {
-        bCrypt.hash(password, 10, (err, hash) => {
-          if (err) throw err;
+router.get('/create', (req, res) => {
+    res.render('createaccount');
+});
 
-          const newUser = {
-            username: req.body.username.toLowerCase(),
-            password: hash,
-            secret_answer: req.body.secret
-          };
-          //store hashed pass in the DB
-          db.User.create(newUser)
-            .then(data => {
-              res.redirect("/account");
-            })
-            .catch(err => {
-              console.log(err);
-            });
-        });
-      } else {
-          res.send('Username exists!');
-      }
+router.post('/api/createuser', (req, res) => {
+    const password = req.body.password;
+
+    db.User.findOne({
+        where: {
+            username: req.body.username.toLowerCase()
+        }
     })
-    .catch(err => {
-      console.log(err);
-    });
+        .then(user => {
+            if (!user) {
+                bCrypt.hash(password, 10, (err, hash) => {
+                    if (err) throw err;
+
+                    const newUser = {
+                        username: req.body.username.toLowerCase(),
+                        password: hash,
+                        secret_answer: req.body.secret
+                    };
+                    //store hashed pass in the DB
+                    db.User.create(newUser)
+                        .then(data => {
+                            res.redirect('/account');
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                });
+            } else {
+                res.json({
+                    message: 'Username exists!'
+                });
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
 });
 
 module.exports = router;

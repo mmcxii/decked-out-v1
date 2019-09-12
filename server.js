@@ -14,7 +14,7 @@ const apiRoutes = require('./routes/apiRoutes');
 // Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(express.static('public'));
+// app.use(express.static('public'));
 
 // Handlebars
 app.engine(

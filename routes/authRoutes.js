@@ -14,23 +14,32 @@ const secret = process.env.SECRET;
 router.use(require('express-session')({ secret: secret, resave: false, saveUninitialized: false }));
 router.use(passport.initialize());
 router.use(passport.session()); //persistent login sessions
-router.use(express.static(path.join(__dirname, '../public')));
+router.use(express.static(path.join(__dirname, '../public/')));
 
 
 passport.use(
-  new Strategy(function(username, password, cb) {
+  new Strategy( function(username, password, cb) {
+    
+    //Match user
     db.User.findOne({
       where: {
-        username: username
+        username: username.toLowerCase()
       }
     })
       .then(user => {
-        //compare incoming password to hashed password from DB
+        
+        if (!user) {
+          return cb(null, false, {message: 'Username not found'})
+        }
+
+        // Match password
         bCrypt.compare(password, user.password, (err, match) => {
           if (err) throw err;
 
           if (match) {
             return cb(null, user);
+          } else {
+            return cb(null, false, {message: 'Incorrect password'})
           }
         });
       })
@@ -41,31 +50,38 @@ passport.use(
 );
 
 passport.serializeUser(function(user, cb) {
-  cb(null, user.username);
+  cb(null, user.id);
 });
 
-passport.deserializeUser(function(username, cb) {
-  db.User.findOne({
-    where: {
-      username: username
-    }
-  })
+passport.deserializeUser(function(id, cb) {
+  db.User.findByPk(id)
     .then(user => {
       cb(null, user);
     })
-    .catch(err => {
-      console.log(err);
-    });
+    .catch(cb);
 });
 
 //default fallback route, no auth required
 router.get('/login', (req, res) => {
-    res.render('login');
+  res.render('login');
 })
 
+router.get('/', (req, res) => {
+  res.render('home');
+})
+
+
 //Auth protected account route
-router.get('/account', passport.authenticate('local', {failureRedirect: '/login'}), (req, res) => {
+router.get('/account', passport.authenticate('local', {failureRedirect: '/create'}), (req, res) => {
+    console.log('Hit account Route');
+    console.log(req.user);
     res.render('account');
+})
+
+router.post('/login', passport.authenticate('local', {failureRedirect: '/create'}), (req, res) => {
+  console.log('POST ROUTE YO');
+  console.log(req.user);
+  res.redirect(307, '/');
 })
 
 
