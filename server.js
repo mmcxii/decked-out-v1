@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 3000;
 
 //routers
 const authRoutes = require('./routes/authRoutes');
+const apiRoutes = require('./routes/apiRoutes');
 
 // Middleware
 app.use(express.urlencoded({ extended: false }));
@@ -26,6 +27,7 @@ app.set('view engine', 'handlebars');
 
 // Routes
 app.use('/', authRoutes);
+app.use('/', apiRoutes);
 
 const syncOptions = { force: false };
 
