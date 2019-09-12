@@ -14,7 +14,7 @@ const secret = process.env.SECRET;
 router.use(require('express-session')({ secret: secret, resave: false, saveUninitialized: false }));
 router.use(passport.initialize());
 router.use(passport.session()); //persistent login sessions
-router.use(express.static(path.join(__dirname, '../public/assets')));
+router.use(express.static(path.join(__dirname, '../public')));
 
 
 passport.use(
