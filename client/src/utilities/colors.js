@@ -18,15 +18,27 @@ export const manaRed2 = 'rgb(235, 159, 130)';
 export const manaGreen = 'rgb(0, 115, 62)';
 export const manaGreen2 = 'rgb(196, 211, 202)';
 
+// Background Colors
+export const brown = 'rgb(138, 86, 39)';
+export const brown2 = 'rgb(69, 53, 25)';
+
+// Text Colors
+export const light = '#fffbfc';
+export const dark = '#111';
+
 export default {
     manaWhite,
     manaWhite2,
     manaBlue,
-    manablue2,
+    manaBlue2,
     manaBlack,
     manaBlack2,
     manaRed,
-    manared2,
+    manaRed2,
     manaGreen,
     manaGreen2,
+    brown,
+    brown2,
+    light,
+    dark,
 };
