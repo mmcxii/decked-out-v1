@@ -1,66 +1,100 @@
 const passport = require("passport");
-const path = require('path');
-const express = require('express');
+const path = require("path");
+const express = require("express");
 const router = express.Router();
-const checkAuthentication = require('../config/checkAuthentication');
-const s3Method = require('../models/AWS/s3method');
-
-
+const checkAuthentication = require("../config/checkAuthentication");
+const s3Method = require("../models/AWS/s3method");
 
 //USE SECRET
 
-router.use(express.static(path.join(__dirname, '../public/')));
-
+router.use(express.static(path.join(__dirname, "../public/")));
 
 //default fallback route, no auth required
-router.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/login.html'));
-})
+router.get("/login", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/login.html"));
+});
 
-router.get('/user', (req, res) => {
-  res.send(req.user.dataValues.username + ' You\'re home!');
-})
-
+router.get("/user", (req, res) => {
+  res.send(req.user.dataValues.username + " You're home!");
+});
 
 //Auth protected account route
-router.get('/account', checkAuthentication, (req, res) => {
-    res.send('This will soon be an account page');
-})
+router.get("/account", checkAuthentication, (req, res) => {
+  res.send("This will soon be an account page");
+});
 
-router.post('/login', passport.authenticate('local', {failureRedirect: '/create'}), (req, res) => {
-  console.log('POST ROUTE YO');
-  console.log(req.user);
-  res.redirect(307, '/user');
-})
+router.post(
+  "/login",
+  passport.authenticate("local", { failureRedirect: "/create" }),
+  (req, res) => {
+    console.log("POST ROUTE YO");
+    console.log(req.user);
+    res.redirect(307, "/user");
+  }
+);
 
+//Re-add checkAuthentication after testing
+router.get("/account/collection", (req, res) => {
+  const { username } = req.user.dataValues;
 
-//Auth protected collection route
-router.get('/account/collection', checkAuthentication, (req, res) => {
-    res.send('This is where your collection will display! ' + JSON.stringify(s3Method.getCollection(req.user.dataValues.username)));
-})
+  s3Method.getCollection(username, (data) => {
+    console.log(data);
 
-//Auth protected decklist route
-router.get('/account/:deckname', checkAuthentication, (req, res) => {
+    res.send(`This is your collection: ${JSON.stringify(data)}`);
+  });
+});
 
-  res.send('This is will show your deck!');
-})
+//Re-add checkAuthentication after testing
+router.get("/account/:deckname", (req, res) => {
+  
+  //Change to req.user.dataValues
+  const {username} = req.body
+  const deckName = req.params.deckname;
+  
+  s3Method.getDeck(username, deckName, (data) => {
+    if (data.error) {
+      console.log(data.error);
+      res.send(`We apologize. ${data.error}. Please try again later.`);
+    } else {
+      console.log(data);
+      res.send(`Here's your deck! Name: ${deckName} Mainboard: ${data.main} Sideboard: ${data.sideboard}`);
+    }
+  })
+});
 
+router.post("/api/createcollection", (req, res) => {
+  const { collection } = req.body;
+  //Change to req.user.dataValues for production
+  const { username } = req.body;
 
-router.post('/api/createcollection', (req, res) => {
-    const {collection} = req.body;
-    const {username} = req.user.dataValues;
-
-    if (s3Method.createCollection()) {
+  s3Method.createCollection(username, collection, (succes) => {
+    if (succes) {
       res.sendStatus(200);
     } else {
       res.sendStatus(500);
     }
+  });
+});
+
+router.post('/api/createdeck', (req, res) => {
+  const {deckName, deckList} = req.body
+
+  //Change to req.user.dataValues for production
+  const {username} = req.body;
+  
+  s3Method.createDeck(username, deckName, deckList, (succes) => {
+    if (succes) {
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(500);
+    }
+  });
+
 })
 
-
-router.get('/logout', (req, res) => {
-    req.logout();
-    res.send('Home.');
+router.get("/logout", (req, res) => {
+  req.logout();
+  res.send("Home.");
 });
 
 module.exports = router;
