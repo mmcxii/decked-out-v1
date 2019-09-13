@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Card, CardHeader, CardBody } from 'elements';
 
 const Example = () => {
     const [examples, setExample] = useState([]);
@@ -17,10 +18,12 @@ const Example = () => {
     return (
         <>
             {examples.map(example => (
-                <div key={example.id}>
-                    <h3>{example.text}</h3>
-                    <p>{example.description}</p>
-                </div>
+                <Card key={example.id}>
+                    <CardHeader>{example.text}</CardHeader>
+                    <CardBody>
+                        <p>{example.description}</p>
+                    </CardBody>
+                </Card>
             ))}
         </>
     );
