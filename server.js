@@ -1,29 +1,16 @@
 require('dotenv').config();
 const express = require('express');
-const exphbs = require('express-handlebars');
 
 const db = require('./models');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-
-//routers
+const PORT = process.env.PORT || 5000;
 const authRoutes = require('./routes/authRoutes');
 const apiRoutes = require('./routes/apiRoutes');
-
 // Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-// app.use(express.static('public'));
-
-// Handlebars
-app.engine(
-    'handlebars',
-    exphbs({
-        defaultLayout: 'main',
-    })
-);
-app.set('view engine', 'handlebars');
+app.use(express.static('client/public'));
 
 // Routes
 app.use('/', authRoutes);
