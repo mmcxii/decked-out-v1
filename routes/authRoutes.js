@@ -79,6 +79,22 @@ router.get("/account/:deckname", (req, res) => {
   })
 });
 
+router.put("/account/updatedeck", (req, res) => {
+  
+  //Change to req.user.dataValues
+  const {username, cardsToAdd, deckName} = req.body
+  
+  s3Method.updateDeckList(username, deckName, cardsToAdd, (data) => {
+    if (data.error) {
+      console.log(data.error);
+      res.send(data.error);
+    } else {
+      console.log(data);
+      res.send(`Here's your deck! Name: ${deckName} Mainboard: ${data.main} Sideboard: ${data.sideboard}`);
+    }
+  })
+});
+
 //make authed
 
 router.post("/api/createcollection", (req, res) => {
