@@ -21,6 +21,7 @@ signIn.addEventListener("click", e => {
   .then((data) => {
       if (data.message === 'Username exists!') {
           alert('Username exists');
+          window.location.reload();
       }
   })
   .catch(err => console.log(err));
