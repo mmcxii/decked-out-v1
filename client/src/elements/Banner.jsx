@@ -45,8 +45,8 @@ const Banner = () => {
     ];
     return (
         <ManaBanner>
-            {ManaSymbols.map(({ classNames, primary, secondary }) => (
-                <ManaSymbol className={classNames} primary={primary} secondary={secondary} />
+            {ManaSymbols.map(({ classNames, primary, secondary }, index) => (
+                <ManaSymbol key={index} className={classNames} primary={primary} secondary={secondary} />
             ))}
         </ManaBanner>
     );

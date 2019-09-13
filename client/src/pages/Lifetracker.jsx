@@ -9,7 +9,7 @@ const Lifetracker = () => {
             <CardHeader>Lifetracker</CardHeader>
             <CardBody>
                 <Form>
-                    <FormLabel for='name'>Name:</FormLabel>
+                    <FormLabel htmlFor='name'>Name:</FormLabel>
                     <FormInput name='name' type='text' />
                 </Form>
 
