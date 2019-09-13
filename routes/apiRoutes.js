@@ -1,24 +1,53 @@
-var db = require('../models');
+const db = require("../models");
+const express = require("express");
+const router = express.Router();
+const bCrypt = require("bcrypt");
+const path = require("path");
 
-module.exports = function(app) {
-    // Get all examples
-    app.get('/api/examples', function(req, res) {
-        db.Example.findAll({}).then(function(dbExamples) {
-            res.json(dbExamples);
-        });
-    });
+router.use(express.static(path.join(__dirname, "../public/")));
 
-    // Create a new example
-    app.post('/api/examples', function(req, res) {
-        db.Example.create(req.body).then(function(dbExample) {
-            res.json(dbExample);
-        });
-    });
+router.get("/create", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/create.html"));
+});
 
-    // Delete an example by id
-    app.delete('/api/examples/:id', function(req, res) {
-        db.Example.destroy({ where: { id: req.params.id } }).then(function(dbExample) {
-            res.json(dbExample);
+router.post("/api/createuser", (req, res) => {
+  const password = req.body.password;
+
+  db.User.findOne({
+    where: {
+      username: req.body.username.toLowerCase()
+    }
+  })
+    .then(user => {
+      if (!user) {
+        bCrypt.hash(password, 10, (err, hash) => {
+          if (err) throw err;
+
+          const newUser = {
+            username: req.body.username.toLowerCase(),
+            password: hash,
+            secret_answer: req.body.secret
+          };
+          //store hashed pass in the DB
+          db.User.create(newUser)
+            .then(data => {
+              res.redirect("/account");
+            })
+            .catch(err => {
+              console.log(err);
+            });
         });
+      } else {
+        res.json({
+          message: "Username exists!"
+        });
+      }
+    })
+    .catch(err => {
+      console.log(err);
     });
-};
+});
+
+
+
+module.exports = router;

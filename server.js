@@ -1,21 +1,44 @@
 require('dotenv').config();
-var express = require('express');
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 5000;
+const secret = process.env.SECRET;
 
-var db = require('./models');
+const db = require('./models');
+// const flash = require('connect-flash');
 
-var app = express();
-var PORT = process.env.PORT || 5000;
+// Passport Config
+const passport = require('passport');
+require('./config/passport')(passport);
+
+// Routers
+const authRoutes = require('./routes/authRoutes');
+const apiRoutes = require('./routes/apiRoutes');
 
 // Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static('client/public'));
 
-// Routes
-require('./routes/apiRoutes')(app);
-require('./routes/htmlRoutes')(app);
+//Authentication Middleware
+app.use(require('express-session')({ secret: secret, resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session()); //persistent login sessions
 
-var syncOptions = { force: false };
+//Flash messages
+// app.use(flash());
+
+// app.use((req, res, next) => {
+//     res.locals.success_msg = req.flash('success_msg');
+//     res.locals.error_msg = req.flash('success_msg');
+//     next();
+// })
+
+// Routes
+app.use('/', authRoutes);
+app.use('/', apiRoutes);
+
+const syncOptions = { force: false };
 
 // If running a test, set syncOptions.force to true
 // clearing the `testdb`
