@@ -1,16 +1,37 @@
 require('dotenv').config();
 const express = require('express');
-
-const db = require('./models');
-
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+const db = require('./models');
+const flash = require('connect-flash');
+
+// Passport Config
+const passport = require('passport');
+require('./config/passport')(passport);
+
+// Routers
 const authRoutes = require('./routes/authRoutes');
 const apiRoutes = require('./routes/apiRoutes');
+
 // Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static('client/public'));
+
+//Authentication Middleware
+app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session()); //persistent login sessions
+
+//Flash messages
+app.use(flash());
+
+app.use((req, res, next) => {
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('success_msg');
+    next();
+})
 
 // Routes
 app.use('/', authRoutes);
