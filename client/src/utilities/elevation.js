@@ -1,3 +1,11 @@
+/*
+ * To use this elevation property you call it like this in the styled-component template-literal:
+ * ${elevation[ INDEX OF THE SHADOW YOU WISH TO USE ]}.
+ *
+ * Example:
+ * ${elevation[4]};
+ */
+
 export default [
     'box-shadow: inset 0 7px 9px -7px rgba(0,0,0,0.7);',
     'box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);',
