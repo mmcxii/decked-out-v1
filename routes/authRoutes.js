@@ -33,6 +33,23 @@ router.post(
   }
 );
 
+router.get('/account/alldecks', (req, res) => {
+  //update to req.user.dataValues
+  const {username} = req.body;
+  
+  // this is going to return an array
+  s3Method.listDecks(username, (data) => {
+    if (data.error) {
+      console.log(data.error);
+      res.send(`We apologize. ${data.error}. Please try again later.`);
+    } else {
+      console.log(data);
+      res.send(`Here's your list of decks as an array: ${data}`);
+    }
+  })
+  
+})
+
 //Re-add checkAuthentication after testing
 router.get("/account/collection", (req, res) => {
   const { username } = req.user.dataValues;
@@ -62,6 +79,8 @@ router.get("/account/:deckname", (req, res) => {
   })
 });
 
+//make authed
+
 router.post("/api/createcollection", (req, res) => {
   const { collection } = req.body;
   //Change to req.user.dataValues for production
@@ -75,6 +94,8 @@ router.post("/api/createcollection", (req, res) => {
     }
   });
 });
+
+//make authed
 
 router.post('/api/createdeck', (req, res) => {
   const {deckName, deckList} = req.body

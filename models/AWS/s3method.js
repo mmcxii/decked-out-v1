@@ -63,6 +63,30 @@ module.exports = {
 
             return cb(JSON.parse(data.Body));
         })
+    },
+    listDecks: function(username, cb) {
+        s3.listObjects({
+            Bucket: S3_BUCKET, 
+            Prefix: `${username}/decks/`, 
+            Delimiter: '/'
+            }, 
+            (err, decks) => {
+            
+                if (err) {
+                console.log(`List decks error: ${err}`);
+                return cb({error: 'There was an error lsiting your decks'})
+            }
+        
+            return cb(this.listDecksHelper(decks.CommonPrefixes));
+          })
+    },
+    listDecksHelper: function(arr) {
+        const decks = [];
+        for(let i=0; i<arr.length; i++) {
+          decks.push(arr[i].Prefix.split('/')[2]);
+        }
+      
+        return decks;
     }
     
 }
