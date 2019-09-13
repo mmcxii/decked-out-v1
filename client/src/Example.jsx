@@ -4,7 +4,6 @@ const Example = () => {
     const [examples, setExample] = useState([]);
 
     useEffect(() => {
-        console.log('effect firing');
         fetch('/api/examples', {
             headers: {
                 'Content-Type': 'application/json',
