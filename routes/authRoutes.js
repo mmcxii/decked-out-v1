@@ -96,6 +96,8 @@ router.put("/account/updatedeck", (req, res) => {
 });
 
 router.put('/account/updatecollection', (req, res) => {
+  
+  //Change to req.user.dataValues
   const {username, cardsToAdd} = req.body;
 
   s3Method.updateCollection(username, cardsToAdd, (data) => {
@@ -109,6 +111,19 @@ router.put('/account/updatecollection', (req, res) => {
   })
 })
 
+
+router.delete('/account/:deckname', (req, res) => {
+  const {username } = req.body;
+  const deckName = req.params.deckname;
+
+  s3Method.deleteDeckList(username, deckName, (data) => {
+    if(!data.error) {
+      res.sendStatus(200);
+    } else {
+      res.send(data.error);
+    }
+  })
+})
 //make authed
 
 router.post("/api/createcollection", (req, res) => {

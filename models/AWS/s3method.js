@@ -143,5 +143,49 @@ module.exports = {
               }
           })
       })
+  },
+  deleteDeckList: function(username, deckName, cb) {
+    s3.deleteObjects(
+      {
+        Bucket: S3_BUCKET,
+        Delete: {
+            Objects: [ { Key: `${username}/decks/${deckName}/decklist.json` } ]
+        } 
+      },
+      (err, data) => {
+        if (err) {
+          console.log(`Delete decklist error: ${err}`);
+          return cb({ error: "There was an error deleting this decklist" });
+        }
+        console.log(data);
+        this.deleteDeck(username, deckName, (data) => {
+            if (data.error) {
+                console.log(`Delete deck error: ${err}`);
+                return cb({ error: "There was an error deleting this deck" });
+            } else {
+                return cb({ success: 'Deck has been deleted'});
+            }
+        });
+      }
+    );
+  },
+  deleteDeck: function(username, deckName, cb) {
+
+    s3.deleteObjects(
+        {
+          Bucket: S3_BUCKET,
+          Delete: {
+              Objects: [ { Key: `${username}/decks/${deckName}` } ]
+          } 
+        },
+        (err, data) => {
+          if (err) {
+            console.log(`Delete deck folder error: ${err}`);
+            return cb({ error: "There was an error deleting this deck" });
+          }
+          console.log(data);
+          return cb(data);
+        }
+      );
   }
 };
