@@ -2,9 +2,6 @@ const db = require("../models");
 const express = require("express");
 const router = express.Router();
 const bCrypt = require("bcrypt");
-const path = require("path");
-
-router.use(express.static(path.join(__dirname, "../public/")));
 
 router.post("/api/createuser", (req, res) => {
   const password = req.body.password;

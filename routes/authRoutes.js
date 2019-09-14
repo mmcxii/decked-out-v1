@@ -1,13 +1,10 @@
 const passport = require("passport");
-const path = require("path");
 const express = require("express");
 const router = express.Router();
 const checkAuthentication = require("../config/checkAuthentication");
 const s3Method = require("../models/AWS/s3method");
 
 //USE SECRET
-
-router.use(express.static(path.join(__dirname, "../public/")));
 
 //Auth protected account route
 router.get("/account", checkAuthentication, (req, res) => {
