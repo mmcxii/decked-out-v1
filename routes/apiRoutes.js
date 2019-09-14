@@ -6,10 +6,6 @@ const path = require("path");
 
 router.use(express.static(path.join(__dirname, "../public/")));
 
-router.get("/create", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/create.html"));
-});
-
 router.post("/api/createuser", (req, res) => {
   const password = req.body.password;
 
@@ -20,6 +16,7 @@ router.post("/api/createuser", (req, res) => {
   })
     .then(user => {
       if (!user) {
+        //hash password
         bCrypt.hash(password, 10, (err, hash) => {
           if (err) throw err;
 
@@ -31,19 +28,21 @@ router.post("/api/createuser", (req, res) => {
           //store hashed pass in the DB
           db.User.create(newUser)
             .then(data => {
-              res.redirect("/account");
+              res.sendStatus(200);
             })
             .catch(err => {
+              res.sendStatus(500);
               console.log(err);
             });
         });
       } else {
         res.json({
-          message: "Username exists!"
+          message: "Username alread in use."
         });
       }
     })
     .catch(err => {
+      res.sendStatus(500);
       console.log(err);
     });
 });

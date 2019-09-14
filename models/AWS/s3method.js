@@ -18,7 +18,10 @@ module.exports = {
         Key: `${username}/collection.json`
       },
       (err, data) => {
-        if (err) return console.log(err);
+        if (err) {
+          console.log(`Get collection error: ${err}`);
+          return cb({error: 'There was an issue getting your collection.'})
+        } 
 
         return cb(JSON.parse(data.Body));
       }
