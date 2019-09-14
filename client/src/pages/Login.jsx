@@ -10,19 +10,16 @@ const Login = ({ history }) => {
 
     useEffect(() => {
         const signIn = async () => {
-            console.log('form was submitted');
-
-            const res = await fetch('/login', {
-                method: 'post',
+            const res = await fetch('/api/login', {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ username, password }),
-                redirect: 'follow',
             });
 
-            if (res.redirected) {
-                history.push(res.url);
+            if (res.status === 200) {
+                history.push('/account');
             }
         };
 
