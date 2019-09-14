@@ -7,6 +7,7 @@ import Header from './layout/Header';
 import Footer from './layout/Footer';
 import Lifetracker from 'pages/Lifetracker';
 import Login from 'pages/Login';
+import Account from 'pages/Account';
 import { light, spacing } from 'utilities';
 
 import './Global.css';
@@ -23,6 +24,7 @@ const App = () => {
                     <Switch>
                         <Route exact path='/' component={Lifetracker} />
                         <Route path='/login' component={Login} />
+                        <Route path='/account' component={Account} />
                     </Switch>
                 </PageWrapper>
 
