@@ -95,6 +95,20 @@ router.put("/account/updatedeck", (req, res) => {
   })
 });
 
+router.put('/account/updatecollection', (req, res) => {
+  const {username, cardsToAdd} = req.body;
+
+  s3Method.updateCollection(username, cardsToAdd, (data) => {
+    if (data.error) {
+      console.log(data.error);
+      res.send(data.error);
+    } else {
+      console.log(data);
+      res.send(`Here's your collection: ${data}`);
+    }
+  })
+})
+
 //make authed
 
 router.post("/api/createcollection", (req, res) => {

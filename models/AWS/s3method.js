@@ -100,7 +100,11 @@ module.exports = {
     return decks;
   },
   updateDeckList: function(username, deckName, cardsToAdd, cb) {
+    
+    //Get the deck
     this.getDeck(username, deckName, data => {
+      
+      // Combine arrays of new and old cards
       const main = data.main.concat(cardsToAdd.main);
       const sideboard = data.sideboard.concat(cardsToAdd.sideboard);
 
@@ -109,6 +113,7 @@ module.exports = {
         sideboard
       };
 
+      // 'Create' new deck with updated decklist
       this.createDeck(username, deckName, newDeck, succes => {
         if (succes) {
           console.log("Deck updated");
@@ -116,10 +121,27 @@ module.exports = {
         } else {
           console.log("Deck failed to update");
           return cb({
-            error: "The deck fialed to update. Please try again later."
+            error: "The collection failed to update. Please try again later."
           });
         }
       });
     });
+  },
+  updateCollection: function(username, cardsToAdd, cb) {
+      this.getCollection(username, (data) => {
+          const collection = data.concat(cardsToAdd);
+
+          this.createCollection(username, collection, (succes) => {
+            if (succes) {
+                console.log("Collection updated");
+                return cb(collection);
+              } else {
+                console.log("Collection failed to update");
+                return cb({
+                  error: "The collection failed to update. Please try again later."
+                });
+              }
+          })
+      })
   }
 };
