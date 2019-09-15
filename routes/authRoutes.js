@@ -93,8 +93,8 @@ router.put("/api/updatecollection", checkAuthentication, (req, res) => {
 });
 
 router.delete("/api/deletedeck", checkAuthentication, (req, res) => {
-  const { username } = req.body;
-  const deckName = req.params.deckname;
+  const { username, deckName } = req.body;
+
 
   s3Method.deleteDeckList(username, deckName, data => {
     if (!data.error) {
@@ -111,8 +111,8 @@ router.post("/api/createcollection", checkAuthentication, (req, res) => {
   //Change to req.user.dataValues for production
   const { username } = req.user.dataValues;
 
-  s3Method.createCollection(username, collection, succes => {
-    if (succes) {
+  s3Method.createCollection(username, collection, success => {
+    if (success) {
       res.sendStatus(200);
     } else {
       res.sendStatus(500);
@@ -128,8 +128,8 @@ router.post("/api/createdeck", checkAuthentication, (req, res) => {
   //Change to req.user.dataValues for production
   const { username } = req.user.dataValues;
 
-  s3Method.createDeck(username, deckName, deckList, succes => {
-    if (succes) {
+  s3Method.createDeck(username, deckName, deckList, success => {
+    if (success) {
       res.sendStatus(200);
     } else {
       res.sendStatus(500);
@@ -139,7 +139,7 @@ router.post("/api/createdeck", checkAuthentication, (req, res) => {
 
 router.get("/logout", (req, res) => {
   req.logout();
-  res.send("Home.");
+  res.sendStatus(200);
 });
 
 module.exports = router;
