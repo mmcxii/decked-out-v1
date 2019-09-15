@@ -47,7 +47,7 @@ router.get("/api/collection", checkAuthentication, (req, res) => {
 router.get("/account/:deckname", checkAuthentication, (req, res) => {
   //Change to req.user.dataValues
   const { username } = req.user.dataValues;
-  const deckName = req.params.deckname;
+  const deckName = req.params.deckname.split('-').join(' ');
 
   s3Method.getDeck(username, deckName, data => {
     if (data.error) {
