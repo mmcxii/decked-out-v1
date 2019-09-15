@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(express.static('client/public'));
 
 //Authentication Middleware
-app.use(require('express-session')({ secret: 'keyboRD CAT', resave: true, saveUninitialized: true }));
+app.use(require('express-session')({ secret: secret, resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session()); //persistent login sessions
 
