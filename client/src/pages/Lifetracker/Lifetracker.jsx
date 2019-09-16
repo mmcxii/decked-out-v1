@@ -7,11 +7,7 @@ import Controls from './Controls';
 import PlayerCard from './PlayerCard';
 
 const Lifetracker = ({ user }) => {
-    const [players, setPlayers] = useState([
-        { name: user.username, lifeTotal: 20 },
-        { name: 'Jack', lifeTotal: 20 },
-        { name: 'Ethan', lifeTotal: 20 },
-    ]);
+    const [players, setPlayers] = useState([{ name: user.username, lifeTotal: 20 }]);
 
     return (
         <>
