@@ -8,6 +8,7 @@ import Footer from './layout/Footer';
 import Lifetracker from 'pages/Lifetracker';
 import Login from 'pages/Login';
 import Account from 'pages/Account';
+import Cardsearch from 'pages/Cardsearch';
 import { light, spacing } from 'utilities';
 
 import './Global.css';
@@ -25,6 +26,7 @@ const App = () => {
                         <Route exact path='/' component={Lifetracker} />
                         <Route path='/login' component={Login} />
                         <Route path='/account' component={Account} />
+                        <Route path='/cardsearch' component={Cardsearch} />
                     </Switch>
                 </PageWrapper>
 
