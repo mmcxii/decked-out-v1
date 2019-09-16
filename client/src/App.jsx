@@ -27,10 +27,11 @@ const App = () => {
 
                 <PageWrapper>
                     <Switch>
-                        <Route exact path='/' render={props => <Lifetracker localUser={user} />} />
+                        <Route exact path='/' render={props => <Lifetracker user={user} />} />
                         <Route path='/login' render={props => <Login setUser={setUser} />} />
                         <Route exact path='/account' render={props => <Account user={user} />} />
                         <Route path='/createdeck' component={CreateDeck} />
+                        <Route path='/cardsearch' component={Cardsearch} />
                         <Route path='/account/:deckName' component={Deck} />
                     </Switch>
                 </PageWrapper>
