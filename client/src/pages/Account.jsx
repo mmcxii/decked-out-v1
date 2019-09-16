@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ButtonLink } from 'elements';
 
-const Account = ({ history, user }) => {
+const Account = ({ user }) => {
     const [userDecks, setUserDecks] = useState([]);
 
     useEffect(() => {
-        if (!user) {
-            history.push('/login');
-        }
-
         const fetchDecks = async () => {
             const res = await fetch('/account', {
                 method: 'GET',
@@ -59,7 +55,7 @@ const Account = ({ history, user }) => {
     );
 };
 
-export default withRouter(Account);
+export default Account;
 
 const UserName = styled.h2`
     font-size: 1.75rem;

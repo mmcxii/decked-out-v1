@@ -2,7 +2,7 @@ import React from 'react';
 import { Toggle } from 'utilities';
 import { Button, Card, CardHeader, CardBody, Form, FormInput, FormLabel, Modal } from 'elements';
 
-const Lifetracker = () => {
+const Lifetracker = ({ user }) => {
     return (
         <>
             <h2>Lifetracker</h2>

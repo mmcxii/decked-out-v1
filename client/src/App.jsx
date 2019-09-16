@@ -1,6 +1,6 @@
 //* Packages
 import React, { useState } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Normalize from 'react-normalize';
 import styled from 'styled-components';
 
@@ -36,12 +36,23 @@ const App = () => {
 
                 <PageWrapper>
                     <Switch>
-                        <Route exact path='/' render={props => <Lifetracker user={user} />} />
-                        <Route exact path='/account' render={props => <Account user={user} />} />
-                        <Route path='/account/:deckName' component={Deck} />
-                        <Route path='/login' render={props => <Login setUser={setUser} />} />
-                        <Route path='/createdeck' component={CreateDeck} />
-                        <Route path='/cardsearch' component={CardSearch} />
+                        <>
+                            {!user ? (
+                                <>
+                                    <Redirect to='/login' />
+                                    <Route path='/login' render={props => <Login setUser={setUser} />} />
+                                </>
+                            ) : (
+                                <>
+                                    <Route exact path='/' render={props => <Lifetracker user={user} />} />
+                                    <Route exact path='/account' render={props => <Account user={user} />} />
+                                    <Route path='/account/:deckName' component={Deck} />
+                                    <Route path='/login' render={props => <Login setUser={setUser} />} />
+                                    <Route path='/createdeck' component={CreateDeck} />
+                                    <Route path='/cardsearch' component={CardSearch} />
+                                </>
+                            )}
+                        </>
                     </Switch>
                 </PageWrapper>
 
