@@ -16,7 +16,7 @@ import Account from 'pages/Account';
 import CardSearch from 'pages/CardSearch';
 import CreateDeck from 'pages/CreateDeck';
 import Deck from 'pages/Deck';
-import Lifetracker from 'pages/Lifetracker';
+import Lifetracker from 'pages/Lifetracker/Lifetracker';
 import Login from 'pages/Login';
 
 //* Global Stylesheet
@@ -25,7 +25,7 @@ import './Global.scss';
 const App = () => {
     //* App Level State:
     //* User Object, stores users name when signed in from '/login'
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState({ username: 'nicholas' });
 
     return (
         <BrowserRouter>
