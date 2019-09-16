@@ -1,21 +1,30 @@
+//* Packages
 import React, { useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Normalize from 'react-normalize';
 import styled from 'styled-components';
 
+//* Utilities
 import { light, spacing } from 'utilities';
 
+//* Layout Elements
 import Header from './layout/Header';
 import Footer from './layout/Footer';
+
+//* Pages
 import Account from 'pages/Account';
+import CardSearch from 'pages/CardSearch';
 import CreateDeck from 'pages/CreateDeck';
 import Deck from 'pages/Deck';
 import Lifetracker from 'pages/Lifetracker';
 import Login from 'pages/Login';
 
+//* Global Stylesheet
 import './Global.scss';
 
 const App = () => {
+    //* App Level State:
+    //* User Object, stores users name when signed in from '/login'
     const [user, setUser] = useState(null);
 
     return (
@@ -28,11 +37,11 @@ const App = () => {
                 <PageWrapper>
                     <Switch>
                         <Route exact path='/' render={props => <Lifetracker user={user} />} />
-                        <Route path='/login' render={props => <Login setUser={setUser} />} />
                         <Route exact path='/account' render={props => <Account user={user} />} />
-                        <Route path='/createdeck' component={CreateDeck} />
-                        <Route path='/cardsearch' component={Cardsearch} />
                         <Route path='/account/:deckName' component={Deck} />
+                        <Route path='/login' render={props => <Login setUser={setUser} />} />
+                        <Route path='/createdeck' component={CreateDeck} />
+                        <Route path='/cardsearch' component={CardSearch} />
                     </Switch>
                 </PageWrapper>
 
