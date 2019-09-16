@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Button, Card, CardHeader, CardBody, Form, FormLabel, FormInput } from 'elements';
 
-const Login = ({ history }) => {
+const Login = ({ history, setUser }) => {
     const [formIsSubmitted, setFormIsSubmitted] = useState(false);
 
     const [username, setUsername] = useState('');
@@ -19,6 +19,7 @@ const Login = ({ history }) => {
             });
 
             if (res.status === 200) {
+                setUser({ username });
                 history.push('/account');
             }
         };

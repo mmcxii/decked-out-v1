@@ -1,30 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Normalize from 'react-normalize';
 import styled from 'styled-components';
 
-import Header from './layout/Header';
-import Footer from './layout/Footer';
-import Lifetracker from 'pages/Lifetracker';
-import Login from 'pages/Login';
-import Account from 'pages/Account';
 import { light, spacing } from 'utilities';
 
-import './Global.css';
+import Header from './layout/Header';
+import Footer from './layout/Footer';
+import Account from 'pages/Account';
+import CreateDeck from 'pages/CreateDeck';
+import Deck from 'pages/Deck';
+import Lifetracker from 'pages/Lifetracker';
+import Login from 'pages/Login';
+
+import './Global.scss';
 
 const App = () => {
+    const [user, setUser] = useState(null);
+
     return (
         <BrowserRouter>
             <Normalize />
 
             <AppWrapper>
-                <Header />
+                <Header user={user} />
 
                 <PageWrapper>
                     <Switch>
-                        <Route exact path='/' component={Lifetracker} />
-                        <Route path='/login' component={Login} />
-                        <Route path='/account' component={Account} />
+                        <Route exact path='/' render={props => <Lifetracker localUser={user} />} />
+                        <Route path='/login' render={props => <Login setUser={setUser} />} />
+                        <Route exact path='/account' render={props => <Account user={user} />} />
+                        <Route path='/createdeck' component={CreateDeck} />
+                        <Route path='/account/:deckName' component={Deck} />
                     </Switch>
                 </PageWrapper>
 

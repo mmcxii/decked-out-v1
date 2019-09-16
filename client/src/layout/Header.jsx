@@ -4,14 +4,18 @@ import { Link } from 'react-router-dom';
 import { Banner, Button } from 'elements';
 import { spacing, dark } from 'utilities';
 
-const Header = () => {
+const Header = ({ user }) => {
     return (
         <HeaderWrapper>
             <ManaBanner />
             <Title>Welcome to Decked Out</Title>
-            <SignIn as={Link} to='/login'>
-                Log In
-            </SignIn>
+            {user ? (
+                <p>Welcome back {user.username}</p>
+            ) : (
+                <SignIn as={Link} to='/login'>
+                    Log In
+                </SignIn>
+            )}
         </HeaderWrapper>
     );
 };
