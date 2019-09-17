@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { rounded, spacing, manaBlue, manaBlue2, transition } from 'utilities';
 
-const Button = styled.button`
+export const Button = styled.button`
     cursor: pointer;
     border-radius: ${rounded};
     padding: ${spacing.sm} ${spacing.md};
@@ -15,4 +15,7 @@ const Button = styled.button`
     }
 `;
 
-export default Button;
+export const ButtonLink = styled(Button)`
+    display: inline-block;
+    margin: ${spacing.xs} 0;
+`;

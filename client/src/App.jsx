@@ -1,32 +1,58 @@
-import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+//* Packages
+import React, { useState } from 'react';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Normalize from 'react-normalize';
 import styled from 'styled-components';
 
-import Header from './layout/Header';
-import Footer from './layout/Footer';
-import Lifetracker from 'pages/Lifetracker';
-import Login from 'pages/Login';
-import Account from 'pages/Account';
-import Cardsearch from 'pages/Cardsearch';
+//* Utilities
 import { light, spacing } from 'utilities';
 
-import './Global.css';
+//* Layout Elements
+import Header from './layout/Header';
+import Footer from './layout/Footer';
+
+//* Pages
+import Account from 'pages/Account';
+import CardSearch from 'pages/CardSearch';
+import CreateDeck from 'pages/CreateDeck';
+import Deck from 'pages/Deck';
+import Lifetracker from 'pages/Lifetracker/Lifetracker';
+import Login from 'pages/Login';
+
+//* Global Stylesheet
+import './Global.scss';
 
 const App = () => {
+    //* App Level State:
+    //* User Object, stores users name when signed in from '/login'
+    const [user, setUser] = useState(null);
+
     return (
         <BrowserRouter>
             <Normalize />
 
             <AppWrapper>
-                <Header />
+                <Header user={user} />
 
                 <PageWrapper>
                     <Switch>
-                        <Route exact path='/' component={Lifetracker} />
-                        <Route path='/login' component={Login} />
-                        <Route path='/account' component={Account} />
-                        <Route path='/cardsearch' component={Cardsearch} />
+                        <>
+                            {!user ? (
+                                <>
+                                    <Redirect to='/login' />
+                                    <Route path='/login' render={props => <Login setUser={setUser} />} />
+                                </>
+                            ) : (
+                                <>
+                                    <Route exact path='/' render={props => <Lifetracker user={user} />} />
+                                    <Route exact path='/account' render={props => <Account user={user} />} />
+                                    <Route path='/account/:deckName' component={Deck} />
+                                    <Route path='/login' render={props => <Login setUser={setUser} />} />
+                                    <Route path='/createdeck' component={CreateDeck} />
+                                    <Route path='/cardsearch' component={CardSearch} />
+                                </>
+                            )}
+                        </>
                     </Switch>
                 </PageWrapper>
 

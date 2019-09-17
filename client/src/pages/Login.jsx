@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
+
+import { useForm } from 'hooks';
 import { Button, Card, CardHeader, CardBody, Form, FormLabel, FormInput } from 'elements';
 
-const Login = ({ history }) => {
+const Login = ({ history, setUser }) => {
     const [formIsSubmitted, setFormIsSubmitted] = useState(false);
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [values, handleChange] = useForm({ username: '', password: '' });
 
     useEffect(() => {
         const signIn = async () => {
+            const { username, password } = values;
+
             const res = await fetch('/api/login', {
                 method: 'POST',
                 headers: {
@@ -19,6 +22,7 @@ const Login = ({ history }) => {
             });
 
             if (res.status === 200) {
+                setUser({ username });
                 history.push('/account');
             }
         };
@@ -40,19 +44,14 @@ const Login = ({ history }) => {
                     }}
                 >
                     <FormLabel htmlFor='username'>Username:</FormLabel>
-                    <FormInput
-                        name='username'
-                        type='text'
-                        value={username}
-                        onChange={e => setUsername(e.target.value)}
-                    />
+                    <FormInput name='username' type='text' value={values.username} onChange={handleChange} />
 
                     <FormLabel htmlFor='password'>Password:</FormLabel>
                     <FormInput
                         name='password'
                         type='password'
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
+                        value={values.password}
+                        onChange={handleChange}
                     />
 
                     <Button type='submit'>Sign In</Button>
