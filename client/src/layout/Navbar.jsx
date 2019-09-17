@@ -47,6 +47,7 @@ const Nav = styled.nav`
     width: 100%;
     border-top-left-radius: ${rounded};
     border-top-right-radius: ${rounded};
+    z-index: 10;
 `;
 
 const NavContainer = styled(Container)`
