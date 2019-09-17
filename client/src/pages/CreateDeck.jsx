@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
+
+import { useForm } from 'hooks';
 import { Button, Card, CardBody, CardHeader, Form, FormInput, FormLabel } from 'elements';
 
 const CreateDeck = ({ history }) => {
     const [formIsSubmitted, setFormIsSubmitted] = useState(false);
-    const [deckName, setDeckName] = useState('');
+    const [values, handleChange] = useForm({ deckName: '' });
 
     useEffect(() => {
         const createNewDeck = async () => {
+            const { deckName } = values;
+
             const res = await fetch('/api/createdeck', {
                 method: 'POST',
                 headers: {
@@ -42,10 +46,11 @@ const CreateDeck = ({ history }) => {
                 >
                     <FormLabel>Deck Name</FormLabel>
                     <FormInput
+                        name='deckName'
                         type='text'
                         placeholder='What is your deck called?'
-                        value={deckName}
-                        onChange={e => setDeckName(e.target.value)}
+                        value={values.deckName}
+                        onChange={handleChange}
                     />
 
                     <Button type='submit'>Create Deck</Button>

@@ -1,32 +1,61 @@
 import React, { useState, useEffect } from 'react';
+
+import { useForm, useCheckbox } from 'hooks';
 import { Form, FormInput, FormLabel } from 'elements';
-import { Button, Card, CardHeader, CardBody, Modal } from 'elements';
+import { Button, Card, CardHeader, CardBody } from 'elements';
 
 const CardSearch = () => {
     const [formSubmitted, setFormSubmitted] = useState(false);
-    const [queryInput, setQueryInput] = useState([]);
-    const [whiteCheckbox, setWhiteCheckbox] = useState(false);
-    const [blueCheckbox, setBlueCheckbox] = useState(false);
-    const [redCheckbox, setRedCheckbox] = useState(false);
-    const [greenCheckbox, setGreenCheckbox] = useState(false);
-    const [blackCheckbox, setBlackCheckbox] = useState(false);
-    const [colorlessCheckbox, setColorlessCheckbox] = useState(false);
+    const [{ queryInput }, handleFormChange] = useForm({ queryInput: '' });
+    const [checkboxes, handleCheckboxChange] = useCheckbox({
+        whiteCheckbox: false,
+        blueCheckbox: false,
+        blackCheckbox: false,
+        redCheckbox: false,
+        greenCheckbox: false,
+        colorlessCheckbox: false,
+        cmc0Checkbox: false,
+        cmc1Checkbox: false,
+        cmc2Checkbox: false,
+        cmc3Checkbox: false,
+        cmc4Checkbox: false,
+        cmc5Checkbox: false,
+        cmc6Checkbox: false,
+        cmc7Checkbox: false,
+        cmc8Checkbox: false,
+        cmc9Checkbox: false,
+        cmc10Checkbox: false,
+    });
 
-    const [cmc0Checkbox, setCmc0Checkbox] = useState(false);
-    const [cmc1Checkbox, setCmc1Checkbox] = useState(false);
-    const [cmc2Checkbox, setCmc2Checkbox] = useState(false);
-    const [cmc3Checkbox, setCmc3Checkbox] = useState(false);
-    const [cmc4Checkbox, setCmc4Checkbox] = useState(false);
-    const [cmc5Checkbox, setCmc5Checkbox] = useState(false);
-    const [cmc6Checkbox, setCmc6Checkbox] = useState(false);
-    const [cmc7Checkbox, setCmc7Checkbox] = useState(false);
-    const [cmc8Checkbox, setCmc8Checkbox] = useState(false);
-    const [cmc9Checkbox, setCmc9Checkbox] = useState(false);
-    const [cmc10Checkbox, setCmc10Checkbox] = useState(false);
+    const checkboxItems = {
+        colors: [
+            { name: 'whiteCheckbox', label: 'White' },
+            { name: 'blueCheckbox', label: 'Blue' },
+            { name: 'blackCheckbox', label: 'Black' },
+            { name: 'redCheckbox', label: 'Red' },
+            { name: 'greenCheckbox', label: 'Green' },
+            { name: 'colorlessCheckbox', label: 'Colorless' },
+        ],
+
+        manaCosts: [
+            { name: 'cmc0Checkbox', label: '0' },
+            { name: 'cmc1Checkbox', label: '1' },
+            { name: 'cmc2Checkbox', label: '2' },
+            { name: 'cmc3Checkbox', label: '3' },
+            { name: 'cmc4Checkbox', label: '4' },
+            { name: 'cmc5Checkbox', label: '5' },
+            { name: 'cmc6Checkbox', label: '6' },
+            { name: 'cmc7Checkbox', label: '7' },
+            { name: 'cmc8Checkbox', label: '8' },
+            { name: 'cmc9Checkbox', label: '9' },
+            { name: 'cmc10Checkbox', label: '10+' },
+        ],
+    };
 
     useEffect(() => {
         let query;
-        let card = [];
+        const card = [];
+
         function apiCall() {
             console.log('in api call');
             fetch(`https://api.scryfall.com/cards/search?q=${query}`)
@@ -38,15 +67,27 @@ const CardSearch = () => {
                     let data = myJson.data;
 
                     for (let i = 0; i < data.length; i++) {
-                        card[i] = {
-                            id: i,
-                            name: data[i].name,
-                            color: data[i].colors,
-                            img_url: data[i].image_uris.normal,
-                            CMC: data[i].cmc,
-                            mana_cost: data[i].mana_cost,
-                            price: data[i].prices,
-                        };
+                        if (data[i].card_faces) {
+                            card[i] = {
+                                id: i,
+                                name: data[i].name,
+                                color: data[i].card_faces[0].colors,
+                                img_url: data[i].card_faces[0].image_uris.normal,
+                                CMC: data[i].card_faces[0].cmc,
+                                mana_cost: data[i].card_faces[0].mana_cost,
+                                price: data[i].prices,
+                            };
+                        } else {
+                            card[i] = {
+                                id: i,
+                                name: data[i].name,
+                                color: data[i].colors,
+                                img_url: data[i].image_uris.normal,
+                                CMC: data[i].cmc,
+                                mana_cost: data[i].mana_cost,
+                                price: data[i].prices,
+                            };
+                        }
                     }
                     console.log(card);
                     //data to save:
@@ -56,27 +97,47 @@ const CardSearch = () => {
         }
 
         const buildSearchQuery = () => {
+            const {
+                whiteCheckbox,
+                blueCheckbox,
+                blackCheckbox,
+                redCheckbox,
+                greenCheckbox,
+                colorlessCheckbox,
+                cmc0Checkbox,
+                cmc1Checkbox,
+                cmc2Checkbox,
+                cmc3Checkbox,
+                cmc4Checkbox,
+                cmc5Checkbox,
+                cmc6Checkbox,
+                cmc7Checkbox,
+                cmc8Checkbox,
+                cmc9Checkbox,
+                cmc10Checkbox,
+            } = checkboxes;
+
             //declare vairable
-            let white = whiteCheckbox ? 'w' : '';
-            let blue = blueCheckbox ? 'u' : '';
-            let red = redCheckbox ? 'r' : '';
-            let green = greenCheckbox ? 'g' : '';
-            let black = blackCheckbox ? 'b' : '';
-            let colorless = colorlessCheckbox ? 'c' : '';
+            const white = whiteCheckbox ? 'w' : '';
+            const blue = blueCheckbox ? 'u' : '';
+            const red = redCheckbox ? 'r' : '';
+            const green = greenCheckbox ? 'g' : '';
+            const black = blackCheckbox ? 'b' : '';
+            const colorless = colorlessCheckbox ? 'c' : '';
 
-            let cmc0 = '0';
-            let cmc1 = '1';
-            let cmc2 = '2';
-            let cmc3 = '3';
-            let cmc4 = '4';
-            let cmc5 = '5';
-            let cmc6 = '6';
-            let cmc7 = '7';
-            let cmc8 = '8';
-            let cmc9 = '9';
-            let cmc10 = '10';
+            const cmc0 = '0';
+            const cmc1 = '1';
+            const cmc2 = '2';
+            const cmc3 = '3';
+            const cmc4 = '4';
+            const cmc5 = '5';
+            const cmc6 = '6';
+            const cmc7 = '7';
+            const cmc8 = '8';
+            const cmc9 = '9';
+            const cmc10 = '10';
 
-            let search = queryInput;
+            const search = queryInput;
             let color = [];
             let CMC = [
                 'cmc!=0+',
@@ -113,11 +174,12 @@ const CardSearch = () => {
 
             function colorType(type) {
                 for (let i = 0; i < color.length; i++) {
-                    if (color[i] === type && type != '') {
+                    if (color[i] === type && type !== '') {
                         return;
                     }
                 }
-                if (type != '') {
+
+                if (type !== '') {
                     color.push(type);
                 } else {
                     for (let i = 0; i < color.length; i++) {
@@ -130,7 +192,7 @@ const CardSearch = () => {
 
             //function that you pass the CMC value through and adds it to the query.
             function cmcFilter(num, checked) {
-                if (CMC.indexOf(`cmc!=${num}+`) != -1 && !checked) {
+                if (CMC.indexOf(`cmc!=${num}+`) !== -1 && !checked) {
                     return;
                 }
                 if (checked) {
@@ -156,11 +218,11 @@ const CardSearch = () => {
             function queryText() {
                 color = color.join('');
                 CMC = CMC.join('');
-                if (color != '' && CMC.length != 78) {
+                if (color !== '' && CMC.length !== 78) {
                     query = `color:${color}+${CMC}${search}`;
-                } else if (CMC.length != 78) {
+                } else if (CMC.length !== 78) {
                     query = `${CMC}${search}`;
-                } else if (color != '') {
+                } else if (color !== '') {
                     query = `color:${color}+${search}`;
                 } //add in if search is empty
                 else {
@@ -179,129 +241,60 @@ const CardSearch = () => {
     }, [formSubmitted]);
 
     return (
-        <div>
-            <Form
-                onSubmit={e => {
-                    e.preventDefault();
-                    setFormSubmitted(true);
-                }}
-            >
-                <FormInput
-                    type='text'
-                    placeholder='search for card..'
-                    value={queryInput}
-                    onChange={e => setQueryInput(e.target.value)}
-                />
-                <Button type='submit'>Search</Button>
-            </Form>
-            <p>
-                <FormInput
-                    type='checkbox'
-                    value={whiteCheckbox}
-                    onChange={() => setWhiteCheckbox(!whiteCheckbox)}
-                />{' '}
-                white
-                <FormInput
-                    type='checkbox'
-                    value={blueCheckbox}
-                    onChange={() => setBlueCheckbox(!blueCheckbox)}
-                />{' '}
-                blue
-                <FormInput
-                    type='checkbox'
-                    value={redCheckbox}
-                    onChange={() => setRedCheckbox(!redCheckbox)}
-                />{' '}
-                red
-                <FormInput
-                    type='checkbox'
-                    value={greenCheckbox}
-                    onChange={() => setGreenCheckbox(!greenCheckbox)}
-                />
-                green
-                <FormInput
-                    type='checkbox'
-                    value={blackCheckbox}
-                    onChange={() => setBlackCheckbox(!blackCheckbox)}
-                />
-                black
-                <FormInput
-                    type='checkbox'
-                    value={colorlessCheckbox}
-                    onChange={() => setColorlessCheckbox(!colorlessCheckbox)}
-                />
-                Colorless
-            </p>
+        <Card>
+            <CardHeader as='h2'>Oracle Search</CardHeader>
+            <CardBody>
+                <Form
+                    onSubmit={e => {
+                        e.preventDefault();
 
-            <p>
-                <FormInput
-                    type='checkbox'
-                    value={cmc0Checkbox}
-                    onChange={() => setCmc0Checkbox(!cmc0Checkbox)}
-                />
-                0
-                <FormInput
-                    type='checkbox'
-                    value={cmc1Checkbox}
-                    onChange={() => setCmc1Checkbox(!cmc1Checkbox)}
-                />
-                1
-                <FormInput
-                    type='checkbox'
-                    value={cmc2Checkbox}
-                    onChange={() => setCmc2Checkbox(!cmc2Checkbox)}
-                />
-                2
-                <FormInput
-                    type='checkbox'
-                    value={cmc3Checkbox}
-                    onChange={() => setCmc3Checkbox(!cmc3Checkbox)}
-                />
-                3
-                <FormInput
-                    type='checkbox'
-                    value={cmc4Checkbox}
-                    onChange={() => setCmc4Checkbox(!cmc4Checkbox)}
-                />
-                4
-                <FormInput
-                    type='checkbox'
-                    value={cmc5Checkbox}
-                    onChange={() => setCmc5Checkbox(!cmc5Checkbox)}
-                />
-                5
-                <FormInput
-                    type='checkbox'
-                    value={cmc6Checkbox}
-                    onChange={() => setCmc6Checkbox(!cmc6Checkbox)}
-                />
-                6
-                <FormInput
-                    type='checkbox'
-                    value={cmc7Checkbox}
-                    onChange={() => setCmc7Checkbox(!cmc7Checkbox)}
-                />
-                7
-                <FormInput
-                    type='checkbox'
-                    value={cmc8Checkbox}
-                    onChange={() => setCmc8Checkbox(!cmc8Checkbox)}
-                />
-                8
-                <FormInput
-                    type='checkbox'
-                    value={cmc9Checkbox}
-                    onChange={() => setCmc9Checkbox(!cmc9Checkbox)}
-                />
-                9
-                <FormInput
-                    type='checkbox'
-                    value={cmc10Checkbox}
-                    onChange={() => setCmc10Checkbox(!cmc10Checkbox)}
-                />
-                10
-            </p>
-        </div>
+                        setFormSubmitted(true);
+                    }}
+                >
+                    <FormInput
+                        name='queryInput'
+                        type='text'
+                        placeholder='Search for card...'
+                        value={queryInput}
+                        onChange={handleFormChange}
+                    />
+
+                    <section>
+                        <h3>Color</h3>
+                        {checkboxItems.colors.map((color, index) => (
+                            <FormLabel key={index}>
+                                <FormInput
+                                    name={color.name}
+                                    type='checkbox'
+                                    checked={checkboxes[color.name]}
+                                    onChange={handleCheckboxChange}
+                                />
+
+                                {color.label}
+                            </FormLabel>
+                        ))}
+                    </section>
+
+                    <section>
+                        <h3>Converted Mana Cost</h3>
+                        {checkboxItems.manaCosts.map((cmc, index) => (
+                            <FormLabel key={index}>
+                                <FormInput
+                                    name={cmc.name}
+                                    type='checkbox'
+                                    checked={checkboxes[cmc.name]}
+                                    onChange={handleCheckboxChange}
+                                />
+
+                                {cmc.label}
+                            </FormLabel>
+                        ))}
+                    </section>
+
+                    <Button type='submit'>Search</Button>
+                </Form>
+            </CardBody>
+        </Card>
     );
 };
 
