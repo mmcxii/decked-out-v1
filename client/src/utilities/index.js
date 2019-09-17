@@ -1,8 +1,9 @@
-// Master file for Utilities
+//* Master file for Utilities
 
 // Components
 import Portal from './Portal';
 import Toggle from './Toggle';
+import PrivateRoute from './PrivateRoute';
 
 // Non-Component Utilities
 import colors from './colors';
@@ -17,4 +18,4 @@ export * from './design';
 export * from './position';
 
 // Main Export of all Utilities
-export { Portal, Toggle, colors, design, elevation, position, transition };
+export { PrivateRoute, Portal, Toggle, colors, design, elevation, position, transition };

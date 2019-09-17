@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { useForm } from 'hooks';
 import { Button, Card, CardHeader, CardBody, Form, FormGroupWithIcon, FormInput, FormLabel } from 'elements';
 
-const Login = ({ history, setUser }) => {
+const Login = ({ history, location, setUser }) => {
     const [formIsSubmitted, setFormIsSubmitted] = useState(false);
 
     const [values, handleChange] = useForm({ username: '', password: '' });
@@ -12,6 +12,7 @@ const Login = ({ history, setUser }) => {
     useEffect(() => {
         const signIn = async () => {
             const { username, password } = values;
+            const { from } = location.state || { from: null };
 
             const res = await fetch('/api/login', {
                 method: 'POST',
@@ -23,7 +24,16 @@ const Login = ({ history, setUser }) => {
 
             if (res.status === 200) {
                 setUser({ username });
-                history.push('/account');
+
+                // If the user attempted to access a protected route
+                // redirect them after they sign in
+                if (from) {
+                    return history.push(from);
+                }
+
+                // If the use clicked the sign in button
+                // return them to the page they were on
+                return history.goBack();
             }
         };
 
