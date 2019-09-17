@@ -6,7 +6,7 @@ import { Button, Card, CardHeader, CardBody } from 'elements';
 
 const CardSearch = () => {
     const [formSubmitted, setFormSubmitted] = useState(false);
-    const [{ queryInput }, handleFormChange] = useForm({ queryInput: '' });
+    const [values, handleFormChange] = useForm({ queryInput: '' });
     const [checkboxes, handleCheckboxChange] = useCheckbox({
         whiteCheckbox: false,
         blueCheckbox: false,
@@ -116,6 +116,8 @@ const CardSearch = () => {
                 cmc9Checkbox,
                 cmc10Checkbox,
             } = checkboxes;
+
+            const { queryInput } = values;
 
             //declare vairable
             const white = whiteCheckbox ? 'w' : '';
@@ -255,7 +257,7 @@ const CardSearch = () => {
                         name='queryInput'
                         type='text'
                         placeholder='Search for card...'
-                        value={queryInput}
+                        value={values.queryInput}
                         onChange={handleFormChange}
                     />
 
