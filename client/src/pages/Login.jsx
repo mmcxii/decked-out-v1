@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import { useForm } from 'hooks';
-import { Button, Card, CardHeader, CardBody, Form, FormLabel, FormInput } from 'elements';
+import { Button, Card, CardHeader, CardBody, Form, FormGroupWithIcon, FormInput, FormLabel } from 'elements';
 
 const Login = ({ history, setUser }) => {
     const [formIsSubmitted, setFormIsSubmitted] = useState(false);
@@ -43,16 +43,27 @@ const Login = ({ history, setUser }) => {
                         setFormIsSubmitted(true);
                     }}
                 >
-                    <FormLabel htmlFor='username'>Username:</FormLabel>
-                    <FormInput name='username' type='text' value={values.username} onChange={handleChange} />
+                    <FormGroupWithIcon>
+                        <FormLabel htmlFor='username'>Username</FormLabel>
+                        <FormInput
+                            name='username'
+                            type='text'
+                            value={values.username}
+                            onChange={handleChange}
+                        />
+                        <i className='fad fa-user'></i>
+                    </FormGroupWithIcon>
 
-                    <FormLabel htmlFor='password'>Password:</FormLabel>
-                    <FormInput
-                        name='password'
-                        type='password'
-                        value={values.password}
-                        onChange={handleChange}
-                    />
+                    <FormGroupWithIcon>
+                        <FormLabel htmlFor='password'>Password</FormLabel>
+                        <FormInput
+                            name='password'
+                            type='password'
+                            value={values.password}
+                            onChange={handleChange}
+                        />
+                        <i className='fad fa-lock-alt'></i>
+                    </FormGroupWithIcon>
 
                     <Button type='submit'>Sign In</Button>
                 </Form>
