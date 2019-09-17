@@ -41,6 +41,5 @@ const SubTitle = styled.p`
 `;
 
 const SignIn = styled(ButtonLink)`
-    /* text-decoration: none; */
     color: ${dark};
 `;
