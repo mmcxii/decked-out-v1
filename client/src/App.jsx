@@ -8,16 +8,10 @@ import styled from 'styled-components';
 import { light, spacing } from 'utilities';
 
 //* Layout Elements
-import Header from './layout/Header';
-import Footer from './layout/Footer';
+import { Footer, Header } from 'layout';
 
 //* Pages
-import Account from 'pages/Account';
-import CardSearch from 'pages/CardSearch';
-import CreateDeck from 'pages/CreateDeck';
-import Deck from 'pages/Deck';
-import Lifetracker from 'pages/Lifetracker/Lifetracker';
-import Login from 'pages/Login';
+import { Account, CardSearch, CreateDeck, Deck, Lifetracker, Login } from 'pages';
 
 //* Global Stylesheet
 import './Global.scss';
@@ -37,12 +31,7 @@ const App = () => {
                 <PageWrapper>
                     <Switch>
                         <>
-                            {!user ? (
-                                <>
-                                    <Redirect to='/login' />
-                                    <Route path='/login' render={props => <Login setUser={setUser} />} />
-                                </>
-                            ) : (
+                            {user ? (
                                 <>
                                     <Route exact path='/' render={props => <Lifetracker user={user} />} />
                                     <Route exact path='/account' render={props => <Account user={user} />} />
@@ -50,6 +39,11 @@ const App = () => {
                                     <Route path='/login' render={props => <Login setUser={setUser} />} />
                                     <Route path='/createdeck' component={CreateDeck} />
                                     <Route path='/cardsearch' component={CardSearch} />
+                                </>
+                            ) : (
+                                <>
+                                    <Redirect to='/login' />
+                                    <Route path='/login' render={props => <Login setUser={setUser} />} />
                                 </>
                             )}
                         </>
