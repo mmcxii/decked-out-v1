@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, FormInput, FormLabel } from 'elements';
 import { Button, Card, CardHeader, CardBody, Modal } from 'elements';
-import { CheckboxInput, StyledCheckbox, CheckboxContainer } from 'elements';
+import  {CheckboxInput} from 'elements/CheckboxInput';
 
 
 
@@ -189,7 +189,7 @@ const Cardsearch = () => {
                 <Button type='submit'>Search</Button>
             </Form>
             <p>
-                <CheckboxInput type='checkbox' value={whiteCheckbox} onChange={() => setWhiteCheckbox(!whiteCheckbox)} /> white
+            Sort by Color:   <CheckboxInput type='checkbox' value={whiteCheckbox} onChange={() => setWhiteCheckbox(!whiteCheckbox)} /> white
             <CheckboxInput type='checkbox' value={blueCheckbox} onChange={() => setBlueCheckbox(!blueCheckbox)} /> blue
             <CheckboxInput type='checkbox' value={redCheckbox} onChange={() => setRedCheckbox(!redCheckbox)} /> red
             <CheckboxInput type='checkbox' value={greenCheckbox} onChange={() => setGreenCheckbox(!greenCheckbox)} />green
@@ -197,8 +197,8 @@ const Cardsearch = () => {
             <CheckboxInput type='checkbox' value={colorlessCheckbox} onChange={() => setColorlessCheckbox(!colorlessCheckbox)} />Colorless
             </p>
 
-            <p>
-                <CheckboxInput type='checkbox' value={cmc0Checkbox} onChange={() => setCmc0Checkbox(!cmc0Checkbox)} />0
+            <p> 
+             Sort by Converted Mana Cost:   <CheckboxInput type='checkbox' value={cmc0Checkbox} onChange={() => setCmc0Checkbox(!cmc0Checkbox)} />0
                 <CheckboxInput type='checkbox' value={cmc1Checkbox} onChange={() => setCmc1Checkbox(!cmc1Checkbox)} />1
                 <CheckboxInput type='checkbox' value={cmc2Checkbox} onChange={() => setCmc2Checkbox(!cmc2Checkbox)} />2
                 <CheckboxInput type='checkbox' value={cmc3Checkbox} onChange={() => setCmc3Checkbox(!cmc3Checkbox)} />3
@@ -216,3 +216,4 @@ const Cardsearch = () => {
 };
 
 export default Cardsearch;
+
