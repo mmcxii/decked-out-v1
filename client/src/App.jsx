@@ -1,11 +1,11 @@
 //* Packages
 import React, { useState } from 'react';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Normalize from 'react-normalize';
 import styled from 'styled-components';
 
 //* Utilities
-import { light, spacing } from 'utilities';
+import { light, spacing, PrivateRoute } from 'utilities';
 
 //* Layout Elements
 import { Container, Footer, Header, Navbar } from 'layout';
@@ -35,21 +35,18 @@ const App = () => {
                 <PageWrapper>
                     <Switch>
                         <>
-                            {user ? (
-                                <>
-                                    <Route exact path='/' render={() => <Lifetracker user={user} />} />
-                                    <Route exact path='/account' render={() => <Account user={user} />} />
-                                    <Route path='/account/:deckname' component={Deck} />
-                                    <Route path='/login' render={() => <Login setUser={setUser} />} />
-                                    <Route path='/createdeck' component={CreateDeck} />
-                                    <Route path='/cardsearch' component={CardSearch} />
-                                </>
-                            ) : (
-                                <>
-                                    <Redirect from='/*' to='/login' />
-                                    <Route path='/login' render={() => <Login setUser={setUser} />} />
-                                </>
-                            )}
+                            <Route exact path='/' render={() => <Lifetracker user={user} />} />
+                            <PrivateRoute
+                                isLoggedIn={user}
+                                exact
+                                path='/account'
+                                component={Account}
+                                user={user}
+                            />
+                            <Route path='/account/:deckname' component={Deck} />
+                            <Route path='/login' render={() => <Login setUser={setUser} />} />
+                            <Route path='/createdeck' component={CreateDeck} />
+                            <Route path='/cardsearch' component={CardSearch} />
                         </>
                     </Switch>
                 </PageWrapper>
