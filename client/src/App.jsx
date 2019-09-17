@@ -19,7 +19,7 @@ import './Global.scss';
 const App = () => {
     //* App Level State:
     //* User Object, stores users name when signed in from '/login'
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState({ username: 'nicholas' });
 
     return (
         <BrowserRouter>
@@ -35,7 +35,7 @@ const App = () => {
                                 <>
                                     <Route exact path='/' render={props => <Lifetracker user={user} />} />
                                     <Route exact path='/account' render={props => <Account user={user} />} />
-                                    <Route path='/account/:deckName' component={Deck} />
+                                    <Route path='/account/:deckname' component={Deck} />
                                     <Route path='/login' render={props => <Login setUser={setUser} />} />
                                     <Route path='/createdeck' component={CreateDeck} />
                                     <Route path='/cardsearch' component={CardSearch} />

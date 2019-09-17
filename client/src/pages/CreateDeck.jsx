@@ -18,7 +18,7 @@ const CreateDeck = ({ history }) => {
             });
 
             if (res.status === 200) {
-                history.push('/account');
+                history.push(`/account/${deckName.split(' ').join('-')}`);
             } else {
                 console.log(res.status);
             }
@@ -30,30 +30,28 @@ const CreateDeck = ({ history }) => {
     }, [formIsSubmitted]);
 
     return (
-        <>
-            <Card>
-                <CardHeader>Create a New Deck</CardHeader>
-                <CardBody>
-                    <Form
-                        onSubmit={e => {
-                            e.preventDefault();
+        <Card>
+            <CardHeader>Create a New Deck</CardHeader>
+            <CardBody>
+                <Form
+                    onSubmit={e => {
+                        e.preventDefault();
 
-                            setFormIsSubmitted(true);
-                        }}
-                    >
-                        <FormLabel>Deck Name</FormLabel>
-                        <FormInput
-                            type='text'
-                            placeholder='What is your deck called?'
-                            value={deckName}
-                            onChange={e => setDeckName(e.target.value)}
-                        />
+                        setFormIsSubmitted(true);
+                    }}
+                >
+                    <FormLabel>Deck Name</FormLabel>
+                    <FormInput
+                        type='text'
+                        placeholder='What is your deck called?'
+                        value={deckName}
+                        onChange={e => setDeckName(e.target.value)}
+                    />
 
-                        <Button type='submit'>Create Deck</Button>
-                    </Form>
-                </CardBody>
-            </Card>
-        </>
+                    <Button type='submit'>Create Deck</Button>
+                </Form>
+            </CardBody>
+        </Card>
     );
 };
 

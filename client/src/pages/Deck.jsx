@@ -2,9 +2,11 @@ import React from 'react';
 
 const Deck = ({
     match: {
-        params: { deckName },
+        params: { deckname },
     },
 }) => {
+    const deckName = deckname.split('-').join(' ');
+
     return <p>{deckName}</p>;
 };
 
