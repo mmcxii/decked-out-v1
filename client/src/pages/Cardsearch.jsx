@@ -2,12 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Form, FormInput, FormLabel } from 'elements';
 import { Button, Card, CardHeader, CardBody, Modal } from 'elements';
 
-
-
-
-const Cardsearch = () => {
+const CardSearch = () => {
     const [formSubmitted, setFormSubmitted] = useState(false);
-    const [queryInput, setQueryInput] = useState([]);;
+    const [queryInput, setQueryInput] = useState([]);
     const [whiteCheckbox, setWhiteCheckbox] = useState(false);
     const [blueCheckbox, setBlueCheckbox] = useState(false);
     const [redCheckbox, setRedCheckbox] = useState(false);
@@ -27,39 +24,35 @@ const Cardsearch = () => {
     const [cmc9Checkbox, setCmc9Checkbox] = useState(false);
     const [cmc10Checkbox, setCmc10Checkbox] = useState(false);
 
-
-
     useEffect(() => {
-
-
         let query;
         let card = [];
         function apiCall() {
             console.log('in api call');
             fetch(`https://api.scryfall.com/cards/search?q=${query}`)
-                .then(function (response) {
+                .then(function(response) {
                     return response.json();
                 })
-                .then(function (myJson) {
+                .then(function(myJson) {
                     console.log(myJson.data);
                     let data = myJson.data;
-    
-                    for(let i = 0; i < data.length; i++){
+
+                    for (let i = 0; i < data.length; i++) {
                         card[i] = {
-                            'id': i,
-                            'name': data[i].name,
-                            'color': data[i].colors,
-                            'img_url': data[i].image_uris.normal,
-                            'CMC': data[i].cmc,
-                            'mana_cost': data[i].mana_cost,
-                            "price": data[i].prices
-                        }
+                            id: i,
+                            name: data[i].name,
+                            color: data[i].colors,
+                            img_url: data[i].image_uris.normal,
+                            CMC: data[i].cmc,
+                            mana_cost: data[i].mana_cost,
+                            price: data[i].prices,
+                        };
                     }
                     console.log(card);
                     //data to save:
-                    //CMC, colors, image_url, mana_cost, name, prices, 
+                    //CMC, colors, image_url, mana_cost, name, prices,
                     setFormSubmitted(false);
-                })
+                });
         }
 
         const buildSearchQuery = () => {
@@ -85,7 +78,19 @@ const Cardsearch = () => {
 
             let search = queryInput;
             let color = [];
-            let CMC = ['cmc!=0+', 'cmc!=1+', 'cmc!=2+', 'cmc!=3+', 'cmc!=4+', 'cmc!=5+', 'cmc!=6+', 'cmc!=7+', 'cmc!=8+', 'cmc!=9+', 'cmc!=10+'];
+            let CMC = [
+                'cmc!=0+',
+                'cmc!=1+',
+                'cmc!=2+',
+                'cmc!=3+',
+                'cmc!=4+',
+                'cmc!=5+',
+                'cmc!=6+',
+                'cmc!=7+',
+                'cmc!=8+',
+                'cmc!=9+',
+                'cmc!=10+',
+            ];
 
             colorType(white);
             colorType(blue);
@@ -121,9 +126,7 @@ const Cardsearch = () => {
                         }
                     }
                 }
-
             }
-
 
             //function that you pass the CMC value through and adds it to the query.
             function cmcFilter(num, checked) {
@@ -154,64 +157,152 @@ const Cardsearch = () => {
                 color = color.join('');
                 CMC = CMC.join('');
                 if (color != '' && CMC.length != 78) {
-                    query = `color:${color}+${CMC}${search}`
-                }
-                else if (CMC.length != 78) {
-                    query = `${CMC}${search}`
+                    query = `color:${color}+${CMC}${search}`;
+                } else if (CMC.length != 78) {
+                    query = `${CMC}${search}`;
                 } else if (color != '') {
                     query = `color:${color}+${search}`;
-                }//add in if search is empty
+                } //add in if search is empty
                 else {
-                    query = `${search}`
+                    query = `${search}`;
                 }
-
             }
             queryText();
             console.log(query);
             apiCall();
             makeArray();
-        }
-
+        };
 
         if (formSubmitted) {
             buildSearchQuery();
         }
-    }, [formSubmitted])
+    }, [formSubmitted]);
 
     return (
         <div>
-            <Form onSubmit={e => {
-                e.preventDefault();
-                setFormSubmitted(true);
-            }}>
-                <FormInput type='text' placeholder='search for card..' value={queryInput} onChange={e => setQueryInput(e.target.value)} />
+            <Form
+                onSubmit={e => {
+                    e.preventDefault();
+                    setFormSubmitted(true);
+                }}
+            >
+                <FormInput
+                    type='text'
+                    placeholder='search for card..'
+                    value={queryInput}
+                    onChange={e => setQueryInput(e.target.value)}
+                />
                 <Button type='submit'>Search</Button>
             </Form>
             <p>
-                <FormInput type='checkbox' value={whiteCheckbox} onChange={() => setWhiteCheckbox(!whiteCheckbox)} /> white
-            <FormInput type='checkbox' value={blueCheckbox} onChange={() => setBlueCheckbox(!blueCheckbox)} /> blue
-            <FormInput type='checkbox' value={redCheckbox} onChange={() => setRedCheckbox(!redCheckbox)} /> red
-            <FormInput type='checkbox' value={greenCheckbox} onChange={() => setGreenCheckbox(!greenCheckbox)} />green
-            <FormInput type='checkbox' value={blackCheckbox} onChange={() => setBlackCheckbox(!blackCheckbox)} />black
-            <FormInput type='checkbox' value={colorlessCheckbox} onChange={() => setColorlessCheckbox(!colorlessCheckbox)} />Colorless
+                <FormInput
+                    type='checkbox'
+                    value={whiteCheckbox}
+                    onChange={() => setWhiteCheckbox(!whiteCheckbox)}
+                />{' '}
+                white
+                <FormInput
+                    type='checkbox'
+                    value={blueCheckbox}
+                    onChange={() => setBlueCheckbox(!blueCheckbox)}
+                />{' '}
+                blue
+                <FormInput
+                    type='checkbox'
+                    value={redCheckbox}
+                    onChange={() => setRedCheckbox(!redCheckbox)}
+                />{' '}
+                red
+                <FormInput
+                    type='checkbox'
+                    value={greenCheckbox}
+                    onChange={() => setGreenCheckbox(!greenCheckbox)}
+                />
+                green
+                <FormInput
+                    type='checkbox'
+                    value={blackCheckbox}
+                    onChange={() => setBlackCheckbox(!blackCheckbox)}
+                />
+                black
+                <FormInput
+                    type='checkbox'
+                    value={colorlessCheckbox}
+                    onChange={() => setColorlessCheckbox(!colorlessCheckbox)}
+                />
+                Colorless
             </p>
 
             <p>
-                <FormInput type='checkbox' value={cmc0Checkbox} onChange={() => setCmc0Checkbox(!cmc0Checkbox)} />0
-                <FormInput type='checkbox' value={cmc1Checkbox} onChange={() => setCmc1Checkbox(!cmc1Checkbox)} />1
-                <FormInput type='checkbox' value={cmc2Checkbox} onChange={() => setCmc2Checkbox(!cmc2Checkbox)} />2
-                <FormInput type='checkbox' value={cmc3Checkbox} onChange={() => setCmc3Checkbox(!cmc3Checkbox)} />3
-                <FormInput type='checkbox' value={cmc4Checkbox} onChange={() => setCmc4Checkbox(!cmc4Checkbox)} />4
-                <FormInput type='checkbox' value={cmc5Checkbox} onChange={() => setCmc5Checkbox(!cmc5Checkbox)} />5
-                <FormInput type='checkbox' value={cmc6Checkbox} onChange={() => setCmc6Checkbox(!cmc6Checkbox)} />6
-                <FormInput type='checkbox' value={cmc7Checkbox} onChange={() => setCmc7Checkbox(!cmc7Checkbox)} />7
-                <FormInput type='checkbox' value={cmc8Checkbox} onChange={() => setCmc8Checkbox(!cmc8Checkbox)} />8
-                <FormInput type='checkbox' value={cmc9Checkbox} onChange={() => setCmc9Checkbox(!cmc9Checkbox)} />9
-                <FormInput type='checkbox' value={cmc10Checkbox} onChange={() => setCmc10Checkbox(!cmc10Checkbox)} />10
-
+                <FormInput
+                    type='checkbox'
+                    value={cmc0Checkbox}
+                    onChange={() => setCmc0Checkbox(!cmc0Checkbox)}
+                />
+                0
+                <FormInput
+                    type='checkbox'
+                    value={cmc1Checkbox}
+                    onChange={() => setCmc1Checkbox(!cmc1Checkbox)}
+                />
+                1
+                <FormInput
+                    type='checkbox'
+                    value={cmc2Checkbox}
+                    onChange={() => setCmc2Checkbox(!cmc2Checkbox)}
+                />
+                2
+                <FormInput
+                    type='checkbox'
+                    value={cmc3Checkbox}
+                    onChange={() => setCmc3Checkbox(!cmc3Checkbox)}
+                />
+                3
+                <FormInput
+                    type='checkbox'
+                    value={cmc4Checkbox}
+                    onChange={() => setCmc4Checkbox(!cmc4Checkbox)}
+                />
+                4
+                <FormInput
+                    type='checkbox'
+                    value={cmc5Checkbox}
+                    onChange={() => setCmc5Checkbox(!cmc5Checkbox)}
+                />
+                5
+                <FormInput
+                    type='checkbox'
+                    value={cmc6Checkbox}
+                    onChange={() => setCmc6Checkbox(!cmc6Checkbox)}
+                />
+                6
+                <FormInput
+                    type='checkbox'
+                    value={cmc7Checkbox}
+                    onChange={() => setCmc7Checkbox(!cmc7Checkbox)}
+                />
+                7
+                <FormInput
+                    type='checkbox'
+                    value={cmc8Checkbox}
+                    onChange={() => setCmc8Checkbox(!cmc8Checkbox)}
+                />
+                8
+                <FormInput
+                    type='checkbox'
+                    value={cmc9Checkbox}
+                    onChange={() => setCmc9Checkbox(!cmc9Checkbox)}
+                />
+                9
+                <FormInput
+                    type='checkbox'
+                    value={cmc10Checkbox}
+                    onChange={() => setCmc10Checkbox(!cmc10Checkbox)}
+                />
+                10
             </p>
         </div>
-    )
+    );
 };
 
-export default Cardsearch;
+export default CardSearch;
