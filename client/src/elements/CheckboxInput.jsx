@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { spacing } from 'utilities';
 
 const CheckboxInput = styled.input.attrs({ type: 'checkbox' })`
   border: 0;
@@ -7,21 +8,21 @@ const CheckboxInput = styled.input.attrs({ type: 'checkbox' })`
   overflow: hidden;
   position: relative;
   white-space: nowrap;
-  margin: 5px;
+  margin: ${spacing.xs};
 `;
 
-// const StyledCheckbox = styled.div`
-//   display: inline-block;
-//   width: 16px;
-//   height: 16px;
-//   background: ${props => props.checked ? 'salmon' : 'papayawhip'};
-//   border-radius: 3px;
-//   transition: all 150ms;
-// `
+const StyledCheckbox = styled.div`
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: ${props => props.checked ? 'salmon' : 'papayawhip'};
+  border-radius: 3px;
+  transition: all 150ms;
+`
 
 // const CheckboxContainer = styled.div`
 //   display: inline-block;
 //   vertical-align: middle;
 // `;
 
-export { CheckboxInput };
+export { CheckboxInput , StyledCheckbox };

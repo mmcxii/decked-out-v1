@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, FormInput, FormLabel } from 'elements';
 import { Button, Card, CardHeader, CardBody, Modal } from 'elements';
-import  {CheckboxInput} from 'elements/CheckboxInput';
+import  {CheckboxInput, StyledCheckbox} from 'elements';
 
 
 
@@ -189,26 +189,26 @@ const Cardsearch = () => {
                 <Button type='submit'>Search</Button>
             </Form>
             <p>
-            Sort by Color:   <CheckboxInput type='checkbox' value={whiteCheckbox} onChange={() => setWhiteCheckbox(!whiteCheckbox)} /> white
-            <CheckboxInput type='checkbox' value={blueCheckbox} onChange={() => setBlueCheckbox(!blueCheckbox)} /> blue
-            <CheckboxInput type='checkbox' value={redCheckbox} onChange={() => setRedCheckbox(!redCheckbox)} /> red
-            <CheckboxInput type='checkbox' value={greenCheckbox} onChange={() => setGreenCheckbox(!greenCheckbox)} />green
-            <CheckboxInput type='checkbox' value={blackCheckbox} onChange={() => setBlackCheckbox(!blackCheckbox)} />black
-            <CheckboxInput type='checkbox' value={colorlessCheckbox} onChange={() => setColorlessCheckbox(!colorlessCheckbox)} />Colorless
+            Sort by Color:   <CheckboxInput value={whiteCheckbox} onChange={() => setWhiteCheckbox(!whiteCheckbox)} /> white
+            <CheckboxInput value={blueCheckbox} onChange={() => setBlueCheckbox(!blueCheckbox)} /> blue
+            <CheckboxInput value={redCheckbox} onChange={() => setRedCheckbox(!redCheckbox)} /> red
+            <CheckboxInput value={greenCheckbox} onChange={() => setGreenCheckbox(!greenCheckbox)} />green
+            <CheckboxInput value={blackCheckbox} onChange={() => setBlackCheckbox(!blackCheckbox)} />black
+            <CheckboxInput value={colorlessCheckbox} onChange={() => setColorlessCheckbox(!colorlessCheckbox)} />Colorless
             </p>
 
             <p> 
-             Sort by Converted Mana Cost:   <CheckboxInput type='checkbox' value={cmc0Checkbox} onChange={() => setCmc0Checkbox(!cmc0Checkbox)} />0
-                <CheckboxInput type='checkbox' value={cmc1Checkbox} onChange={() => setCmc1Checkbox(!cmc1Checkbox)} />1
-                <CheckboxInput type='checkbox' value={cmc2Checkbox} onChange={() => setCmc2Checkbox(!cmc2Checkbox)} />2
-                <CheckboxInput type='checkbox' value={cmc3Checkbox} onChange={() => setCmc3Checkbox(!cmc3Checkbox)} />3
-                <CheckboxInput type='checkbox' value={cmc4Checkbox} onChange={() => setCmc4Checkbox(!cmc4Checkbox)} />4
-                <CheckboxInput type='checkbox' value={cmc5Checkbox} onChange={() => setCmc5Checkbox(!cmc5Checkbox)} />5
-                <CheckboxInput type='checkbox' value={cmc6Checkbox} onChange={() => setCmc6Checkbox(!cmc6Checkbox)} />6
-                <CheckboxInput type='checkbox' value={cmc7Checkbox} onChange={() => setCmc7Checkbox(!cmc7Checkbox)} />7
-                <CheckboxInput type='checkbox' value={cmc8Checkbox} onChange={() => setCmc8Checkbox(!cmc8Checkbox)} />8
-                <CheckboxInput type='checkbox' value={cmc9Checkbox} onChange={() => setCmc9Checkbox(!cmc9Checkbox)} />9
-                <CheckboxInput type='checkbox' value={cmc10Checkbox} onChange={() => setCmc10Checkbox(!cmc10Checkbox)} />10
+             Sort by Converted Mana Cost:   <CheckboxInput value={cmc0Checkbox} onChange={() => setCmc0Checkbox(!cmc0Checkbox)} />0
+                <CheckboxInput  value={cmc1Checkbox} onChange={() => setCmc1Checkbox(!cmc1Checkbox)} />1
+                <CheckboxInput value={cmc2Checkbox} onChange={() => setCmc2Checkbox(!cmc2Checkbox)} />2
+                <CheckboxInput value={cmc3Checkbox} onChange={() => setCmc3Checkbox(!cmc3Checkbox)} />3
+                <CheckboxInput value={cmc4Checkbox} onChange={() => setCmc4Checkbox(!cmc4Checkbox)} />4
+                <CheckboxInput value={cmc5Checkbox} onChange={() => setCmc5Checkbox(!cmc5Checkbox)} />5
+                <CheckboxInput value={cmc6Checkbox} onChange={() => setCmc6Checkbox(!cmc6Checkbox)} />6
+                <CheckboxInput value={cmc7Checkbox} onChange={() => setCmc7Checkbox(!cmc7Checkbox)} />7
+                <CheckboxInput value={cmc8Checkbox} onChange={() => setCmc8Checkbox(!cmc8Checkbox)} />8
+                <CheckboxInput value={cmc9Checkbox} onChange={() => setCmc9Checkbox(!cmc9Checkbox)} />9
+                <CheckboxInput value={cmc10Checkbox} onChange={() => setCmc10Checkbox(!cmc10Checkbox)} />10
 
             </p>
         </div>
@@ -216,4 +216,3 @@ const Cardsearch = () => {
 };
 
 export default Cardsearch;
-
