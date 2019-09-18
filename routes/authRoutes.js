@@ -93,7 +93,8 @@ router.put("/api/updatecollection", checkAuthentication, (req, res) => {
 });
 
 router.delete("/api/deletedeck", checkAuthentication, (req, res) => {
-  const { username, deckName } = req.body;
+  const { deckName } = req.body;
+  const { username } = req.user.dataValues;
 
 
   s3Method.deleteDeckList(username, deckName, data => {
