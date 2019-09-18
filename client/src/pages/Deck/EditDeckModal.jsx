@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { CardBody, CardHeader, Modal } from 'elements';
+import { CardBody, CardHeader, CardSearchForm, Modal } from 'elements';
 
 const EditDeckModal = ({ isToggled, setToggle, deckName }) => {
+    const [searchResults, setSearchResults] = useState();
     return (
         <Modal isToggled={isToggled} setToggle={setToggle}>
             <CardHeader>{deckName}</CardHeader>
-            <CardBody></CardBody>
+            <CardBody>
+                <CardSearchForm />
+            </CardBody>
         </Modal>
     );
 };

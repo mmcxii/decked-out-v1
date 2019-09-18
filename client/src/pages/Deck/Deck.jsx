@@ -10,7 +10,7 @@ const Deck = ({
     },
 }) => {
     const deckName = deckname.split('-').join(' ');
-    const [deckList, setDecklist] = useState({ main: [], sideboard: [] });
+    const [deckList, setDeckList] = useState({ main: [], sideboard: [] });
 
     useEffect(() => {
         const getDeck = async () => {
@@ -24,7 +24,7 @@ const Deck = ({
 
             const data = await res.json();
 
-            setDecklist(data);
+            setDeckList(data);
         };
 
         getDeck();
@@ -57,7 +57,13 @@ const Deck = ({
                         <EditDeckButton onClick={() => setToggle(true)}>Edit</EditDeckButton>
 
                         {isToggled && (
-                            <EditDeckModal deckName={deckName} isToggled={isToggled} setToggle={setToggle} />
+                            <EditDeckModal
+                                deckName={deckName}
+                                deckList={deckList}
+                                setDeckList={setDeckList}
+                                isToggled={isToggled}
+                                setToggle={setToggle}
+                            />
                         )}
                     </>
                 )}
