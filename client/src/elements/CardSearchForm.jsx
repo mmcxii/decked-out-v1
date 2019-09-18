@@ -4,8 +4,7 @@ import { useCheckbox, useForm } from 'hooks';
 import { Toggle } from 'utilities';
 import { Button, CheckboxInput, Form, FormInput, FormLabel } from 'elements';
 
-<<<<<<< HEAD
-const CardSearchForm = () => {
+const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [values, handleFormChange] = useForm({ queryInput: '' });
     const [checkboxes, handleCheckboxChange] = useCheckbox({
@@ -27,30 +26,6 @@ const CardSearchForm = () => {
         cmc9Checkbox: false,
         cmc10Checkbox: false,
     });
-=======
-const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const [values, handleFormChange] = useForm({ queryInput: "" });
-  const [checkboxes, handleCheckboxChange] = useCheckbox({
-    whiteCheckbox: false,
-    blueCheckbox: false,
-    blackCheckbox: false,
-    redCheckbox: false,
-    greenCheckbox: false,
-    colorlessCheckbox: false,
-    cmc0Checkbox: false,
-    cmc1Checkbox: false,
-    cmc2Checkbox: false,
-    cmc3Checkbox: false,
-    cmc4Checkbox: false,
-    cmc5Checkbox: false,
-    cmc6Checkbox: false,
-    cmc7Checkbox: false,
-    cmc8Checkbox: false,
-    cmc9Checkbox: false,
-    cmc10Checkbox: false
-  });
->>>>>>> 2300975d4aed7f46148aac5e939a0f5192bd6d59
 
     const checkboxItems = {
         colors: [
@@ -91,50 +66,10 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
                     console.log(myJson.data);
                     let data = myJson.data;
 
-<<<<<<< HEAD
                     for (let i = 0; i < data.length; i++) {
-                        // const cardFaces = data[i].card_faces[0].image_uris;
-                        // const cardImg = data[i].image_uris;
-                        // const card = {};
-                        // //add name
-                        // if (data[i].name) {
-                        //     card.name = data[i].name;
-                        // }
-                        // //add image
-                        // if (cardFaces) {
-                        //     if (cardFaces.normal) {
-                        //         card.img_url = cardFaces.normal;
-                        //     } else if (cardFaces.samll) {
-                        //         card.img_url = cardFaces.small;
-                        //     } else if (cardFaces.large) {
-                        //         card.img_url = cardFaces.large;
-                        //     } else if (cardFaces.png) {
-                        //         card.img_url = cardFaces.png;
-                        //     } else if (cardFaces.border_crop) {
-                        //         card.img_url = cardFaces.border_crop;
-                        //     } else if (cardFaces.art_crop) {
-                        //         card.img_url = cardFaces.art_crop;
-                        //     }
-                        // }
-                        // if (cardImg) {
-                        //     if (cardImg.normal) {
-                        //         card.img_url = cardImg.normal;
-                        //     } else if (cardImg.samll) {
-                        //         card.img_url = cardImg.small;
-                        //     } else if (cardImg.large) {
-                        //         card.img_url = cardImg.large;
-                        //     } else if (cardImg.png) {
-                        //         card.img_url = cardImg.png;
-                        //     } else if (cardImg.border_crop) {
-                        //         card.img_url = cardImg.border_crop;
-                        //     } else if (cardImg.art_crop) {
-                        //         card.img_url = cardImg.art_crop;
-                        //     }
-                        // }
-
                         if (data[i].card_faces) {
                             card[i] = {
-                                id: i,
+                                id: data[i].id,
                                 name: data[i].name,
                                 color: data[i].card_faces[0].colors,
                                 img_url: data[i].card_faces[0].image_uris.normal,
@@ -147,7 +82,7 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
                                 id: i,
                                 name: data[i].name,
                                 color: data[i].colors,
-                                img_url: data[i].image_uris,
+                                img_url: data[i].image_uris.normal,
                                 CMC: data[i].cmc,
                                 mana_cost: data[i].mana_cost,
                                 price: data[i].prices,
@@ -157,83 +92,13 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
                     console.log(card);
                     //data to save:
                     //CMC, colors, image_url, mana_cost, name, prices,
+
+                    setSearchWasSuccessful(true);
+                    setSearchResults(card);
+
                     setFormSubmitted(false);
                 });
         }
-=======
-          for (let i = 0; i < data.length; i++) {
-            // const cardFaces = data[i].card_faces[0].image_uris;
-            // const cardImg = data[i].image_uris;
-            // const card = {};
-            // //add name
-            // if (data[i].name) {
-            //   card.name = data[i].name;
-            // }
-            // //add image
-            // if (cardFaces) {
-            //   if (cardFaces.normal) {
-            //     card.img_url = cardFaces.normal;
-            //   } else if (cardFaces.samll) {
-            //     card.img_url = cardFaces.small;
-            //   } else if (cardFaces.large) {
-            //     card.img_url = cardFaces.large;
-            //   } else if (cardFaces.png) {
-            //     card.img_url = cardFaces.png;
-            //   } else if (cardFaces.border_crop) {
-            //     card.img_url = cardFaces.border_crop;
-            //   } else if (cardFaces.art_crop) {
-            //     card.img_url = cardFaces.art_crop;
-            //   }
-            // }
-            // if (cardImg) {
-            //   if (cardImg.normal) {
-            //     card.img_url = cardImg.normal;
-            //   } else if (cardImg.samll) {
-            //     card.img_url = cardImg.small;
-            //   } else if (cardImg.large) {
-            //     card.img_url = cardImg.large;
-            //   } else if (cardImg.png) {
-            //     card.img_url = cardImg.png;
-            //   } else if (cardImg.border_crop) {
-            //     card.img_url = cardImg.border_crop;
-            //   } else if (cardImg.art_crop) {
-            //     card.img_url = cardImg.art_crop;
-            //   }
-            // }
-
-            if (data[i].card_faces) {
-              card[i] = {
-                id: i,
-                name: data[i].name,
-                color: data[i].card_faces[0].colors,
-                img_url: data[i].card_faces[0].image_uris.normal,
-                CMC: data[i].card_faces[0].cmc,
-                mana_cost: data[i].card_faces[0].mana_cost,
-                price: data[i].prices
-              };
-            } else {
-              card[i] = {
-                id: i,
-                name: data[i].name,
-                color: data[i].colors,
-                img_url: data[i].image_uris,
-                CMC: data[i].cmc,
-                mana_cost: data[i].mana_cost,
-                price: data[i].prices
-              };
-            }
-          }
-          console.log(card);
-          //data to save:
-          //CMC, colors, image_url, mana_cost, name, prices,
-
-          setSearchWasSuccessful(true);
-          setSearchResults(card)
-
-          setFormSubmitted(false);
-        });
-    }
->>>>>>> 2300975d4aed7f46148aac5e939a0f5192bd6d59
 
         const buildSearchQuery = () => {
             const {

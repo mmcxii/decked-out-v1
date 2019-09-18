@@ -30,7 +30,8 @@ const CardSearch = () => {
                                         {({ isToggled, setToggle }) => (
                                             <>
                                                 <CardImage
-                                                    src={card.img_url.normal}
+                                                    src={card.img_url}
+                                                    alt={card.name}
                                                     onClick={() => setToggle(true)}
                                                 />
 
@@ -38,7 +39,7 @@ const CardSearch = () => {
                                                     <Modal isToggled={isToggled} setToggle={setToggle}>
                                                         <CardHeader>{card.name}</CardHeader>
                                                         <CardBody>
-                                                            <img src={card.img_url.normal} alt={card.name} />
+                                                            <img src={card.img_url} alt={card.name} />
                                                         </CardBody>
                                                     </Modal>
                                                 )}

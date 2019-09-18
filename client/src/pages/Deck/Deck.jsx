@@ -11,6 +11,7 @@ const Deck = ({
 }) => {
     const deckName = deckname.split('-').join(' ');
     const [deckList, setDeckList] = useState({ main: [], sideboard: [] });
+    const [fetchDeck, setFetchDeck] = useState(false);
 
     useEffect(() => {
         const getDeck = async () => {
@@ -25,10 +26,11 @@ const Deck = ({
             const data = await res.json();
 
             setDeckList(data);
+            setFetchDeck(false);
         };
 
         getDeck();
-    }, []);
+    }, [fetchDeck]);
 
     return (
         <DeckList>
@@ -38,7 +40,7 @@ const Deck = ({
                 <h3>Main</h3>
                 <ul>
                     {deckList.main.map(card => (
-                        <li>{card.name}</li>
+                        <li key={card.id}>{card.name}</li>
                     ))}
                 </ul>
             </Mainboard>
@@ -47,10 +49,11 @@ const Deck = ({
                 <h3>Sideboard</h3>
                 <ul>
                     {deckList.sideboard.map(card => (
-                        <li>{card.name}</li>
+                        <li key={card.id}>{card.name}</li>
                     ))}
                 </ul>
             </Sideboard>
+
             <Toggle>
                 {({ isToggled, setToggle }) => (
                     <>
@@ -59,10 +62,9 @@ const Deck = ({
                         {isToggled && (
                             <EditDeckModal
                                 deckName={deckName}
-                                deckList={deckList}
-                                setDeckList={setDeckList}
                                 isToggled={isToggled}
                                 setToggle={setToggle}
+                                setFetchDeck={setFetchDeck}
                             />
                         )}
                     </>
