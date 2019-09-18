@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-
+import styled from 'styled-components';
+import {CardDisplay} from 'elements';
 import { useForm, useCheckbox } from 'hooks';
 import { Button, Card, CardHeader, CardBody, CheckboxInput, Form, FormInput, FormLabel, StyledCheckbox } from 'elements';
-import { Toggle } from 'utilities';
+import { Toggle, spacing } from 'utilities';
+import { CardImage } from 'elements/Carddisplay';
+import Modal from 'elements/Modal';
 
 const CardSearch = () => {
     const [formSubmitted, setFormSubmitted] = useState(false);
-    const [colorsVisible, setColorsVisible] = useState(false);
-    const [cmcsAreVisable, setCmcsAreVisable] = useState(false);
+    const [searchWasSuccessful, setSearchWasSuccessful] = useState(false);
+    const [searchResults, setSearchResults] = useState([]);
     const [values, handleFormChange] = useForm({ queryInput: '' });
     const [checkboxes, handleCheckboxChange] = useCheckbox({
         whiteCheckbox: false,
@@ -90,8 +93,12 @@ const CardSearch = () => {
                                 price: data[i].prices,
                             };
                         }
+                        
                     }
-                    console.log(card);
+                    
+                    console.log('here')
+                    setSearchWasSuccessful(true);
+                    setSearchResults(card)
                     //data to save:
                     //CMC, colors, image_url, mana_cost, name, prices,
                     setFormSubmitted(false);
@@ -245,6 +252,7 @@ const CardSearch = () => {
     }, [formSubmitted]);
 
     return (
+        <>
         <Card>
             <CardHeader as='h2'>Oracle Search</CardHeader>
             <CardBody>
@@ -311,7 +319,41 @@ const CardSearch = () => {
                     <Button type='submit'>Search</Button>
             </CardBody>
         </Card>
+
+        {searchWasSuccessful && (
+            <ResultsCard>
+                <CardHeader>Results</CardHeader>
+                <CardBody>
+                        <CardDisplay>
+                            {searchResults.map(card => (
+                                <Toggle>
+                                    {({isToggled, setToggle}) => (
+                                    <>
+                                        <CardImage key={card.id} src={card.img_url} onClick={() => setToggle(true)}/>
+
+                                        {isToggled && (
+                                            <Modal isToggled={isToggled} setToggle={setToggle}>
+                                                <CardHeader>{card.name}</CardHeader>
+                                                <CardBody>
+                                                    <img src={card.img_url} alt={card.name} />
+                                                </CardBody>
+                                            </Modal>
+                                        )}
+                                    </>
+                                    )}
+
+                                </Toggle>
+                            ))}
+                        </CardDisplay>
+                </CardBody>
+            </ResultsCard>
+        )}
+        </>
     );
 };
 
 export default CardSearch;
+
+const ResultsCard = styled(Card)`
+    margin: ${spacing.lg} 0;
+`;

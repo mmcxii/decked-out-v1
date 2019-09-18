@@ -19,7 +19,9 @@ import './Global.scss';
 const App = () => {
     //* App Level State:
     //* User Object, stores users name when signed in from '/login'
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState({
+        username: 'Jirafaro',
+    });
 
     return (
         <BrowserRouter>
