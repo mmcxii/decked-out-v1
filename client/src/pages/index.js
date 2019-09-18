@@ -1,5 +1,5 @@
 import Account from './Account';
-import CardSearch from './CardSearch';
+import CardSearch from './Cardsearch';
 import CreateDeck from './CreateDeck';
 import Deck from './Deck';
 import Lifetracker from './Lifetracker';
