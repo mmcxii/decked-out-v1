@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { spacing } from 'utilities';
 
-export const CardDisplay = styled.div`
+export const CardDisplay = styled.section`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -11,4 +11,5 @@ export const CardDisplay = styled.div`
 export const CardImage = styled.img`
     height: 250px;
     margin: ${spacing.xs};
+    cursor: pointer;
 `;

@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import {CardDisplay, Modal, CardImage} from 'elements';
-import { useForm, useCheckbox } from 'hooks';
-import { Button, Card, CardHeader, CardBody, CheckboxInput, Form, FormInput, FormLabel, StyledCheckbox, CardSearchForm } from 'elements';
+import { Card, CardHeader, CardBody, CardDisplay, CardImage, CardSearchForm, Modal } from 'elements';
 import { Toggle, spacing } from 'utilities';
-
 
 const CardSearch = () => {
     const [searchWasSuccessful, setSearchWasSuccessful] = useState(false);
@@ -12,45 +9,49 @@ const CardSearch = () => {
 
     return (
         <>
-        <Card>
-            <CardHeader as='h2'>Oracle Search</CardHeader>
-            <CardBody>
-                <CardSearchForm setSearchResults={setSearchResults} setSearchWasSuccessful={setSearchWasSuccessful} />
-            </CardBody>
-        </Card>
-
-        {searchWasSuccessful && (
-            <ResultsCard>
-                {console.log(searchResults)}
-                <CardHeader>Results</CardHeader>
+            <Card>
+                <CardHeader as='h2'>Oracle Search</CardHeader>
                 <CardBody>
-                    <CardDisplay>
-                        {searchResults.map(card => (
-                            <article key={card.id}>
-                                
-                                <Toggle>
-                                    {({isToggled, setToggle}) => (
-                                        <>
-                                            <CardImage src={card.img_url.normal} onClick={() => setToggle(true)}/>
-
-                                            {isToggled && (
-                                                <Modal isToggled={isToggled} setToggle={setToggle}>
-                                                    <CardHeader>{card.name}</CardHeader>
-                                                    <CardBody>
-                                                        <img src={card.img_url.normal} alt={card.name} />
-                                                    </CardBody>
-                                                </Modal>
-                                            )}
-                                        </>
-                                    )}
-
-                                </Toggle>
-                            </article>
-                        ))}
-                    </CardDisplay>
+                    <CardSearchForm
+                        setSearchResults={setSearchResults}
+                        setSearchWasSuccessful={setSearchWasSuccessful}
+                    />
                 </CardBody>
-            </ResultsCard>
-        )}
+            </Card>
+
+            {searchWasSuccessful && (
+                <ResultsCard>
+                    <CardHeader>Results</CardHeader>
+                    <CardBody>
+                        <CardDisplay>
+                            {searchResults.map(card => (
+                                <article key={card.id}>
+                                    <Toggle>
+                                        {({ isToggled, setToggle }) => (
+                                            <>
+                                                <CardImage
+                                                    src={card.img_url}
+                                                    alt={card.name}
+                                                    onClick={() => setToggle(true)}
+                                                />
+
+                                                {isToggled && (
+                                                    <Modal isToggled={isToggled} setToggle={setToggle}>
+                                                        <CardHeader>{card.name}</CardHeader>
+                                                        <CardBody>
+                                                            <img src={card.img_url} alt={card.name} />
+                                                        </CardBody>
+                                                    </Modal>
+                                                )}
+                                            </>
+                                        )}
+                                    </Toggle>
+                                </article>
+                            ))}
+                        </CardDisplay>
+                    </CardBody>
+                </ResultsCard>
+            )}
         </>
     );
 };
