@@ -13,6 +13,9 @@
         "dev": "concurrently \"npm run server\" \"npm run client\"",
         "heroku-postbuild": "cd client && npm install && npm run build"
     },
+    "engines": {
+        "node": "10.15.3"
+    },
     "license": "ISC",
     "dependencies": {
         "aws-sdk": "^2.527.0",
