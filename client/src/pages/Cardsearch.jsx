@@ -1,19 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { CardDisplay, Modal, CardImage } from 'elements';
-import { useForm, useCheckbox } from 'hooks';
-import {
-    Button,
-    Card,
-    CardHeader,
-    CardBody,
-    CheckboxInput,
-    Form,
-    FormInput,
-    FormLabel,
-    StyledCheckbox,
-    CardSearchForm,
-} from 'elements';
+import { Card, CardHeader, CardBody, CardDisplay, CardImage, CardSearchForm, Modal } from 'elements';
 import { Toggle, spacing } from 'utilities';
 
 const CardSearch = () => {
@@ -34,7 +21,6 @@ const CardSearch = () => {
 
             {searchWasSuccessful && (
                 <ResultsCard>
-                    {console.log(searchResults)}
                     <CardHeader>Results</CardHeader>
                     <CardBody>
                         <CardDisplay>
