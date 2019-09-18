@@ -107,7 +107,7 @@ module.exports = {
     this.getDeck(username, deckName, data => {
       console.log(data.main);
 
-      if (cardsToRemove.main) {
+      if (cardsToRemove.main.length > 0) {
         const cardsToRemoveMain = cardsToRemove.main;
         const mainCounter = {};
 
@@ -120,14 +120,14 @@ module.exports = {
           }
         }
 
-        console.log('Cards to remove counter', mainCounter)
+        console.log("Cards to remove counter", mainCounter);
 
         for (let i = 0; i < data.main.length; i++) {
-          let name = mainCounter[data.main[i].name];
-          console.log('Name inside for loop', name);
-          if (name > 0) {
+          
+          console.log("Name inside for loop", mainCounter[data.main[i].name]);
+          if (mainCounter[data.main[i].name] > 0) {
             data.main.splice(i, 1);
-            name = name - 1;
+            mainCounter[data.main[i].name]--;
             i--;
           }
         }
@@ -135,7 +135,7 @@ module.exports = {
         console.log(data.main);
       }
 
-      if (cardsToRemove.sideboard) {
+      if (cardsToRemove.sideboard.length > 0) {
         const cardsToRemoveSideboard = cardsToRemove.sideboard;
 
         const sideCounter = {};
@@ -150,10 +150,9 @@ module.exports = {
         }
 
         for (let i = 0; i < data.sideboard.length; i++) {
-          let name = sideCounter[data.sideboard[i].name];
-          if (name > 0) {
+          if (sideCounter[data.sideboard[i].name] > 0) {
             data.sideboard.splice(i, 1);
-            name--;
+            sideCounter[data.sideboard[i].name]--;
             i--;
           }
         }
@@ -187,24 +186,27 @@ module.exports = {
     this.getCollection(username, data => {
       const counter = {};
 
-      for (let i = 0; i < cardsToRemove.length; i++) {
-        const name = cardsToRemove[i].name;
-
-        if (counter[name]) {
-          counter[name]++;
-        } else {
-          counter[name] = 1;
+      if (cardsToRemove.length > 0) {
+        for (let i = 0; i < cardsToRemove.length; i++) {
+          const name = cardsToRemove[i].name;
+  
+          if (counter[name]) {
+            counter[name]++;
+          } else {
+            counter[name] = 1;
+          }
+        }
+  
+        for (let i = 0; i < data.length; i++) {
+          counter[data[i].name];
+          if (counter[data[i].name] > 0) {
+            data.splice(i, 1);
+            counter[data[i].name]--;
+            i--;
+          }
         }
       }
 
-      for (let i = 0; i < data.length; i++) {
-        const name = counter[data[i].name];
-        if (name > 0) {
-          data.splice(i, 1);
-          name--;
-          i--;
-        }
-      }
 
       const collection = data.concat(cardsToAdd);
 

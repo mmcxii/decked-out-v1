@@ -24,7 +24,7 @@ router.get('/account', checkAuthentication, (req, res) => {
 
 //check failure redirect here
 
-router.post('/api/login', passport.authenticate('local', { failureRedirect: '/create' }), (req, res) => {
+router.post('/api/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
     res.sendStatus(200);
 });
 
@@ -58,10 +58,10 @@ router.get('/account/:deckname', checkAuthentication, (req, res) => {
     });
 });
 
-router.put('/api/updatedeck', (req, res) => {
+router.put('/api/updatedeck', checkAuthentication, (req, res) => {
     //Change to req.user.dataValues
-    // const { username } = req.user.dataValues;
-    const { username, cardsToAdd, cardsToRemove, deckName } = req.body;
+    const { username } = req.user.dataValues;
+    const { cardsToAdd, cardsToRemove, deckName } = req.body;
 
     s3Method.updateDeckList(username, deckName, cardsToAdd, cardsToRemove, data => {
         if (data.error) {
@@ -79,7 +79,7 @@ router.put('/api/updatecollection', checkAuthentication, (req, res) => {
     const { cardsToAdd, cardsToRemove } = req.body;
     const { username } = req.user.dataValues;
 
-    s3Method.updateCollection(username, cardsToAdd, data => {
+    s3Method.updateCollection(username, cardsToAdd, cardsToRemove, data => {
         if (data.error) {
             console.log(data.error);
             res.json(data);
@@ -120,11 +120,11 @@ router.post('/api/createcollection', checkAuthentication, (req, res) => {
 
 //make authed
 
-router.post('/api/createdeck', (req, res) => {
-    const { username, deckName, deckList } = req.body;
+router.post('/api/createdeck', checkAuthentication, (req, res) => {
+    const { deckName, deckList } = req.body;
 
     //Change to req.user.dataValues for production
-    // const { username } = req.user.dataValues;
+    const { username } = req.user.dataValues;
 
     s3Method.createDeck(username, deckName, deckList, success => {
         if (success) {
