@@ -52,9 +52,9 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
         ],
     };
 
-    useEffect(() => {
-        let query;
-        const card = [];
+  useEffect(() => {
+    let query;
+    const cards = [];
 
         function apiCall() {
             console.log('in api call');
@@ -66,35 +66,89 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
                     console.log(myJson.data);
                     let data = myJson.data;
 
-                    for (let i = 0; i < data.length; i++) {
-                        if (data[i].card_faces) {
-                            card[i] = {
-                                id: data[i].id,
-                                name: data[i].name,
-                                color: data[i].card_faces[0].colors,
-                                img_url: data[i].card_faces[0].image_uris.normal,
-                                CMC: data[i].card_faces[0].cmc,
-                                mana_cost: data[i].card_faces[0].mana_cost,
-                                price: data[i].prices,
-                            };
-                        } else {
-                            card[i] = {
-                                id: data[i].id,
-                                name: data[i].name,
-                                color: data[i].colors,
-                                img_url: data[i].image_uris.normal,
-                                CMC: data[i].cmc,
-                                mana_cost: data[i].mana_cost,
-                                price: data[i].prices,
-                            };
-                        }
-                    }
-                    console.log(card);
-                    //data to save:
-                    //CMC, colors, image_url, mana_cost, name, prices,
+          for (let i = 0; i < data.length; i++) {
+            const card = {};
+            //add name
+            if (data[i].name) {
+              card.name = data[i].name;
+            }
+            //add image
+            if (data[i].card_faces) {
+                card.img_url = data[i].card_faces[0].image_uris.normal
+              } else if (data[i].card_faces[0].image_uris.samll) {
+                card.img_url = data[i].card_faces[0].image_uris.small;
+              } else if (data[i].card_faces[0].image_uris.large) {
+                card.img_url = data[i].card_faces[0].image_uris.large;
+              } else if (data[i].card_faces[0].image_uris.png) {
+                card.img_url = data[i].card_faces[0].image_uris.png;
+              } else if (data[i].card_faces[0].image_uris.border_crop) {
+                card.img_url = data[i].card_faces[0].image_uris.border_crop;
+              } else if (data[i].card_faces[0].image_uris.art_crop) {
+                card.img_url = data[i].card_faces[0].image_uris.art_crop;
+            }else if (data[i].image_uris) {
+              if (data[i].image_uris.normal) {
+                card.img_url = data[i].image_uris.normal;
+              } else if (data[i].image_uris.samll) {
+                card.img_url = data[i].image_uris.small;
+              } else if (data[i].image_uris.large) {
+                card.img_url = data[i].image_uris.large;
+              } else if (data[i].image_uris.png) {
+                card.img_url = data[i].image_uris.png;
+              } else if (data[i].image_uris.border_crop) {
+                card.img_url = data[i].image_uris.border_crop;
+              } else if (data[i].image_uris.art_crop) {
+                card.img_url = data[i].image_uris.art_crop;
+              }
+            }
+            if(data[i].card_faces){
+                card.color = data[i].card_faces[0].colors;
+            }else{
+                card.color = data[i].colors;
+            }
+            if(data[i].card_faces){
+                card.CMC = data[i].card_faces[0].cmc;
+            }else{
+                card.CMC = data[i].cmc;
+            }
 
-                    setSearchWasSuccessful(true);
-                    setSearchResults(card);
+            if(data[i].card_faces){
+                card.mana_cost = data[i].card_faces[0].mana_cost;
+            }else{
+                card.mana_cost = data[i].cmc;
+            };
+
+            if(data[i].prices){
+                card.price = data[i].prices;
+            };
+            cards.push(card);
+            // if (data[i].card_faces) {
+            //   card[i] = {
+            //     id: i,
+            //     name: data[i].name,
+            //     color: data[i].card_faces[0].colors,
+            //     img_url: data[i].card_faces[0].image_uris.normal,
+            //     CMC: data[i].card_faces[0].cmc,
+            //     mana_cost: data[i].card_faces[0].mana_cost,
+            //     price: data[i].prices
+            //   };
+            // } else {
+            //   cards[i] = {
+            //     id: i,
+            //     name: data[i].name,
+            //     color: data[i].colors,
+            //     img_url: data[i].image_uris,
+            //     CMC: data[i].cmc,
+            //     mana_cost: data[i].mana_cost,
+            //     price: data[i].prices
+            //   };
+            // }
+          }
+          console.log(cards);
+          //data to save:
+          //CMC, colors, image_url, mana_cost, name, prices,
+          setFormSubmitted(false);
+        });
+    }
 
                     setFormSubmitted(false);
                 });
