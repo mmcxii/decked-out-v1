@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
 import { useForm, useCheckbox } from 'hooks';
-import { Form, FormInput, FormLabel } from 'elements';
-import { Button, Card, CardHeader, CardBody } from 'elements';
+import { Button, Card, CardHeader, CardBody, CheckboxInput, Form, FormInput, FormLabel, StyledCheckbox } from 'elements';
+import { Toggle } from 'utilities';
 
 const CardSearch = () => {
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [colorsVisible, setColorsVisible] = useState(false);
+    const [cmcsAreVisable, setCmcsAreVisable] = useState(false);
     const [values, handleFormChange] = useForm({ queryInput: '' });
     const [checkboxes, handleCheckboxChange] = useCheckbox({
         whiteCheckbox: false,
@@ -250,6 +252,7 @@ const CardSearch = () => {
                     onSubmit={e => {
                         e.preventDefault();
 
+
                         setFormSubmitted(true);
                     }}
                 >
@@ -260,41 +263,52 @@ const CardSearch = () => {
                         value={values.queryInput}
                         onChange={handleFormChange}
                     />
+                        </Form>
 
-                    <section>
-                        <h3>Color</h3>
-                        {checkboxItems.colors.map((color, index) => (
-                            <FormLabel key={index}>
-                                <FormInput
-                                    name={color.name}
-                                    type='checkbox'
-                                    checked={checkboxes[color.name]}
-                                    onChange={handleCheckboxChange}
-                                />
+                    <Toggle>
+                        {({isToggled, setToggle}) => (
+                            <>
+                                <Button onClick={()=> setToggle(!isToggled)}>Filter</Button>
 
-                                {color.label}
-                            </FormLabel>
-                        ))}
-                    </section>
+                                {isToggled && (
+                                   <> 
+                                    <section>
+                                        <h3>Color</h3>
+                                        {checkboxItems.colors.map((color, index) => (
+                                            <FormLabel key={index}>
+                                                <CheckboxInput
+                                                    name={color.name}
+                                                    checked={checkboxes[color.name]}
+                                                    onChange={handleCheckboxChange}
+                                                    />
 
-                    <section>
-                        <h3>Converted Mana Cost</h3>
-                        {checkboxItems.manaCosts.map((cmc, index) => (
-                            <FormLabel key={index}>
-                                <FormInput
-                                    name={cmc.name}
-                                    type='checkbox'
-                                    checked={checkboxes[cmc.name]}
-                                    onChange={handleCheckboxChange}
-                                />
-
-                                {cmc.label}
-                            </FormLabel>
-                        ))}
-                    </section>
+                                                {color.label}
+                                            </FormLabel>
+                                        ))}
+                                    </section>
+                                    <section>
+                                        <h3>Converted Mana Cost</h3>
+                                        {checkboxItems.manaCosts.map((cmc, index) => (
+                                            <FormLabel key={index}>
+                                                <CheckboxInput
+                                                    name={cmc.name}
+                                                    type='checkbox'
+                                                    checked={checkboxes[cmc.name]}
+                                                    onChange={handleCheckboxChange}
+                                                />
+                
+                                                {cmc.label}
+                                            </FormLabel>
+                                        ))}
+                                    </section>
+                                    </>
+                                    )}
+                                </>
+                            )}
+                        </Toggle>
+                            
 
                     <Button type='submit'>Search</Button>
-                </Form>
             </CardBody>
         </Card>
     );

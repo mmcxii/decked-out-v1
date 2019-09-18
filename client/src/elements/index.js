@@ -5,6 +5,7 @@ import ManaSymbol from './ManaSymbol';
 
 export * from './Button';
 export * from './Card';
+export * from './CheckboxInput'
 export * from './Form';
 
 export { Banner, Container, ManaSymbol, Modal };
