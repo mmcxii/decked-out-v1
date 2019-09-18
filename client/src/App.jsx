@@ -19,7 +19,7 @@ import './Global.scss';
 const App = () => {
     //* App Level State:
     //* User Object, stores users name when signed in from '/login'
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState({ username: 'nicholas' });
 
     return (
         <BrowserRouter>
@@ -29,7 +29,6 @@ const App = () => {
                 {/* Static Layout Components */}
                 <Header user={user} />
                 <Navbar user={user} />
-                <Footer />
 
                 {/* Pages */}
                 <PageWrapper>
@@ -43,13 +42,15 @@ const App = () => {
                                 component={Account}
                                 user={user}
                             />
-                            <Route path='/account/:deckname' component={Deck} />
+                            <PrivateRoute isLoggedIn={user} path='/account/:deckname' component={Deck} />
                             <Route path='/login' render={() => <Login setUser={setUser} />} />
                             <Route path='/createdeck' component={CreateDeck} />
                             <Route path='/cardsearch' component={CardSearch} />
                         </>
                     </Switch>
                 </PageWrapper>
+
+                <Footer />
             </AppWrapper>
         </BrowserRouter>
     );
