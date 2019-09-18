@@ -56,7 +56,11 @@ const CardSearchForm = () => {
 
   useEffect(() => {
     let query;
+<<<<<<< HEAD
     const cards = [];
+=======
+    const card = [];
+>>>>>>> master
 
     function apiCall() {
       console.log("in api call");
@@ -91,7 +95,12 @@ const CardSearchForm = () => {
               } else if (cardFaces.art_crop) {
                 card.img_url = cardFaces.art_crop;
               }
+<<<<<<< HEAD
             }else if (cardImg) {
+=======
+            }
+            if (cardImg) {
+>>>>>>> master
               if (cardImg.normal) {
                 card.img_url = cardImg.normal;
               } else if (cardImg.samll) {
@@ -106,6 +115,7 @@ const CardSearchForm = () => {
                 card.img_url = cardImg.art_crop;
               }
             }
+<<<<<<< HEAD
             if(data[i].card_faces[0].colors){
                 card.color = data[i].card_faces[0].colors;
             }else{
@@ -150,6 +160,32 @@ const CardSearchForm = () => {
             // }
           }
           console.log(cards);
+=======
+
+            if (data[i].card_faces) {
+              card[i] = {
+                id: i,
+                name: data[i].name,
+                color: data[i].card_faces[0].colors,
+                img_url: data[i].card_faces[0].image_uris.normal,
+                CMC: data[i].card_faces[0].cmc,
+                mana_cost: data[i].card_faces[0].mana_cost,
+                price: data[i].prices
+              };
+            } else {
+              card[i] = {
+                id: i,
+                name: data[i].name,
+                color: data[i].colors,
+                img_url: data[i].image_uris,
+                CMC: data[i].cmc,
+                mana_cost: data[i].mana_cost,
+                price: data[i].prices
+              };
+            }
+          }
+          console.log(card);
+>>>>>>> master
           //data to save:
           //CMC, colors, image_url, mana_cost, name, prices,
           setFormSubmitted(false);
