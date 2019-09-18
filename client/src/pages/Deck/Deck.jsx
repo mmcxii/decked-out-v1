@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+
 import { Button } from 'elements';
-import { absolute, Toggle } from 'utilities';
+import { absolute, spacing, Toggle } from 'utilities';
 import EditDeckModal from './EditDeckModal';
+import RemoveCardsModal from './RemoveCardsModal';
 
 const Deck = ({
     match: {
@@ -25,7 +27,31 @@ const Deck = ({
 
             const data = await res.json();
 
-            setDeckList(data);
+            const reduceDuplicates = arr => {
+                const map = {};
+                //loop over the array of cards
+                for (let i = 0; i < arr.length; i++) {
+                    //check if the map/counter has a key that is the current cards name, and increment if it exists
+                    if (map[arr[i].name]) {
+                        map[arr[i].name]++;
+                    } else {
+                        //create a key withe the current cards name and set it equal to 1 (you have one card)
+                        map[arr[i].name] = 1;
+                    }
+                }
+
+                return map;
+            };
+
+            console.log(data.main);
+
+            const reducedMain = reduceDuplicates(data.main);
+            const reducedSideboard = reduceDuplicates(data.sideboard);
+
+            console.log(reducedMain);
+            console.log(reducedSideboard);
+
+            setDeckList({ main: reducedMain, sideboard: reducedSideboard });
             setFetchDeck(false);
         };
 
@@ -39,8 +65,10 @@ const Deck = ({
             <Mainboard>
                 <h3>Main</h3>
                 <ul>
-                    {deckList.main.map(card => (
-                        <li key={card.id}>{card.name}</li>
+                    {Object.keys(deckList.main).map((card, index) => (
+                        <li key={index}>
+                            {deckList.main[card]} {[card]}
+                        </li>
                     ))}
                 </ul>
             </Mainboard>
@@ -48,28 +76,50 @@ const Deck = ({
             <Sideboard>
                 <h3>Sideboard</h3>
                 <ul>
-                    {deckList.sideboard.map(card => (
-                        <li key={card.id}>{card.name}</li>
+                    {Object.keys(deckList.sideboard).map((card, index) => (
+                        <li key={index}>
+                            {deckList.sideboard[card]} {[card]}
+                        </li>
                     ))}
                 </ul>
             </Sideboard>
 
-            <Toggle>
-                {({ isToggled, setToggle }) => (
-                    <>
-                        <EditDeckButton onClick={() => setToggle(true)}>Edit</EditDeckButton>
+            <EditDeckButtons>
+                <Toggle>
+                    {({ isToggled, setToggle }) => (
+                        <>
+                            <Button onClick={() => setToggle(true)}>Add Cards</Button>
 
-                        {isToggled && (
-                            <EditDeckModal
-                                deckName={deckName}
-                                isToggled={isToggled}
-                                setToggle={setToggle}
-                                setFetchDeck={setFetchDeck}
-                            />
-                        )}
-                    </>
-                )}
-            </Toggle>
+                            {isToggled && (
+                                <EditDeckModal
+                                    deckName={deckName}
+                                    setFetchDeck={setFetchDeck}
+                                    isToggled={isToggled}
+                                    setToggle={setToggle}
+                                />
+                            )}
+                        </>
+                    )}
+                </Toggle>
+
+                <Toggle>
+                    {({ isToggled, setToggle }) => (
+                        <>
+                            <Button onClick={() => setToggle(true)}>Remove Cards</Button>
+
+                            {isToggled && (
+                                <RemoveCardsModal
+                                    deckName={deckName}
+                                    deckList={deckList}
+                                    setFetchDeck={setFetchDeck}
+                                    isToggled={isToggled}
+                                    setToggle={setToggle}
+                                />
+                            )}
+                        </>
+                    )}
+                </Toggle>
+            </EditDeckButtons>
         </DeckList>
     );
 };
@@ -89,6 +139,7 @@ const DeckList = styled.section`
 
 const DeckTitle = styled.h2`
     grid-area: title;
+    margin-bottom: ${spacing.md};
 `;
 
 const Mainboard = styled.section`
@@ -99,6 +150,10 @@ const Sideboard = styled.section`
     grid-area: sideboard;
 `;
 
-const EditDeckButton = styled(Button)`
+const EditDeckButtons = styled.section`
     ${absolute({ x: 'right' })};
+
+    > button {
+        margin: 0 ${spacing.xs};
+    }
 `;

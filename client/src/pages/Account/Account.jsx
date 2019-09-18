@@ -39,12 +39,7 @@ const Account = ({ user }) => {
                 {userDecks.length > 0 ? (
                     <UserDecks>
                         {userDecks.map((deckName, index) => (
-                            <DeckItem
-                                key={index}
-                                deckName={deckName}
-                                username={user.username}
-                                setFetchDecks={setFetchDecks}
-                            />
+                            <DeckItem key={index} deckName={deckName} setFetchDecks={setFetchDecks} />
                         ))}
                     </UserDecks>
                 ) : (

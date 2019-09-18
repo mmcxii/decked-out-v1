@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { spacing, absolute, transition, manaRed, Toggle } from 'utilities';
 import { Button, ButtonLink, CardBody, CardHeader, Modal } from 'elements';
 
-const DeckItem = ({ deckName, username, setFetchDecks }) => {
+const DeckItem = ({ deckName, setFetchDecks }) => {
     const [userDeletedDeck, setUserDeletedDeck] = useState(false);
 
     useEffect(() => {
@@ -17,7 +17,7 @@ const DeckItem = ({ deckName, username, setFetchDecks }) => {
                     Accept: 'application/json',
                 },
                 credentials: 'include',
-                body: JSON.stringify({ username, deckName }),
+                body: JSON.stringify({ deckName }),
             });
 
             setFetchDecks(true);

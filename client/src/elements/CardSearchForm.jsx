@@ -79,7 +79,7 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
                             };
                         } else {
                             card[i] = {
-                                id: i,
+                                id: data[i].id,
                                 name: data[i].name,
                                 color: data[i].colors,
                                 img_url: data[i].image_uris.normal,
