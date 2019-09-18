@@ -1,14 +1,19 @@
 import styled from 'styled-components';
-import { spacing } from 'utilities';
+import { spacing, transition } from 'utilities';
 
 const CheckboxInput = styled.input.attrs({ type: 'checkbox' })`
-  border: 0;
+  border: none;
   size: 16px;
   clip: rect(0 0 0 0);
   overflow: hidden;
   position: relative;
   white-space: nowrap;
   margin: ${spacing.xs};
+  ${transition({prop: 'border'})};
+
+  &:hover {
+    border: 3px solid red;
+  }
 `;
 
 const StyledCheckbox = styled.div`

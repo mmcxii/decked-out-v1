@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Button, Card, CardHeader, CardBody, Form, FormLabel, FormInput } from 'elements';
 
-const Login = ({ history }) => {
+import { useForm } from 'hooks';
+import { Button, Card, CardHeader, CardBody, Form, FormGroupWithIcon, FormInput, FormLabel } from 'elements';
+
+const Login = ({ history, location, setUser }) => {
     const [formIsSubmitted, setFormIsSubmitted] = useState(false);
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [values, handleChange] = useForm({ username: '', password: '' });
 
     useEffect(() => {
         const signIn = async () => {
+            const { username, password } = values;
+            const { from } = location.state || { from: null };
+
             const res = await fetch('/api/login', {
                 method: 'POST',
                 headers: {
@@ -19,7 +23,17 @@ const Login = ({ history }) => {
             });
 
             if (res.status === 200) {
-                history.push('/account');
+                setUser({ username });
+
+                // If the user attempted to access a protected route
+                // redirect them after they sign in
+                if (from) {
+                    return history.push(from);
+                }
+
+                // If the use clicked the sign in button
+                // return them to the page they were on
+                return history.goBack();
             }
         };
 
@@ -39,21 +53,29 @@ const Login = ({ history }) => {
                         setFormIsSubmitted(true);
                     }}
                 >
-                    <FormLabel htmlFor='username'>Username:</FormLabel>
-                    <FormInput
-                        name='username'
-                        type='text'
-                        value={username}
-                        onChange={e => setUsername(e.target.value)}
-                    />
+                    <FormGroupWithIcon>
+                        <FormLabel htmlFor='username'>Username</FormLabel>
+                        <FormInput
+                            name='username'
+                            type='text'
+                            required
+                            value={values.username}
+                            onChange={handleChange}
+                        />
+                        <i className='fad fa-user'></i>
+                    </FormGroupWithIcon>
 
-                    <FormLabel htmlFor='password'>Password:</FormLabel>
-                    <FormInput
-                        name='password'
-                        type='password'
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                    />
+                    <FormGroupWithIcon>
+                        <FormLabel htmlFor='password'>Password</FormLabel>
+                        <FormInput
+                            name='password'
+                            type='password'
+                            required
+                            value={values.password}
+                            onChange={handleChange}
+                        />
+                        <i className='fad fa-lock-alt'></i>
+                    </FormGroupWithIcon>
 
                     <Button type='submit'>Sign In</Button>
                 </Form>

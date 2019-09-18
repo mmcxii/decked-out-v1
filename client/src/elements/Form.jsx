@@ -1,20 +1,21 @@
 import styled from 'styled-components';
-import { rounded, spacing, dark, manaBlue2 } from 'utilities';
+import { rounded, spacing, dark, manaBlue2, manaBlue } from 'utilities';
 
-const Form = styled.form`
+export const Form = styled.form`
     display: flex;
     flex-direction: column;
 
-    > input {
+    > input,
+    > div {
         margin: ${spacing.sm} 0;
     }
 `;
 
-const FormLabel = styled.label`
+export const FormLabel = styled.label`
     padding-left: ${spacing.sm};
 `;
 
-const FormInput = styled.input`
+export const FormInput = styled.input`
     border-radius: ${rounded};
     border: none;
     padding: ${spacing.sm} ${spacing.md};
@@ -22,4 +23,27 @@ const FormInput = styled.input`
     color: ${dark};
 `;
 
-export { Form, FormInput, FormLabel };
+export const FormGroupWithIcon = styled.div`
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    grid-template-rows: repeat(2, max-content);
+    grid-template-areas:
+        'icon label'
+        'icon input';
+    align-items: center;
+
+    > i {
+        grid-area: icon;
+        margin-right: ${spacing.sm};
+        font-size: 2rem;
+        color: ${manaBlue};
+    }
+
+    > label {
+        grid-area: label;
+    }
+
+    > input {
+        grid-area: input;
+    }
+`;
