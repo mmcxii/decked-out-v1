@@ -20,8 +20,8 @@ module.exports = {
       (err, data) => {
         if (err) {
           console.log(`Get collection error: ${err}`);
-          return cb({error: 'There was an issue getting your collection.'})
-        } 
+          return cb({ error: "There was an issue getting your collection." });
+        }
 
         return cb(JSON.parse(data.Body));
       }
@@ -102,12 +102,63 @@ module.exports = {
 
     return decks;
   },
-  updateDeckList: function(username, deckName, cardsToAdd, cb) {
-    
+  updateDeckList: function(username, deckName, cardsToAdd, cardsToRemove, cb) {
     //Get the deck
     this.getDeck(username, deckName, data => {
-      
-      // Combine arrays of new and old cards
+      console.log(data.main);
+
+      if (cardsToRemove.main) {
+        const cardsToRemoveMain = cardsToRemove.main;
+        const mainCounter = {};
+
+        for (let i = 0; i < cardsToRemoveMain.length; i++) {
+          let name = cardsToRemoveMain[i].name;
+          if (mainCounter[name]) {
+            mainCounter[name]++;
+          } else {
+            mainCounter[name] = 1;
+          }
+        }
+
+        console.log('Cards to remove counter', mainCounter)
+
+        for (let i = 0; i < data.main.length; i++) {
+          let name = mainCounter[data.main[i].name];
+          console.log('Name inside for loop', name);
+          if (name > 0) {
+            data.main.splice(i, 1);
+            name = name - 1;
+            i--;
+          }
+        }
+
+        console.log(data.main);
+      }
+
+      if (cardsToRemove.sideboard) {
+        const cardsToRemoveSideboard = cardsToRemove.sideboard;
+
+        const sideCounter = {};
+
+        for (let i = 0; i < cardsToRemoveSideboard.length; i++) {
+          let name = cardsToRemoveSideboard[i].name;
+          if (sideCounter[name]) {
+            sideCounter[name]++;
+          } else {
+            sideCounter[name] = 1;
+          }
+        }
+
+        for (let i = 0; i < data.sideboard.length; i++) {
+          let name = sideCounter[data.sideboard[i].name];
+          if (name > 0) {
+            data.sideboard.splice(i, 1);
+            name--;
+            i--;
+          }
+        }
+      }
+
       const main = data.main.concat(cardsToAdd.main);
       const sideboard = data.sideboard.concat(cardsToAdd.sideboard);
 
@@ -115,6 +166,8 @@ module.exports = {
         main,
         sideboard
       };
+
+      console.log(newDeck);
 
       // 'Create' new deck with updated decklist
       this.createDeck(username, deckName, newDeck, succes => {
@@ -130,30 +183,51 @@ module.exports = {
       });
     });
   },
-  updateCollection: function(username, cardsToAdd, cb) {
-      this.getCollection(username, (data) => {
-          const collection = data.concat(cardsToAdd);
+  updateCollection: function(username, cardsToAdd, cardsToRemove, cb) {
+    this.getCollection(username, data => {
+      const counter = {};
 
-          this.createCollection(username, collection, (succes) => {
-            if (succes) {
-                console.log("Collection updated");
-                return cb(collection);
-              } else {
-                console.log("Collection failed to update");
-                return cb({
-                  error: "The collection failed to update. Please try again later."
-                });
-              }
-          })
-      })
+      for (let i = 0; i < cardsToRemove.length; i++) {
+        const name = cardsToRemove[i].name;
+
+        if (counter[name]) {
+          counter[name]++;
+        } else {
+          counter[name] = 1;
+        }
+      }
+
+      for (let i = 0; i < data.length; i++) {
+        const name = counter[data[i].name];
+        if (name > 0) {
+          data.splice(i, 1);
+          name--;
+          i--;
+        }
+      }
+
+      const collection = data.concat(cardsToAdd);
+
+      this.createCollection(username, collection, succes => {
+        if (succes) {
+          console.log("Collection updated");
+          return cb(collection);
+        } else {
+          console.log("Collection failed to update");
+          return cb({
+            error: "The collection failed to update. Please try again later."
+          });
+        }
+      });
+    });
   },
   deleteDeckList: function(username, deckName, cb) {
     s3.deleteObjects(
       {
         Bucket: S3_BUCKET,
         Delete: {
-            Objects: [ { Key: `${username}/decks/${deckName}/decklist.json` } ]
-        } 
+          Objects: [{ Key: `${username}/decks/${deckName}/decklist.json` }]
+        }
       },
       (err, data) => {
         if (err) {
@@ -161,34 +235,33 @@ module.exports = {
           return cb({ error: "There was an error deleting this decklist" });
         }
         console.log(data);
-        this.deleteDeck(username, deckName, (data) => {
-            if (data.error) {
-                console.log(`Delete deck error: ${err}`);
-                return cb({ error: "There was an error deleting this deck" });
-            } else {
-                return cb({ success: 'Deck has been deleted'});
-            }
+        this.deleteDeck(username, deckName, data => {
+          if (data.error) {
+            console.log(`Delete deck error: ${err}`);
+            return cb({ error: "There was an error deleting this deck" });
+          } else {
+            return cb({ success: "Deck has been deleted" });
+          }
         });
       }
     );
   },
   deleteDeck: function(username, deckName, cb) {
-
     s3.deleteObjects(
-        {
-          Bucket: S3_BUCKET,
-          Delete: {
-              Objects: [ { Key: `${username}/decks/${deckName}` } ]
-          } 
-        },
-        (err, data) => {
-          if (err) {
-            console.log(`Delete deck folder error: ${err}`);
-            return cb({ error: "There was an error deleting this deck" });
-          }
-          console.log(data);
-          return cb(data);
+      {
+        Bucket: S3_BUCKET,
+        Delete: {
+          Objects: [{ Key: `${username}/decks/${deckName}` }]
         }
-      );
+      },
+      (err, data) => {
+        if (err) {
+          console.log(`Delete deck folder error: ${err}`);
+          return cb({ error: "There was an error deleting this deck" });
+        }
+        console.log(data);
+        return cb(data);
+      }
+    );
   }
 };

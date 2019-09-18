@@ -58,12 +58,12 @@ router.get('/account/:deckname', checkAuthentication, (req, res) => {
     });
 });
 
-router.put('/api/updatedeck', checkAuthentication, (req, res) => {
+router.put('/api/updatedeck', (req, res) => {
     //Change to req.user.dataValues
-    const { username } = req.user.dataValues;
-    const { cardsToAdd, deckName } = req.body;
+    // const { username } = req.user.dataValues;
+    const { username, cardsToAdd, cardsToRemove, deckName } = req.body;
 
-    s3Method.updateDeckList(username, deckName, cardsToAdd, data => {
+    s3Method.updateDeckList(username, deckName, cardsToAdd, cardsToRemove, data => {
         if (data.error) {
             console.log(data.error);
             res.json(data);
@@ -76,7 +76,7 @@ router.put('/api/updatedeck', checkAuthentication, (req, res) => {
 
 router.put('/api/updatecollection', checkAuthentication, (req, res) => {
     //Change to req.user.dataValues
-    const { cardsToAdd } = req.body;
+    const { cardsToAdd, cardsToRemove } = req.body;
     const { username } = req.user.dataValues;
 
     s3Method.updateCollection(username, cardsToAdd, data => {
@@ -91,7 +91,8 @@ router.put('/api/updatecollection', checkAuthentication, (req, res) => {
 });
 
 router.delete('/api/deletedeck', checkAuthentication, (req, res) => {
-    const { username, deckName } = req.body;
+    const { deckName } = req.body;
+    const { username } = req.user.dataValues;
 
     s3Method.deleteDeckList(username, deckName, data => {
         if (!data.error) {
@@ -119,11 +120,11 @@ router.post('/api/createcollection', checkAuthentication, (req, res) => {
 
 //make authed
 
-router.post('/api/createdeck', checkAuthentication, (req, res) => {
-    const { deckName, deckList } = req.body;
+router.post('/api/createdeck', (req, res) => {
+    const { username, deckName, deckList } = req.body;
 
     //Change to req.user.dataValues for production
-    const { username } = req.user.dataValues;
+    // const { username } = req.user.dataValues;
 
     s3Method.createDeck(username, deckName, deckList, success => {
         if (success) {
