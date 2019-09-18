@@ -24,7 +24,7 @@ router.get('/account', checkAuthentication, (req, res) => {
 
 //check failure redirect here
 
-router.post('/api/login', passport.authenticate('local', { failureRedirect: '/create' }), (req, res) => {
+router.post('/api/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
     res.sendStatus(200);
 });
 
@@ -61,9 +61,9 @@ router.get('/account/:deckname', checkAuthentication, (req, res) => {
 router.put('/api/updatedeck', checkAuthentication, (req, res) => {
     //Change to req.user.dataValues
     const { username } = req.user.dataValues;
-    const { cardsToAdd, deckName } = req.body;
+    const { cardsToAdd, cardsToRemove, deckName } = req.body;
 
-    s3Method.updateDeckList(username, deckName, cardsToAdd, data => {
+    s3Method.updateDeckList(username, deckName, cardsToAdd, cardsToRemove, data => {
         if (data.error) {
             console.log(data.error);
             res.json(data);
@@ -76,10 +76,10 @@ router.put('/api/updatedeck', checkAuthentication, (req, res) => {
 
 router.put('/api/updatecollection', checkAuthentication, (req, res) => {
     //Change to req.user.dataValues
-    const { cardsToAdd } = req.body;
+    const { cardsToAdd, cardsToRemove } = req.body;
     const { username } = req.user.dataValues;
 
-    s3Method.updateCollection(username, cardsToAdd, data => {
+    s3Method.updateCollection(username, cardsToAdd, cardsToRemove, data => {
         if (data.error) {
             console.log(data.error);
             res.json(data);
@@ -91,7 +91,8 @@ router.put('/api/updatecollection', checkAuthentication, (req, res) => {
 });
 
 router.delete('/api/deletedeck', checkAuthentication, (req, res) => {
-    const { username, deckName } = req.body;
+    const { deckName } = req.body;
+    const { username } = req.user.dataValues;
 
     s3Method.deleteDeckList(username, deckName, data => {
         if (!data.error) {
