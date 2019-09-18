@@ -48,7 +48,7 @@ const Account = ({ user }) => {
                         ) : (
                             <p>
                                 Hmmm it seems you don't have any decks right now, why not
-                                <Link to='/createdeck'>go make one?</Link>
+                                <Link to='/createdeck'> go make one?</Link>
                             </p>
                         )}
                     </section>

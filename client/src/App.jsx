@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { light, spacing } from 'utilities';
 
 //* Layout Elements
-import { Footer, Header } from 'layout';
+import { Container, Footer, Header, Navbar } from 'layout';
 
 //* Pages
 import { Account, CardSearch, CreateDeck, Deck, Lifetracker, Login } from 'pages';
@@ -26,31 +26,33 @@ const App = () => {
             <Normalize />
 
             <AppWrapper>
+                {/* Static Layout Components */}
                 <Header user={user} />
+                <Navbar user={user} />
+                <Footer />
 
+                {/* Pages */}
                 <PageWrapper>
                     <Switch>
                         <>
                             {user ? (
                                 <>
-                                    <Route exact path='/' render={props => <Lifetracker user={user} />} />
-                                    <Route exact path='/account' render={props => <Account user={user} />} />
+                                    <Route exact path='/' render={() => <Lifetracker user={user} />} />
+                                    <Route exact path='/account' render={() => <Account user={user} />} />
                                     <Route path='/account/:deckname' component={Deck} />
-                                    <Route path='/login' render={props => <Login setUser={setUser} />} />
+                                    <Route path='/login' render={() => <Login setUser={setUser} />} />
                                     <Route path='/createdeck' component={CreateDeck} />
                                     <Route path='/cardsearch' component={CardSearch} />
                                 </>
                             ) : (
                                 <>
-                                    <Redirect to='/login' />
-                                    <Route path='/login' render={props => <Login setUser={setUser} />} />
+                                    <Redirect from='/*' to='/login' />
+                                    <Route path='/login' render={() => <Login setUser={setUser} />} />
                                 </>
                             )}
                         </>
                     </Switch>
                 </PageWrapper>
-
-                <Footer />
             </AppWrapper>
         </BrowserRouter>
     );
@@ -58,27 +60,10 @@ const App = () => {
 
 export default App;
 
-const AppWrapper = styled.div`
-    --margin: 0.5rem;
-
-    margin: 0 var(--margin);
-
-    @media screen and (min-width: 576px) {
-        --margin: 1rem;
-    }
-    @media screen and (min-width: 768px) {
-        --margin: 2rem;
-    }
-    @media screen and (min-width: 992px) {
-        --margin: 4rem;
-    }
-    @media screen and (min-width: 1200px) {
-        --margin: 10%;
-    }
-
+const AppWrapper = styled(Container)`
     min-height: 100vh;
     display: grid;
-    grid-template-columns: --margin 1fr --margin;
+    grid-template-columns: var(--margin) 1fr var(--margin);
     grid-template-rows: max-content 1fr max-content;
     grid-template-areas:
         '. header .'
@@ -86,7 +71,8 @@ const AppWrapper = styled.div`
         '. footer .';
     color: ${light};
     font-family: 'Sorts Mill Goudy', serif;
-    padding: ${spacing.md} 0;
+    padding-top: ${spacing.md};
+    padding-bottom: ${spacing.xxl};
 `;
 
 const PageWrapper = styled.main`

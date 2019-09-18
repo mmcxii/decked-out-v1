@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 import { useForm } from 'hooks';
 import { Button, Card, CardBody, CardHeader, Form, FormInput, FormLabel } from 'elements';
+import { FormGroupWithIcon } from 'elements/Form';
 
 const CreateDeck = ({ history }) => {
     const [formIsSubmitted, setFormIsSubmitted] = useState(false);
@@ -44,14 +45,17 @@ const CreateDeck = ({ history }) => {
                         setFormIsSubmitted(true);
                     }}
                 >
-                    <FormLabel>Deck Name</FormLabel>
-                    <FormInput
-                        name='deckName'
-                        type='text'
-                        placeholder='What is your deck called?'
-                        value={values.deckName}
-                        onChange={handleChange}
-                    />
+                    <FormGroupWithIcon>
+                        <FormLabel>Deck Name</FormLabel>
+                        <FormInput
+                            name='deckName'
+                            type='text'
+                            placeholder='What is your deck called?'
+                            value={values.deckName}
+                            onChange={handleChange}
+                        />
+                        <i className='fad fa-align-justify'></i>
+                    </FormGroupWithIcon>
 
                     <Button type='submit'>Create Deck</Button>
                 </Form>
