@@ -4,10 +4,8 @@ import { useCheckbox, useForm } from "hooks";
 import {Button, Card, CardHeader, CardBody, CheckboxInput, Form, FormInput, FormLabel, StyledCheckbox} from "elements";
 import { Toggle } from "utilities";
 
-const CardSearchForm = () => {
+const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [colorsVisible, setColorsVisible] = useState(false);
-  const [cmcsAreVisable, setCmcsAreVisable] = useState(false);
   const [values, handleFormChange] = useForm({ queryInput: "" });
   const [checkboxes, handleCheckboxChange] = useCheckbox({
     whiteCheckbox: false,
@@ -69,44 +67,44 @@ const CardSearchForm = () => {
           let data = myJson.data;
 
           for (let i = 0; i < data.length; i++) {
-            const cardFaces = data[i].card_faces[0].image_uris;
-            const cardImg = data[i].image_uris;
-            const card = {};
-            //add name
-            if (data[i].name) {
-              card.name = data[i].name;
-            }
-            //add image
-            if (cardFaces) {
-              if (cardFaces.normal) {
-                card.img_url = cardFaces.normal;
-              } else if (cardFaces.samll) {
-                card.img_url = cardFaces.small;
-              } else if (cardFaces.large) {
-                card.img_url = cardFaces.large;
-              } else if (cardFaces.png) {
-                card.img_url = cardFaces.png;
-              } else if (cardFaces.border_crop) {
-                card.img_url = cardFaces.border_crop;
-              } else if (cardFaces.art_crop) {
-                card.img_url = cardFaces.art_crop;
-              }
-            }
-            if (cardImg) {
-              if (cardImg.normal) {
-                card.img_url = cardImg.normal;
-              } else if (cardImg.samll) {
-                card.img_url = cardImg.small;
-              } else if (cardImg.large) {
-                card.img_url = cardImg.large;
-              } else if (cardImg.png) {
-                card.img_url = cardImg.png;
-              } else if (cardImg.border_crop) {
-                card.img_url = cardImg.border_crop;
-              } else if (cardImg.art_crop) {
-                card.img_url = cardImg.art_crop;
-              }
-            }
+            // const cardFaces = data[i].card_faces[0].image_uris;
+            // const cardImg = data[i].image_uris;
+            // const card = {};
+            // //add name
+            // if (data[i].name) {
+            //   card.name = data[i].name;
+            // }
+            // //add image
+            // if (cardFaces) {
+            //   if (cardFaces.normal) {
+            //     card.img_url = cardFaces.normal;
+            //   } else if (cardFaces.samll) {
+            //     card.img_url = cardFaces.small;
+            //   } else if (cardFaces.large) {
+            //     card.img_url = cardFaces.large;
+            //   } else if (cardFaces.png) {
+            //     card.img_url = cardFaces.png;
+            //   } else if (cardFaces.border_crop) {
+            //     card.img_url = cardFaces.border_crop;
+            //   } else if (cardFaces.art_crop) {
+            //     card.img_url = cardFaces.art_crop;
+            //   }
+            // }
+            // if (cardImg) {
+            //   if (cardImg.normal) {
+            //     card.img_url = cardImg.normal;
+            //   } else if (cardImg.samll) {
+            //     card.img_url = cardImg.small;
+            //   } else if (cardImg.large) {
+            //     card.img_url = cardImg.large;
+            //   } else if (cardImg.png) {
+            //     card.img_url = cardImg.png;
+            //   } else if (cardImg.border_crop) {
+            //     card.img_url = cardImg.border_crop;
+            //   } else if (cardImg.art_crop) {
+            //     card.img_url = cardImg.art_crop;
+            //   }
+            // }
 
             if (data[i].card_faces) {
               card[i] = {
@@ -133,6 +131,10 @@ const CardSearchForm = () => {
           console.log(card);
           //data to save:
           //CMC, colors, image_url, mana_cost, name, prices,
+
+          setSearchWasSuccessful(true);
+          setSearchResults(card)
+
           setFormSubmitted(false);
         });
     }
