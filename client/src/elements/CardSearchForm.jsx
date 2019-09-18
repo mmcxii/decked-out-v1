@@ -56,11 +56,7 @@ const CardSearchForm = () => {
 
   useEffect(() => {
     let query;
-<<<<<<< HEAD
     const cards = [];
-=======
-    const card = [];
->>>>>>> master
 
     function apiCall() {
       console.log("in api call");
@@ -73,61 +69,51 @@ const CardSearchForm = () => {
           let data = myJson.data;
 
           for (let i = 0; i < data.length; i++) {
-            const cardFaces = data[i].card_faces[0].image_uris;
-            const cardImg = data[i].image_uris;
             const card = {};
             //add name
             if (data[i].name) {
               card.name = data[i].name;
             }
             //add image
-            if (cardFaces) {
-              if (cardFaces.normal) {
-                card.img_url = cardFaces.normal;
-              } else if (cardFaces.samll) {
-                card.img_url = cardFaces.small;
-              } else if (cardFaces.large) {
-                card.img_url = cardFaces.large;
-              } else if (cardFaces.png) {
-                card.img_url = cardFaces.png;
-              } else if (cardFaces.border_crop) {
-                card.img_url = cardFaces.border_crop;
-              } else if (cardFaces.art_crop) {
-                card.img_url = cardFaces.art_crop;
-              }
-<<<<<<< HEAD
-            }else if (cardImg) {
-=======
-            }
-            if (cardImg) {
->>>>>>> master
-              if (cardImg.normal) {
-                card.img_url = cardImg.normal;
-              } else if (cardImg.samll) {
-                card.img_url = cardImg.small;
-              } else if (cardImg.large) {
-                card.img_url = cardImg.large;
-              } else if (cardImg.png) {
-                card.img_url = cardImg.png;
-              } else if (cardImg.border_crop) {
-                card.img_url = cardImg.border_crop;
-              } else if (cardImg.art_crop) {
-                card.img_url = cardImg.art_crop;
+            if (data[i].card_faces) {
+                card.img_url = data[i].card_faces[0].image_uris.normal
+              } else if (data[i].card_faces[0].image_uris.samll) {
+                card.img_url = data[i].card_faces[0].image_uris.small;
+              } else if (data[i].card_faces[0].image_uris.large) {
+                card.img_url = data[i].card_faces[0].image_uris.large;
+              } else if (data[i].card_faces[0].image_uris.png) {
+                card.img_url = data[i].card_faces[0].image_uris.png;
+              } else if (data[i].card_faces[0].image_uris.border_crop) {
+                card.img_url = data[i].card_faces[0].image_uris.border_crop;
+              } else if (data[i].card_faces[0].image_uris.art_crop) {
+                card.img_url = data[i].card_faces[0].image_uris.art_crop;
+            }else if (data[i].image_uris) {
+              if (data[i].image_uris.normal) {
+                card.img_url = data[i].image_uris.normal;
+              } else if (data[i].image_uris.samll) {
+                card.img_url = data[i].image_uris.small;
+              } else if (data[i].image_uris.large) {
+                card.img_url = data[i].image_uris.large;
+              } else if (data[i].image_uris.png) {
+                card.img_url = data[i].image_uris.png;
+              } else if (data[i].image_uris.border_crop) {
+                card.img_url = data[i].image_uris.border_crop;
+              } else if (data[i].image_uris.art_crop) {
+                card.img_url = data[i].image_uris.art_crop;
               }
             }
-<<<<<<< HEAD
-            if(data[i].card_faces[0].colors){
+            if(data[i].card_faces){
                 card.color = data[i].card_faces[0].colors;
             }else{
                 card.color = data[i].colors;
             }
-            if(data[i].card_faces[0].cmc){
+            if(data[i].card_faces){
                 card.CMC = data[i].card_faces[0].cmc;
             }else{
                 card.CMC = data[i].cmc;
             }
 
-            if(data[i].card_faces[0].mana_cost){
+            if(data[i].card_faces){
                 card.mana_cost = data[i].card_faces[0].mana_cost;
             }else{
                 card.mana_cost = data[i].cmc;
@@ -148,7 +134,7 @@ const CardSearchForm = () => {
             //     price: data[i].prices
             //   };
             // } else {
-            //   card[i] = {
+            //   cards[i] = {
             //     id: i,
             //     name: data[i].name,
             //     color: data[i].colors,
@@ -160,32 +146,6 @@ const CardSearchForm = () => {
             // }
           }
           console.log(cards);
-=======
-
-            if (data[i].card_faces) {
-              card[i] = {
-                id: i,
-                name: data[i].name,
-                color: data[i].card_faces[0].colors,
-                img_url: data[i].card_faces[0].image_uris.normal,
-                CMC: data[i].card_faces[0].cmc,
-                mana_cost: data[i].card_faces[0].mana_cost,
-                price: data[i].prices
-              };
-            } else {
-              card[i] = {
-                id: i,
-                name: data[i].name,
-                color: data[i].colors,
-                img_url: data[i].image_uris,
-                CMC: data[i].cmc,
-                mana_cost: data[i].mana_cost,
-                price: data[i].prices
-              };
-            }
-          }
-          console.log(card);
->>>>>>> master
           //data to save:
           //CMC, colors, image_url, mana_cost, name, prices,
           setFormSubmitted(false);
