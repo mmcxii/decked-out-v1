@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { spacing } from 'utilities';
 import { ButtonLink } from 'elements';
 
 const Account = ({ user }) => {
@@ -36,11 +38,12 @@ const Account = ({ user }) => {
                         <ButtonLink as={Link} to='/createdeck'>
                             Add New Deck
                         </ButtonLink>
+
                         {userDecks.length > 0 ? (
                             userDecks.map((deck, index) => (
-                                <h4 key={index}>
-                                    <Link to={`/account/${deck.split(' ').join('-')}`}>{deck}</Link>
-                                </h4>
+                                <DeckTitle key={index} to={`/account/${deck.split(' ').join('-')}`}>
+                                    {deck}
+                                </DeckTitle>
                             ))
                         ) : (
                             <p>
@@ -63,5 +66,11 @@ const UserName = styled.h2`
 `;
 
 const SectionHeader = styled.h3`
+    font-size: 1.5rem;
+`;
+
+const DeckTitle = styled(ButtonLink)`
+    display: block;
     font-size: 1.25rem;
+    margin: ${spacing.sm} 0;
 `;

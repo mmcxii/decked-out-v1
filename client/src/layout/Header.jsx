@@ -1,20 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Banner, Button } from 'elements';
+import { Banner, ButtonLink } from 'elements';
 import { spacing, dark } from 'utilities';
 
 const Header = ({ user }) => {
     return (
         <HeaderWrapper>
-            <ManaBanner />
+            <Banner />
             <Title>Welcome to Decked Out</Title>
             {user ? (
-                <p>Welcome back {user.username}</p>
+                <SubTitle>
+                    Welcome back <Link to='/account'>{user.username}</Link>
+                </SubTitle>
             ) : (
-                <SignIn as={Link} to='/login'>
-                    Log In
-                </SignIn>
+                <SignIn to='/login'>Log In</SignIn>
             )}
         </HeaderWrapper>
     );
@@ -35,9 +35,11 @@ const Title = styled.h1`
     margin-top: ${spacing.sm};
 `;
 
-const ManaBanner = styled(Banner)``;
+const SubTitle = styled.p`
+    font-size: 1.25rem;
+    font-weight: bolder;
+`;
 
-const SignIn = styled(Button)`
-    text-decoration: none;
+const SignIn = styled(ButtonLink)`
     color: ${dark};
 `;

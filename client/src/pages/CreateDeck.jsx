@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
+
+import { useForm } from 'hooks';
 import { Button, Card, CardBody, CardHeader, Form, FormInput, FormLabel } from 'elements';
 
 const CreateDeck = ({ history }) => {
     const [formIsSubmitted, setFormIsSubmitted] = useState(false);
-    const [deckName, setDeckName] = useState('');
+    const [values, handleChange] = useForm({ deckName: '' });
 
     useEffect(() => {
         const createNewDeck = async () => {
+            const { deckName } = values;
+
             const res = await fetch('/api/createdeck', {
                 method: 'POST',
                 headers: {
@@ -18,7 +22,7 @@ const CreateDeck = ({ history }) => {
             });
 
             if (res.status === 200) {
-                history.push('/account');
+                history.push(`/account/${deckName.split(' ').join('-')}`);
             } else {
                 console.log(res.status);
             }
@@ -30,30 +34,29 @@ const CreateDeck = ({ history }) => {
     }, [formIsSubmitted]);
 
     return (
-        <>
-            <Card>
-                <CardHeader>Create a New Deck</CardHeader>
-                <CardBody>
-                    <Form
-                        onSubmit={e => {
-                            e.preventDefault();
+        <Card>
+            <CardHeader>Create a New Deck</CardHeader>
+            <CardBody>
+                <Form
+                    onSubmit={e => {
+                        e.preventDefault();
 
-                            setFormIsSubmitted(true);
-                        }}
-                    >
-                        <FormLabel>Deck Name</FormLabel>
-                        <FormInput
-                            type='text'
-                            placeholder='What is your deck called?'
-                            value={deckName}
-                            onChange={e => setDeckName(e.target.value)}
-                        />
+                        setFormIsSubmitted(true);
+                    }}
+                >
+                    <FormLabel>Deck Name</FormLabel>
+                    <FormInput
+                        name='deckName'
+                        type='text'
+                        placeholder='What is your deck called?'
+                        value={values.deckName}
+                        onChange={handleChange}
+                    />
 
-                        <Button type='submit'>Create Deck</Button>
-                    </Form>
-                </CardBody>
-            </Card>
-        </>
+                    <Button type='submit'>Create Deck</Button>
+                </Form>
+            </CardBody>
+        </Card>
     );
 };
 
