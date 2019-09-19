@@ -22,7 +22,7 @@ const apiRoutes = require('./routes/apiRoutes');
 // Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, './client/build')));
+app.use(express.static(path.join(__dirname, './client/build/static')));
 
 //Authentication Middleware
 app.use(require('express-session')({ secret: secret, resave: true, saveUninitialized: true }));
