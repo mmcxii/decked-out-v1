@@ -1,6 +1,10 @@
+//* Packages
 import React, { useEffect, useState } from 'react';
 
+//* Utilities
 import { spacing } from 'utilities';
+
+//* Elements
 import { Button, CardBody, CardHeader, Modal } from 'elements';
 import { Board, CardItem } from './Deck';
 

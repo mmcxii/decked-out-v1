@@ -1,8 +1,12 @@
+//* Packages
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { Button, ButtonGroup } from 'elements';
+//* Utilities
 import { absolute, spacing, Toggle } from 'utilities';
+
+//* Elements
+import { Button, ButtonGroup } from 'elements';
 import EditDeckModal from './EditDeckModal';
 import RemoveCardsModal from './RemoveCardsModal';
 
@@ -126,6 +130,7 @@ const Deck = ({
 
 export default Deck;
 
+//* Styled Components
 const Wrapper = styled.div`
     position: relative;
 `;

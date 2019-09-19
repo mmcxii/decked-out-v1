@@ -1,8 +1,12 @@
+//* Packages
 import React, { useEffect, useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
+//* Utilities
 import { absolute, spacing } from 'utilities';
+
+//* Elements
 import { Button, ButtonLink } from 'elements';
 import DeckItem from './DeckItem';
 
@@ -73,6 +77,7 @@ const Account = ({ history, user, setUser }) => {
 
 export default withRouter(Account);
 
+//* Styled Components
 const UserName = styled.h2`
     font-size: 1.75rem;
     text-align: center;

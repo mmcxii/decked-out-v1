@@ -1,7 +1,11 @@
+//* Packages
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+
+//* Utilities
 import { rounded, spacing, manaBlue, manaBlue2, transition } from 'utilities';
 
+//* Styled Components
 export const Button = styled.button`
     cursor: pointer;
     border-radius: ${rounded};

@@ -1,6 +1,10 @@
+//* Packages
 import React from 'react';
 
+//* Utilities
 import { Toggle } from 'utilities';
+
+//* Elements
 import { Button } from 'elements';
 import AddPlayerModal from './AddPlayerModal';
 

@@ -1,12 +1,17 @@
+//* Packages
 import React from 'react';
 import styled from 'styled-components';
 import { animated, useSpring } from 'react-spring';
 
+//* Utilities
 import { fixed, absolute, Portal } from 'utilities';
+
+//* Elements
 import { Card } from './Card';
 import Container from './Container';
 
 const Modal = ({ children, setToggle, isToggled }) => {
+    // Fade in and slide on enter
     const modalCardProps = useSpring({
         opacity: 1,
         transform: 'translate3d(0, 0px, 0)',
@@ -36,6 +41,7 @@ const Modal = ({ children, setToggle, isToggled }) => {
 
 export default Modal;
 
+//* Styled Components
 const ModalWrapper = styled.div`
     height: 100%;
     width: 100%;

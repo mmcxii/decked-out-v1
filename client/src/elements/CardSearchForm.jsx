@@ -1,7 +1,13 @@
+//* Packages
 import React, { useState, useEffect } from "react";
 
+//* Hooks
 import { useCheckbox, useForm } from "hooks";
+
+//* Utilities
 import { Toggle } from "utilities";
+
+//* Elements
 import { Button, CheckboxInput, Form, FormInput, FormLabel } from "elements";
 
 const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {

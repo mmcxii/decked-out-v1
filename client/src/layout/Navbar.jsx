@@ -1,7 +1,12 @@
+//* Packages
 import React from 'react';
 import { NavLink as Link } from 'react-router-dom';
 import styled from 'styled-components';
+
+//* Utilities
 import { spacing, brown, rounded, fixed, light, absolute, transition } from 'utilities';
+
+//* Elements
 import { Container } from './Container';
 
 const Navbar = ({ user }) => {
@@ -40,6 +45,7 @@ const Navbar = ({ user }) => {
 
 export default Navbar;
 
+//* Styled Components
 const Nav = styled.nav`
     ${fixed({ y: 'bottom' })};
     padding: ${spacing.sm};

@@ -1,7 +1,11 @@
+//* Packages
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 
+//* Hooks
 import { useForm } from 'hooks';
+
+//* Elements
 import { Button, Card, CardBody, CardHeader, Form, FormInput, FormGroupWithIcon, FormLabel } from 'elements';
 
 const CreateUser = ({ history, setUser }) => {

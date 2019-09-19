@@ -1,7 +1,11 @@
+//* Packages
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 
+//* Hooks
 import { useForm } from 'hooks';
+
+//* Elements
 import {
     Button,
     ButtonGroup,
@@ -18,7 +22,6 @@ import {
 const Login = ({ history, location, setUser }) => {
     const [formIsSubmitted, setFormIsSubmitted] = useState(false);
     const [userMadeError, setUserMadeError] = useState(false);
-
     const [values, handleChange] = useForm({ username: '', password: '' });
 
     useEffect(() => {

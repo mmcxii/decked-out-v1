@@ -60,6 +60,7 @@ const App = () => {
 
 export default App;
 
+//* Styled Components
 const AppWrapper = styled(Container)`
     min-height: 100vh;
     display: grid;

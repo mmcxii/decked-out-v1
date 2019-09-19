@@ -1,6 +1,10 @@
+//* Packages
 import styled from 'styled-components';
+
+//* Utilities
 import { spacing } from 'utilities';
 
+//* Styled Components
 export const CardDisplay = styled.article`
     display: flex;
     flex-wrap: wrap;

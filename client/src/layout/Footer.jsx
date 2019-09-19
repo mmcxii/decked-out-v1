@@ -1,3 +1,4 @@
+//* Packages
 import React from 'react';
 import styled from 'styled-components';
 
@@ -17,6 +18,7 @@ const Footer = () => {
 
 export default Footer;
 
+//* Styled Components
 const FooterWrapper = styled.footer`
     grid-area: footer;
     text-align: center;

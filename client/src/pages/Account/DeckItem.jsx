@@ -1,8 +1,12 @@
+//* Packages
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+//* Utilities
 import { spacing, absolute, transition, manaRed, Toggle } from 'utilities';
-import { Button, ButtonLink, CardBody, CardHeader, Modal } from 'elements';
+
+//* Elements
+import { Button, ButtonGroup, ButtonLink, CardBody, CardHeader, Modal } from 'elements';
 
 const DeckItem = ({ deckName, setFetchDecks }) => {
     const [userDeletedDeck, setUserDeletedDeck] = useState(false);
@@ -46,17 +50,19 @@ const DeckItem = ({ deckName, setFetchDecks }) => {
                                         <strong>This action can not be undone.</strong>
                                     </p>
 
-                                    <Button onClick={() => setToggle(false)}>
-                                        No, don't delete {deckName}
-                                    </Button>
-                                    <Button
-                                        onClick={() => {
-                                            setUserDeletedDeck(true);
-                                            setToggle(false);
-                                        }}
-                                    >
-                                        Yes, I want to delete {deckName}
-                                    </Button>
+                                    <ButtonGroup>
+                                        <Button onClick={() => setToggle(false)}>
+                                            No, don't delete {deckName}
+                                        </Button>
+                                        <Button
+                                            onClick={() => {
+                                                setUserDeletedDeck(true);
+                                                setToggle(false);
+                                            }}
+                                        >
+                                            Yes, I want to delete {deckName}
+                                        </Button>
+                                    </ButtonGroup>
                                 </CardBody>
                             </Modal>
                         )}
@@ -69,6 +75,7 @@ const DeckItem = ({ deckName, setFetchDecks }) => {
 
 export default DeckItem;
 
+//* Styled Components
 const Wrapper = styled.article`
     position: relative;
 `;
