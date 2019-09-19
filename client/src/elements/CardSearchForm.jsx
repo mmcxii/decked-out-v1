@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useCheckbox, useForm } from "hooks";
 
-import {Button, Card, CardHeader, CardBody, CheckboxInput, Form, FormInput, FormLabel, StyledCheckbox} from "elements";
+import { useCheckbox, useForm } from "hooks";
 import { Toggle } from "utilities";
+import { Button, CheckboxInput, Form, FormInput, FormLabel } from "elements";
 
 const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
+    //hooks
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [values, handleFormChange] = useForm({ queryInput: "" });
   const [checkboxes, handleCheckboxChange] = useCheckbox({
@@ -28,6 +29,7 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
   });
 
   const checkboxItems = {
+      //color array for checkbox mapping
     colors: [
       { name: "whiteCheckbox", label: "White" },
       { name: "blueCheckbox", label: "Blue" },
@@ -36,7 +38,7 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
       { name: "greenCheckbox", label: "Green" },
       { name: "colorlessCheckbox", label: "Colorless" }
     ],
-
+    //CMC array to set up checkbox mapping
     manaCosts: [
       { name: "cmc0Checkbox", label: "0" },
       { name: "cmc1Checkbox", label: "1" },
@@ -54,6 +56,7 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
 
   useEffect(() => {
     let query;
+    //card object to be exported
     const card = [];
 
     function apiCall() {
@@ -63,83 +66,73 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
           return response.json();
         })
         .then(function(myJson) {
-          console.log(myJson.data);
           let data = myJson.data;
-
-          for (let i = 0; i < data.length; i++) {
-            // const cardFaces = data[i].card_faces[0].image_uris;
-            // const cardImg = data[i].image_uris;
-            // const card = {};
-            // //add name
-            // if (data[i].name) {
-            //   card.name = data[i].name;
-            // }
-            // //add image
-            // if (cardFaces) {
-            //   if (cardFaces.normal) {
-            //     card.img_url = cardFaces.normal;
-            //   } else if (cardFaces.samll) {
-            //     card.img_url = cardFaces.small;
-            //   } else if (cardFaces.large) {
-            //     card.img_url = cardFaces.large;
-            //   } else if (cardFaces.png) {
-            //     card.img_url = cardFaces.png;
-            //   } else if (cardFaces.border_crop) {
-            //     card.img_url = cardFaces.border_crop;
-            //   } else if (cardFaces.art_crop) {
-            //     card.img_url = cardFaces.art_crop;
-            //   }
-            // }
-            // if (cardImg) {
-            //   if (cardImg.normal) {
-            //     card.img_url = cardImg.normal;
-            //   } else if (cardImg.samll) {
-            //     card.img_url = cardImg.small;
-            //   } else if (cardImg.large) {
-            //     card.img_url = cardImg.large;
-            //   } else if (cardImg.png) {
-            //     card.img_url = cardImg.png;
-            //   } else if (cardImg.border_crop) {
-            //     card.img_url = cardImg.border_crop;
-            //   } else if (cardImg.art_crop) {
-            //     card.img_url = cardImg.art_crop;
-            //   }
-            // }
-
-            if (data[i].card_faces) {
-              card[i] = {
-                id: i,
-                name: data[i].name,
-                color: data[i].card_faces[0].colors,
-                img_url: data[i].card_faces[0].image_uris.normal,
-                CMC: data[i].card_faces[0].cmc,
-                mana_cost: data[i].card_faces[0].mana_cost,
-                price: data[i].prices
-              };
-            } else {
-              card[i] = {
-                id: i,
-                name: data[i].name,
-                color: data[i].colors,
-                img_url: data[i].image_uris,
-                CMC: data[i].cmc,
-                mana_cost: data[i].mana_cost,
-                price: data[i].prices
-              };
+          //checking if any cards exist
+          if (data !== undefined) {
+            for (let i = 0; i < data.length; i++) {
+                //set up oracle variable and check/update if it exists
+              let oracle;
+              if (data[i].oracle_text) {
+                oracle = data[i].oracle_text;
+              } else {
+                oracle = "";
+              }
+              //setting up card object
+              if (data[i].card_faces) {
+                //set up the image value
+                let img;
+                if (data[i].card_faces[0].image_uris) {
+                  if (data[i].card_faces[0].image_uris.normal) {
+                    img = data[i].card_faces[0].image_uris.normal;
+                  } else if (data[i].card_faces[0].image_uris.samll) {
+                    img = data[i].card_faces[0].image_uris.small;
+                  } else if (data[i].card_faces[0].image_uris.large) {
+                    img = data[i].card_faces[0].image_uris.large;
+                  } else if (data[i].card_faces[0].image_uris.png) {
+                    img = data[i].card_faces[0].image_uris.png;
+                  } else if (data[i].card_faces[0].image_uris.border_crop) {
+                    img = data[i].card_faces[0].image_uris.border_crop;
+                  } else if (data[i].card_faces[0].image_uris.art_crop) {
+                    img = data[i].card_faces[0].image_uris.art_crop;
+                  }
+                } else {
+                  img = "No Image Found";
+                }
+                //sets up the card object
+                card[i] = {
+                  id: i,
+                  name: data[i].name,
+                  color: data[i].card_faces[0].colors,
+                  img_url: img,
+                  CMC: data[i].card_faces[0].cmc,
+                  mana_cost: data[i].card_faces[0].mana_cost,
+                  price: data[i].prices,
+                  oracle_text: oracle
+                };
+              } else {
+                //card object for single face cards
+                card[i] = {
+                  id: i,
+                  name: data[i].name,
+                  color: data[i].colors,
+                  img_url: data[i].image_uris,
+                  CMC: data[i].cmc,
+                  mana_cost: data[i].mana_cost,
+                  price: data[i].prices,
+                  oracle_text: oracle
+                };
+              }
             }
           }
           console.log(card);
           //data to save:
           //CMC, colors, image_url, mana_cost, name, prices,
-
-          setSearchWasSuccessful(true);
-          setSearchResults(card)
-
           setFormSubmitted(false);
         });
     }
 
     const buildSearchQuery = () => {
+        //building a checkbox object
       const {
         whiteCheckbox,
         blueCheckbox,
@@ -182,6 +175,7 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
       const cmc9 = "9";
       const cmc10 = "10";
 
+      //variables to set up search query
       const search = queryInput;
       let color = [];
       let CMC = [
@@ -284,6 +278,7 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
       buildSearchQuery();
     }
   }, [formSubmitted]);
+
   return (
     <>
       <Form
@@ -300,6 +295,8 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
           value={values.queryInput}
           onChange={handleFormChange}
         />
+
+        <Button type="submit">Search</Button>
       </Form>
 
       <Toggle>
@@ -343,8 +340,6 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
           </>
         )}
       </Toggle>
-
-      <Button type="submit">Search</Button>
     </>
   );
 };
