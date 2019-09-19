@@ -25,9 +25,28 @@ export const ButtonLink = styled(Link)`
     border: none;
     font-weight: bolder;
     background: ${manaBlue2};
-    ${transition({ prop: 'background' })}
+    ${transition({ prop: 'background' })};
 
     &:hover {
         background: ${manaBlue};
+    }
+`;
+
+export const ButtonGroup = styled.div`
+    display: flex;
+    flex-direction: column;
+
+    > button {
+        width: 100%;
+        margin: ${spacing.xs} 0;
+    }
+
+    @media screen and (min-width: 768px) {
+        flex-direction: row;
+        justify-content: space-evenly;
+
+        > button {
+            margin: 0 ${spacing.xs};
+        }
     }
 `;
