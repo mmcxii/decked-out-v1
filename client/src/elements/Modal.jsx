@@ -1,16 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
+import { animated, useSpring } from 'react-spring';
+
 import { fixed, absolute, Portal } from 'utilities';
 import { Card } from './Card';
 import Container from './Container';
 
 const Modal = ({ children, setToggle, isToggled }) => {
+    const modalCardProps = useSpring({
+        opacity: 1,
+        transform: 'translate3d(0, 0px, 0)',
+        from: {
+            opacity: 0,
+            transform: 'translate3d(0, -50px, 0)',
+        },
+    });
+
     return (
         <Portal>
             {isToggled && (
                 <ModalWrapper>
                     <Container>
-                        <ModalCard>
+                        <ModalCard style={modalCardProps}>
                             {children}
                             <CloseButton onClick={() => setToggle(false)}>&times;</CloseButton>
                         </ModalCard>
@@ -34,7 +45,7 @@ const ModalWrapper = styled.div`
     ${fixed({})};
 `;
 
-const ModalCard = styled(Card)`
+const ModalCard = styled(animated(Card))`
     position: relative;
     z-index: 10;
     min-width: 300px;
