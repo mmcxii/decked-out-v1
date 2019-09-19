@@ -1,7 +1,7 @@
 //* Packages
 import React from 'react';
 import styled from 'styled-components';
-import { animated, useSpring } from 'react-spring';
+import { animated, useSpring, config } from 'react-spring';
 
 //* Utilities
 import { fixed, absolute, Portal } from 'utilities';
@@ -19,7 +19,10 @@ const Modal = ({ children, setToggle, isToggled }) => {
             opacity: 0,
             transform: 'translate3d(0, -50px, 0)',
         },
+        config: config.wobbly,
     });
+
+    const modalBackgroundProps = useSpring({ opacity: 1, from: { opacity: 0 } });
 
     return (
         <Portal>
@@ -32,7 +35,7 @@ const Modal = ({ children, setToggle, isToggled }) => {
                         </ModalCard>
                     </Container>
 
-                    <Background onClick={() => setToggle(false)} />
+                    <Background style={modalBackgroundProps} onClick={() => setToggle(false)} />
                 </ModalWrapper>
             )}
         </Portal>
