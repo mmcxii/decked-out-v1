@@ -49,6 +49,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname,'client/build/index.html'));
 })
 
+app.get('*', (req, res) => {
+    res.redirect('/');
+})
+
 const syncOptions = { force: false };
 
 // If running a test, set syncOptions.force to true
