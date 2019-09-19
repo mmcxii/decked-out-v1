@@ -22,7 +22,7 @@ const apiRoutes = require('./routes/apiRoutes');
 // Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(express.static('client/public'));
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 //Authentication Middleware
 app.use(require('express-session')({ secret: secret, resave: true, saveUninitialized: true }));
@@ -46,7 +46,7 @@ app.use('/', authRoutes);
 app.use('/', apiRoutes);
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname+'/client/build/index.html'));
+    res.sendFile(path.join(__dirname,'/client/build/index.html'));
 })
 
 const syncOptions = { force: false };
