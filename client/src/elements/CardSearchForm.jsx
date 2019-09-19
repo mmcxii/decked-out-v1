@@ -125,6 +125,8 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
             }
           }
           console.log(card);
+          setSearchWasSuccessful(true);
+          setSearchResults(card);
           //data to save:
           //CMC, colors, image_url, mana_cost, name, prices,
           setFormSubmitted(false);
