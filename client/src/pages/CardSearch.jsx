@@ -6,9 +6,9 @@ import { Toggle, spacing } from 'utilities';
 const CardSearch = () => {
     const [searchWasSuccessful, setSearchWasSuccessful] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
-
+    console.log('hi');
     return (
-        <>
+        <> {console.log('I\'m in the return statemnt')}
             <Card>
                 <CardHeader as='h2'>Oracle Search</CardHeader>
                 <CardBody>
@@ -27,6 +27,7 @@ const CardSearch = () => {
                             {searchResults.map(card => (
                                 <article key={card.id}>
                                     <Toggle>
+                                    {console.log('hi')}
                                         {({ isToggled, setToggle }) => (
                                             <>
                                                 <CardImage
