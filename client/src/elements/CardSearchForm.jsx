@@ -5,6 +5,7 @@ import { Toggle } from "utilities";
 import { Button, CheckboxInput, Form, FormInput, FormLabel } from "elements";
 
 const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
+    //hooks
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [values, handleFormChange] = useForm({ queryInput: "" });
   const [checkboxes, handleCheckboxChange] = useCheckbox({
@@ -28,6 +29,7 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
   });
 
   const checkboxItems = {
+      //color array for checkbox mapping
     colors: [
       { name: "whiteCheckbox", label: "White" },
       { name: "blueCheckbox", label: "Blue" },
@@ -36,7 +38,7 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
       { name: "greenCheckbox", label: "Green" },
       { name: "colorlessCheckbox", label: "Colorless" }
     ],
-    //set up
+    //CMC array to set up checkbox mapping
     manaCosts: [
       { name: "cmc0Checkbox", label: "0" },
       { name: "cmc1Checkbox", label: "1" },
@@ -54,6 +56,7 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
 
   useEffect(() => {
     let query;
+    //card object to be exported
     const card = [];
 
     function apiCall() {
@@ -63,18 +66,19 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
           return response.json();
         })
         .then(function(myJson) {
-          console.log(myJson.data);
           let data = myJson.data;
+          //checking if any cards exist
           if (data !== undefined) {
             for (let i = 0; i < data.length; i++) {
+                //set up oracle variable and check/update if it exists
               let oracle;
               if (data[i].oracle_text) {
                 oracle = data[i].oracle_text;
               } else {
                 oracle = "";
               }
+              //setting up card object
               if (data[i].card_faces) {
-                console.log(data[i]);
                 //set up the image value
                 let img;
                 if (data[i].card_faces[0].image_uris) {
@@ -128,6 +132,7 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
     }
 
     const buildSearchQuery = () => {
+        //building a checkbox object
       const {
         whiteCheckbox,
         blueCheckbox,
@@ -170,6 +175,7 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
       const cmc9 = "9";
       const cmc10 = "10";
 
+      //variables to set up search query
       const search = queryInput;
       let color = [];
       let CMC = [
