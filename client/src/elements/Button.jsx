@@ -18,6 +18,7 @@ export const Button = styled.button`
 
 export const ButtonLink = styled(Link)`
     display: inline-block;
+    text-align: center;
     margin: ${spacing.xs} 0;
     cursor: pointer;
     border-radius: ${rounded};
@@ -36,7 +37,7 @@ export const ButtonGroup = styled.div`
     display: flex;
     flex-direction: column;
 
-    > button {
+    > * {
         width: 100%;
         margin: ${spacing.xs} 0;
     }
@@ -45,7 +46,7 @@ export const ButtonGroup = styled.div`
         flex-direction: row;
         justify-content: space-evenly;
 
-        > button {
+        > * {
             margin: 0 ${spacing.xs};
         }
     }
