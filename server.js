@@ -3,8 +3,12 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 5000;
 const secret = process.env.SECRET;
+const path = require('path');
 
 const db = require('./models');
+
+// Serve static files from react app
+app.use(express.static(path.join(__dirname, 'client/build')));
 // const flash = require('connect-flash');
 
 // Passport Config
@@ -18,7 +22,7 @@ const apiRoutes = require('./routes/apiRoutes');
 // Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(express.static('client/public'));
+
 
 //Authentication Middleware
 app.use(require('express-session')({ secret: secret, resave: true, saveUninitialized: true }));
@@ -35,8 +39,15 @@ app.use(passport.session()); //persistent login sessions
 // })
 
 // Routes
+
+
+
 app.use('/', authRoutes);
 app.use('/', apiRoutes);
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname,'client/build/index.html'));
+})
 
 const syncOptions = { force: false };
 
