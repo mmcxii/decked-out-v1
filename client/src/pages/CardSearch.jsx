@@ -19,6 +19,7 @@ const CardSearch = () => {
                 </CardBody>
             </Card>
 
+            
             {searchWasSuccessful && (
                 <ResultsCard>
                     <CardHeader>Results</CardHeader>
