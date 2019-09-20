@@ -10,7 +10,11 @@ import { Toggle } from 'utilities';
 //* Elements
 import { Button, CheckboxInput, Form, FormInput, FormLabel } from 'elements';
 
-const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
+const CardSearchForm = ({
+  setSearchResults,
+  setSearchWasSuccessful,
+  setDataIsLoading
+}) => {
   //hooks
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [values, handleFormChange] = useForm({ queryInput: '' });
