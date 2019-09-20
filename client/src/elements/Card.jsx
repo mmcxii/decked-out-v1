@@ -2,7 +2,17 @@
 import styled from 'styled-components';
 
 //* Utilities
-import { rounded, spacing, manaWhite, manaWhite2, elevation, transition, dark } from 'utilities';
+import {
+    rounded,
+    spacing,
+    manaWhite,
+    manaWhite2,
+    manaRed,
+    manaRed2,
+    elevation,
+    transition,
+    dark,
+} from 'utilities';
 
 //* Styled Components
 export const Card = styled.div`
@@ -26,4 +36,17 @@ export const CardHeader = styled.h3`
 
 export const CardBody = styled.div`
     padding: ${spacing.md};
+`;
+
+export const CardError = styled(Card)`
+    background: ${manaRed2};
+    box-shadow: none;
+
+    &:hover {
+        box-shadow: none;
+    }
+
+    ${CardHeader} {
+        background: ${manaRed};
+    }
 `;

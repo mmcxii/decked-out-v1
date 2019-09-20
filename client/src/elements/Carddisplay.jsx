@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { spacing } from 'utilities';
 
 //* Styled Components
-export const CardDisplay = styled.article`
+export const CardDisplay = styled.section`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 //* Elements
 import { CardBody, CardHeader, CardImage, Modal } from 'elements';
-import { spacing, elevation } from 'utilities';
+import { spacing } from 'utilities';
 
 const SingleCardModal = ({ isToggled, setToggle, card }) => {
     const formattedOracleText = card.oracle_text.split('\n');
