@@ -80,7 +80,7 @@ const Login = ({ history, location, setUser }) => {
                             value={values.username}
                             onChange={handleChange}
                         />
-                        <i className='fad fa-user'></i>
+                        <i className='fad fa-user' />
                     </FormGroupWithIcon>
 
                     <FormGroupWithIcon>
@@ -92,7 +92,7 @@ const Login = ({ history, location, setUser }) => {
                             value={values.password}
                             onChange={handleChange}
                         />
-                        <i className='fad fa-lock-alt'></i>
+                        <i className='fad fa-lock-alt' />
                     </FormGroupWithIcon>
 
                     <ButtonGroup>
