@@ -24,6 +24,7 @@ const CardSearch = () => {
                 </CardBody>
             </Card>
 
+            
             {searchWasSuccessful && (
                 <ResultsCard>
                     <CardHeader>Results</CardHeader>
@@ -46,6 +47,9 @@ const CardSearch = () => {
                                                         <CardHeader>{card.name}</CardHeader>
                                                         <CardBody>
                                                             <img src={card.img_url.normal} alt={card.name} />
+                                                            {/* <button onClick={}>
+                                                                    <p>ADD CARD TO DECK</p>
+                                                                </button> */}
                                                         </CardBody>
                                                     </Modal>
                                                 )}
