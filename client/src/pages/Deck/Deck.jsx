@@ -181,7 +181,7 @@ const Sideboard = styled.section`
 `;
 
 const EditDeckButtons = styled(ButtonGroup)`
-    z-index: 5;
+    z-index: 2;
 
     @media screen and (min-width: 768px) {
         ${absolute({ x: 'right' })};

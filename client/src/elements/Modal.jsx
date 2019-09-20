@@ -52,6 +52,7 @@ const ModalWrapper = styled.div`
     justify-content: center;
     align-items: center;
     ${fixed({})};
+    z-index: 5;
 `;
 
 const ModalCard = styled(animated(Card))`
