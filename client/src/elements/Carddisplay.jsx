@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { spacing } from 'utilities';
 
-export const CardDisplay = styled.section`
+export const CardDisplay = styled.article`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

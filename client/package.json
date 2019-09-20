@@ -2,6 +2,7 @@
     "name": "decked-out",
     "version": "0.1.0",
     "private": true,
+    "homepage": "https://sheltered-hollows-99232.herokuapp.com/",
     "dependencies": {
         "node-sass": "^4.12.0",
         "react": "^16.9.0",

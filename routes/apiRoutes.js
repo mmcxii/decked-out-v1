@@ -34,7 +34,7 @@ router.post("/api/createuser", (req, res) => {
         });
       } else {
         res.json({
-          message: "Username alread in use."
+          message: "Username already in use."
         });
       }
     })
