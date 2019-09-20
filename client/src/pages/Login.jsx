@@ -1,6 +1,6 @@
 //* Packages
 import React, { useEffect, useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 //* Hooks
 import { useForm } from 'hooks';
@@ -81,7 +81,10 @@ const Login = ({ history, location, setUser }) => {
                 {userMadeError && (
                     <CardError>
                         <CardHeader as='h4'>Error: Username or Password was incorrect</CardHeader>
-                        <CardBody>{errorMessage}</CardBody>
+                        <CardBody>
+                            <p>{errorMessage}</p>
+                            <p><Link to='/reset'>Reset Password?</Link></p>
+                        </CardBody>
                     </CardError>
                 )}
                 <Form

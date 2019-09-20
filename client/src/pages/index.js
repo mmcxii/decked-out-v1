@@ -5,5 +5,6 @@ import CreateUser from './CreateUser';
 import Deck from './Deck';
 import Lifetracker from './Lifetracker';
 import Login from './Login';
+import ResetPassword from './ResetPassword';
 
-export { Account, CardSearch, CreateDeck, CreateUser, Deck, Lifetracker, Login };
+export { Account, CardSearch, CreateDeck, CreateUser, Deck, Lifetracker, Login, ResetPassword };
