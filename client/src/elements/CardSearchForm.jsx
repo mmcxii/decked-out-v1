@@ -121,7 +121,7 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
                   id: i,
                   name: data[i].name,
                   color: data[i].colors,
-                  img_url: data[i].image_uris,
+                  img_url: data[i].image_uris.normal,
                   CMC: data[i].cmc,
                   mana_cost: data[i].mana_cost,
                   price: data[i].prices,
