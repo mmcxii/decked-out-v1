@@ -1,10 +1,21 @@
 //* Packages
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 
 //* Elements
-import { Button, CardBody, CardDisplay, CardHeader, CardImage, CardSearchForm, Modal } from 'elements';
+import {
+    Button,
+    CardBody,
+    CardDisplay,
+    CardHeader,
+    CardImage,
+    CardSearchForm,
+    LoadingSpinner,
+    Modal,
+} from 'elements';
 
 const EditDeckModal = ({ isToggled, setToggle, deckName, setFetchDeck }) => {
+    const [dataIsLoading, setDataIsLoading] = useState(true);
     const [searchWasSuccessful, setSearchWasSuccessful] = useState(false);
     const [cardsShouldBeAdded, setCardsShouldBeAdded] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
@@ -39,70 +50,77 @@ const EditDeckModal = ({ isToggled, setToggle, deckName, setFetchDeck }) => {
     return (
         <Modal isToggled={isToggled} setToggle={setToggle}>
             <CardHeader as='h2'>{deckName}</CardHeader>
-            <CardBody>
+            <CardBody style={{ 'max-height': 'calc(100vh - 210px)', 'overflow-y': 'auto' }}>
                 <CardSearchForm
+                    setDataIsLoading={setDataIsLoading}
                     setSearchResults={setSearchResults}
                     setSearchWasSuccessful={setSearchWasSuccessful}
                 />
 
                 {searchWasSuccessful && (
                     <>
-                        <section>
-                            <h3>Main Deck</h3>
-                            <p>Click a card again to add it to your sideboard</p>
+                        {dataIsLoading ? (
+                            <LoadingSpinner />
+                        ) : (
+                            <Wrapper>
+                                <section>
+                                    <h3>Main Deck</h3>
+                                    <p>Click a card again to add it to your sideboard</p>
 
-                            <CardDisplay>
-                                {mainboardToAdd.map(card => (
-                                    <article key={card.id}>
-                                        <CardImage
-                                            src={card.img_url}
-                                            alt={card.name}
-                                            onClick={() => {
-                                                setMainboardToAdd(
-                                                    mainboardToAdd.filter(item => item.id !== card.id)
-                                                );
-                                                setSideboardToAdd([...sideboardToAdd, card]);
-                                            }}
-                                        />
-                                    </article>
-                                ))}
-                            </CardDisplay>
+                                    <CardDisplay>
+                                        {mainboardToAdd.map((card, index) => (
+                                            <article key={index}>
+                                                <CardImage
+                                                    src={card.img_url}
+                                                    alt={card.name}
+                                                    onClick={() => {
+                                                        setMainboardToAdd(
+                                                            mainboardToAdd.filter(item => item.id !== card.id)
+                                                        );
+                                                        setSideboardToAdd([...sideboardToAdd, card]);
+                                                    }}
+                                                />
+                                            </article>
+                                        ))}
+                                    </CardDisplay>
 
-                            <h3>Sideboard</h3>
-                            <p>Click a card again to remove it from the list</p>
-                            <CardDisplay>
-                                {sideboardToAdd.map(card => (
-                                    <article key={card.id}>
-                                        <CardImage
-                                            src={card.img_url}
-                                            alt={card.name}
-                                            onClick={() =>
-                                                setSideboardToAdd(
-                                                    sideboardToAdd.filter(item => item.id !== card.id)
-                                                )
-                                            }
-                                        />
-                                    </article>
-                                ))}
-                            </CardDisplay>
+                                    <h3>Sideboard</h3>
+                                    <p>Click a card again to remove it from the list</p>
+                                    <CardDisplay>
+                                        {sideboardToAdd.map((card, index) => (
+                                            <article key={index}>
+                                                <CardImage
+                                                    src={card.img_url}
+                                                    alt={card.name}
+                                                    onClick={() =>
+                                                        setSideboardToAdd(
+                                                            sideboardToAdd.filter(item => item.id !== card.id)
+                                                        )
+                                                    }
+                                                />
+                                            </article>
+                                        ))}
+                                    </CardDisplay>
 
-                            <Button onClick={() => setCardsShouldBeAdded(true)}>Add Cards</Button>
-                        </section>
+                                    <Button onClick={() => setCardsShouldBeAdded(true)}>Add Cards</Button>
+                                </section>
 
-                        <h3>Search Results</h3>
-                        <p>Click a card to add a copy to your deck</p>
+                                <h3>Search Results</h3>
+                                <p>Click a card to add a copy to your deck</p>
 
-                        <CardDisplay>
-                            {searchResults.map(card => (
-                                <article key={card.id}>
-                                    <CardImage
-                                        src={card.img_url}
-                                        alt={card.name}
-                                        onClick={() => setMainboardToAdd([...mainboardToAdd, card])}
-                                    />
-                                </article>
-                            ))}
-                        </CardDisplay>
+                                <CardDisplay>
+                                    {searchResults.map(card => (
+                                        <article key={card.id}>
+                                            <CardImage
+                                                src={card.img_url}
+                                                alt={card.name}
+                                                onClick={() => setMainboardToAdd([...mainboardToAdd, card])}
+                                            />
+                                        </article>
+                                    ))}
+                                </CardDisplay>
+                            </Wrapper>
+                        )}
                     </>
                 )}
             </CardBody>
@@ -111,3 +129,8 @@ const EditDeckModal = ({ isToggled, setToggle, deckName, setFetchDeck }) => {
 };
 
 export default EditDeckModal;
+
+const Wrapper = styled.section`
+    display: flex;
+    flex-direction: column;
+`;

@@ -13,7 +13,8 @@ export const CardDisplay = styled.article`
 `;
 
 export const CardImage = styled.img`
-    height: 250px;
+    /* height: 250px; */
+    max-width: 250px;
     margin: ${spacing.xs};
     cursor: pointer;
 `;
