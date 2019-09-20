@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Normalize from 'react-normalize';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 //* Utilities
 import { light, spacing, PrivateRoute } from 'utilities';
@@ -11,10 +11,7 @@ import { light, spacing, PrivateRoute } from 'utilities';
 import { Container, Footer, Header, Navbar } from 'layout';
 
 //* Pages
-import { Account, CardSearch, CreateDeck, Deck, Lifetracker, Login } from 'pages';
-
-//* Global Stylesheet
-import './Global.scss';
+import { Account, CardSearch, CreateDeck, CreateUser, Deck, Lifetracker, Login } from 'pages';
 
 const App = () => {
     //* App Level State:
@@ -24,29 +21,29 @@ const App = () => {
     return (
         <BrowserRouter>
             <Normalize />
+            <GlobalStyles />
 
             <AppWrapper>
-                {/* Static Layout Components */}
                 <Header user={user} />
                 <Navbar user={user} />
 
                 {/* Pages */}
                 <PageWrapper>
                     <Switch>
-                        <>
-                            <Route exact path='/' render={() => <Lifetracker user={user} />} />
-                            <PrivateRoute
-                                isLoggedIn={user}
-                                exact
-                                path='/account'
-                                component={Account}
-                                user={user}
-                            />
-                            <PrivateRoute isLoggedIn={user} path='/account/:deckname' component={Deck} />
-                            <Route path='/login' render={() => <Login setUser={setUser} />} />
-                            <Route path='/createdeck' component={CreateDeck} />
-                            <Route path='/cardsearch' component={CardSearch} />
-                        </>
+                        <Route exact path='/' render={() => <Lifetracker user={user} />} />
+                        <PrivateRoute
+                            isLoggedIn={user}
+                            exact
+                            path='/account'
+                            component={Account}
+                            user={user}
+                            setUser={setUser}
+                        />
+                        <PrivateRoute isLoggedIn={user} path='/account/:deckname' component={Deck} />
+                        <Route path='/login' render={() => <Login setUser={setUser} />} />
+                        <Route path='/createuser' render={() => <CreateUser setUser={setUser} />} />
+                        <Route path='/createdeck' component={CreateDeck} />
+                        <Route path='/cardsearch' component={CardSearch} />
                     </Switch>
                 </PageWrapper>
 
@@ -58,6 +55,30 @@ const App = () => {
 
 export default App;
 
+//* Styled Components
+const GlobalStyles = createGlobalStyle`
+    @import url('https://fonts.googleapis.com/css?family=Sorts+Mill+Goudy&display=swap');
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    html,
+    body {
+        background: rgb(69, 53, 25);
+        font-family: 'Sorts Mill Goudy', serif;
+
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+`;
+
 const AppWrapper = styled(Container)`
     min-height: 100vh;
     display: grid;
@@ -68,7 +89,6 @@ const AppWrapper = styled(Container)`
         '. content .'
         '. footer .';
     color: ${light};
-    font-family: 'Sorts Mill Goudy', serif;
     padding-top: ${spacing.md};
     padding-bottom: ${spacing.xxl};
 `;

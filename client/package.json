@@ -10,6 +10,7 @@
         "react-normalize": "^0.4.3",
         "react-router-dom": "^5.0.1",
         "react-scripts": "3.1.1",
+        "react-spring": "^8.0.27",
         "styled-components": "^4.3.2"
     },
     "scripts": {
@@ -33,5 +34,5 @@
             "last 1 safari version"
         ]
     },
-    "proxy": "http://localhost:5000"
+    "proxy": "https://sheltered-hollows-99232.herokuapp.com/"
 }

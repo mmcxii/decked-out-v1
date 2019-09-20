@@ -1,9 +1,12 @@
+//* Packages
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 
+//* Hooks
 import { useForm } from 'hooks';
-import { Button, Card, CardBody, CardHeader, Form, FormInput, FormLabel } from 'elements';
-import { FormGroupWithIcon } from 'elements/Form';
+
+//* Elements
+import { Button, Card, CardBody, CardHeader, Form, FormInput, FormGroupWithIcon, FormLabel } from 'elements';
 
 const CreateDeck = ({ history }) => {
     const [formIsSubmitted, setFormIsSubmitted] = useState(false);

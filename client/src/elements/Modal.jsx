@@ -1,22 +1,41 @@
+//* Packages
 import React from 'react';
 import styled from 'styled-components';
+import { animated, useSpring, config } from 'react-spring';
+
+//* Utilities
 import { fixed, absolute, Portal } from 'utilities';
+
+//* Elements
 import { Card } from './Card';
 import Container from './Container';
 
 const Modal = ({ children, setToggle, isToggled }) => {
+    // Fade in and slide on enter
+    const modalCardProps = useSpring({
+        opacity: 1,
+        transform: 'translate3d(0, 0px, 0)',
+        from: {
+            opacity: 0,
+            transform: 'translate3d(0, -50px, 0)',
+        },
+        config: config.wobbly,
+    });
+
+    const modalBackgroundProps = useSpring({ opacity: 1, from: { opacity: 0 } });
+
     return (
         <Portal>
             {isToggled && (
                 <ModalWrapper>
                     <Container>
-                        <ModalCard>
+                        <ModalCard style={modalCardProps}>
                             {children}
                             <CloseButton onClick={() => setToggle(false)}>&times;</CloseButton>
                         </ModalCard>
                     </Container>
 
-                    <Background onClick={() => setToggle(false)} />
+                    <Background style={modalBackgroundProps} onClick={() => setToggle(false)} />
                 </ModalWrapper>
             )}
         </Portal>
@@ -25,6 +44,7 @@ const Modal = ({ children, setToggle, isToggled }) => {
 
 export default Modal;
 
+//* Styled Components
 const ModalWrapper = styled.div`
     height: 100%;
     width: 100%;
@@ -32,9 +52,10 @@ const ModalWrapper = styled.div`
     justify-content: center;
     align-items: center;
     ${fixed({})};
+    z-index: 5;
 `;
 
-const ModalCard = styled(Card)`
+const ModalCard = styled(animated(Card))`
     position: relative;
     z-index: 10;
     min-width: 300px;

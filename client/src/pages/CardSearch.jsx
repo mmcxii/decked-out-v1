@@ -1,14 +1,19 @@
+//* Packages
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Card, CardHeader, CardBody, CardDisplay, CardImage, CardSearchForm, Modal } from 'elements';
+
+//* Utilities
 import { Toggle, spacing } from 'utilities';
+
+//* Elements
+import { Card, CardHeader, CardBody, CardDisplay, CardImage, CardSearchForm, Modal } from 'elements';
 
 const CardSearch = () => {
     const [searchWasSuccessful, setSearchWasSuccessful] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
-
+    console.log('hi');
     return (
-        <>
+        <> {console.log('I\'m in the return statemnt')}
             <Card>
                 <CardHeader as='h2'>Oracle Search</CardHeader>
                 <CardBody>
@@ -28,6 +33,7 @@ const CardSearch = () => {
                             {searchResults.map(card => (
                                 <article key={card.id}>
                                     <Toggle>
+                                    {console.log('hi')}
                                         {({ isToggled, setToggle }) => (
                                             <>
                                                 <CardImage
@@ -62,6 +68,7 @@ const CardSearch = () => {
 
 export default CardSearch;
 
+//* Styled Components
 const ResultsCard = styled(Card)`
     margin: ${spacing.lg} 0;
 `;
