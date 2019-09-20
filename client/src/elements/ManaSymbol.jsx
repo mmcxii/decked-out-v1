@@ -1,5 +1,7 @@
+//* Packages
 import styled from 'styled-components';
 
+//* Styled Components
 const ManaSymbol = styled.i`
     font-size: 2.5rem;
     --fa-secondary-opacity: 1;

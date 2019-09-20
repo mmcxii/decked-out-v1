@@ -1,8 +1,11 @@
+//* Packages
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+//* Utilities
 import { spacing } from 'utilities';
 
+//* Elements
 import Controls from './Controls';
 import PlayerCard from './PlayerCard';
 
@@ -31,6 +34,7 @@ const Lifetracker = ({ user }) => {
 
 export default Lifetracker;
 
+//* Styled Components
 const PlayersSection = styled.section`
     display: grid;
     grid-gap: ${spacing.sm};

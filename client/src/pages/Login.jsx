@@ -1,12 +1,27 @@
+//* Packages
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 
-import { useFetch, useForm } from 'hooks';
-import { Button, Card, CardHeader, CardBody, Form, FormGroupWithIcon, FormInput, FormLabel } from 'elements';
+//* Hooks
+import { useForm } from 'hooks';
+
+//* Elements
+import {
+    Button,
+    ButtonGroup,
+    ButtonLink,
+    Card,
+    CardHeader,
+    CardBody,
+    Form,
+    FormGroupWithIcon,
+    FormInput,
+    FormLabel,
+} from 'elements';
 
 const Login = ({ history, location, setUser }) => {
     const [formIsSubmitted, setFormIsSubmitted] = useState(false);
-
+    const [userMadeError, setUserMadeError] = useState(false);
     const [values, handleChange] = useForm({ username: '', password: '' });
 
     useEffect(() => {
@@ -34,6 +49,8 @@ const Login = ({ history, location, setUser }) => {
                 // If the use clicked the sign in button
                 // return them to the page they were on
                 return history.goBack();
+            } else {
+                setUserMadeError(true);
             }
         };
 
@@ -46,6 +63,7 @@ const Login = ({ history, location, setUser }) => {
         <Card>
             <CardHeader>Please Sign in to Access Decked Out</CardHeader>
             <CardBody>
+                {userMadeError && <p>Oops! Either your username or password was incorrect!</p>}
                 <Form
                     onSubmit={e => {
                         e.preventDefault();
@@ -77,7 +95,10 @@ const Login = ({ history, location, setUser }) => {
                         <i className='fad fa-lock-alt'></i>
                     </FormGroupWithIcon>
 
-                    <Button type='submit'>Sign In</Button>
+                    <ButtonGroup>
+                        <Button type='submit'>Sign In</Button>
+                        <ButtonLink to='createuser'>Create Account</ButtonLink>
+                    </ButtonGroup>
                 </Form>
             </CardBody>
         </Card>

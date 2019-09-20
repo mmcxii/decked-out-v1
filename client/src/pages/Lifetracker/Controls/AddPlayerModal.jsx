@@ -1,6 +1,10 @@
+//* Packages
 import React, { useEffect, useRef } from 'react';
 
+//* Hooks
 import { useForm } from 'hooks';
+
+//* Elements
 import { Button, CardBody, CardHeader, Form, FormInput, FormLabel, Modal } from 'elements';
 
 const AddPlayerModal = ({ isToggled, setToggle, players, setPlayers }) => {

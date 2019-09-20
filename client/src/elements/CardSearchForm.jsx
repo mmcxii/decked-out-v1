@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from "react";
+//* Packages
+import React, { useState, useEffect } from 'react';
 
-import { useCheckbox, useForm } from "hooks";
-import { Toggle } from "utilities";
-import { Button, CheckboxInput, Form, FormInput, FormLabel } from "elements";
+//* Hooks
+import { useCheckbox, useForm } from 'hooks';
+
+//* Utilities
+import { Toggle } from 'utilities';
+
+//* Elements
+import { Button, CheckboxInput, Form, FormInput, FormLabel } from 'elements';
 
 const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
-    //hooks
+  //hooks
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [values, handleFormChange] = useForm({ queryInput: "" });
+  const [values, handleFormChange] = useForm({ queryInput: '' });
   const [checkboxes, handleCheckboxChange] = useCheckbox({
     whiteCheckbox: false,
     blueCheckbox: false,
@@ -29,28 +35,28 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
   });
 
   const checkboxItems = {
-      //color array for checkbox mapping
+    //color array for checkbox mapping
     colors: [
-      { name: "whiteCheckbox", label: "White" },
-      { name: "blueCheckbox", label: "Blue" },
-      { name: "blackCheckbox", label: "Black" },
-      { name: "redCheckbox", label: "Red" },
-      { name: "greenCheckbox", label: "Green" },
-      { name: "colorlessCheckbox", label: "Colorless" }
+      { name: 'whiteCheckbox', label: 'White' },
+      { name: 'blueCheckbox', label: 'Blue' },
+      { name: 'blackCheckbox', label: 'Black' },
+      { name: 'redCheckbox', label: 'Red' },
+      { name: 'greenCheckbox', label: 'Green' },
+      { name: 'colorlessCheckbox', label: 'Colorless' }
     ],
     //CMC array to set up checkbox mapping
     manaCosts: [
-      { name: "cmc0Checkbox", label: "0" },
-      { name: "cmc1Checkbox", label: "1" },
-      { name: "cmc2Checkbox", label: "2" },
-      { name: "cmc3Checkbox", label: "3" },
-      { name: "cmc4Checkbox", label: "4" },
-      { name: "cmc5Checkbox", label: "5" },
-      { name: "cmc6Checkbox", label: "6" },
-      { name: "cmc7Checkbox", label: "7" },
-      { name: "cmc8Checkbox", label: "8" },
-      { name: "cmc9Checkbox", label: "9" },
-      { name: "cmc10Checkbox", label: "10+" }
+      { name: 'cmc0Checkbox', label: '0' },
+      { name: 'cmc1Checkbox', label: '1' },
+      { name: 'cmc2Checkbox', label: '2' },
+      { name: 'cmc3Checkbox', label: '3' },
+      { name: 'cmc4Checkbox', label: '4' },
+      { name: 'cmc5Checkbox', label: '5' },
+      { name: 'cmc6Checkbox', label: '6' },
+      { name: 'cmc7Checkbox', label: '7' },
+      { name: 'cmc8Checkbox', label: '8' },
+      { name: 'cmc9Checkbox', label: '9' },
+      { name: 'cmc10Checkbox', label: '10+' }
     ]
   };
 
@@ -60,7 +66,7 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
     const card = [];
 
     function apiCall() {
-      console.log("in api call");
+      console.log('in api call');
       fetch(`https://api.scryfall.com/cards/search?q=${query}`)
         .then(function(response) {
           return response.json();
@@ -70,12 +76,12 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
           //checking if any cards exist
           if (data !== undefined) {
             for (let i = 0; i < data.length; i++) {
-                //set up oracle variable and check/update if it exists
+              //set up oracle variable and check/update if it exists
               let oracle;
               if (data[i].oracle_text) {
                 oracle = data[i].oracle_text;
               } else {
-                oracle = "";
+                oracle = '';
               }
               //setting up card object
               if (data[i].card_faces) {
@@ -96,7 +102,7 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
                     img = data[i].card_faces[0].image_uris.art_crop;
                   }
                 } else {
-                  img = "No Image Found";
+                  img = 'No Image Found';
                 }
                 //sets up the card object
                 card[i] = {
@@ -134,7 +140,7 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
     }
 
     const buildSearchQuery = () => {
-        //building a checkbox object
+      //building a checkbox object
       const {
         whiteCheckbox,
         blueCheckbox,
@@ -158,40 +164,40 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
       const { queryInput } = values;
 
       //declare vairable
-      const white = whiteCheckbox ? "w" : "";
-      const blue = blueCheckbox ? "u" : "";
-      const red = redCheckbox ? "r" : "";
-      const green = greenCheckbox ? "g" : "";
-      const black = blackCheckbox ? "b" : "";
-      const colorless = colorlessCheckbox ? "c" : "";
+      const white = whiteCheckbox ? 'w' : '';
+      const blue = blueCheckbox ? 'u' : '';
+      const red = redCheckbox ? 'r' : '';
+      const green = greenCheckbox ? 'g' : '';
+      const black = blackCheckbox ? 'b' : '';
+      const colorless = colorlessCheckbox ? 'c' : '';
 
-      const cmc0 = "0";
-      const cmc1 = "1";
-      const cmc2 = "2";
-      const cmc3 = "3";
-      const cmc4 = "4";
-      const cmc5 = "5";
-      const cmc6 = "6";
-      const cmc7 = "7";
-      const cmc8 = "8";
-      const cmc9 = "9";
-      const cmc10 = "10";
+      const cmc0 = '0';
+      const cmc1 = '1';
+      const cmc2 = '2';
+      const cmc3 = '3';
+      const cmc4 = '4';
+      const cmc5 = '5';
+      const cmc6 = '6';
+      const cmc7 = '7';
+      const cmc8 = '8';
+      const cmc9 = '9';
+      const cmc10 = '10';
 
       //variables to set up search query
       const search = queryInput;
       let color = [];
       let CMC = [
-        "cmc!=0+",
-        "cmc!=1+",
-        "cmc!=2+",
-        "cmc!=3+",
-        "cmc!=4+",
-        "cmc!=5+",
-        "cmc!=6+",
-        "cmc!=7+",
-        "cmc!=8+",
-        "cmc!=9+",
-        "cmc!=10+"
+        'cmc!=0+',
+        'cmc!=1+',
+        'cmc!=2+',
+        'cmc!=3+',
+        'cmc!=4+',
+        'cmc!=5+',
+        'cmc!=6+',
+        'cmc!=7+',
+        'cmc!=8+',
+        'cmc!=9+',
+        'cmc!=10+'
       ];
 
       colorType(white);
@@ -215,12 +221,12 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
 
       function colorType(type) {
         for (let i = 0; i < color.length; i++) {
-          if (color[i] === type && type !== "") {
+          if (color[i] === type && type !== '') {
             return;
           }
         }
 
-        if (type !== "") {
+        if (type !== '') {
           color.push(type);
         } else {
           for (let i = 0; i < color.length; i++) {
@@ -248,29 +254,29 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
       //split deletes the delimeter, so this function works around that by adding in a place to seperate.
       function makeArray() {
         for (let i = 0; i < CMC.length; i++) {
-          if (CMC[i] === "+") {
-            CMC = CMC.slice(0, i + 1) + "," + CMC.slice(i + 1);
+          if (CMC[i] === '+') {
+            CMC = CMC.slice(0, i + 1) + ',' + CMC.slice(i + 1);
             i++;
           }
         }
-        CMC = CMC.split(",");
+        CMC = CMC.split(',');
       }
 
       function queryText() {
-        color = color.join("");
-        CMC = CMC.join("");
-        if (color !== "" && CMC.length !== 78) {
+        color = color.join('');
+        CMC = CMC.join('');
+        if (color !== '' && CMC.length !== 78) {
           query = `color:${color}+${CMC}${search}`;
         } else if (CMC.length !== 78) {
           query = `${CMC}${search}`;
-        } else if (color !== "") {
+        } else if (color !== '') {
           query = `color:${color}+${search}`;
         } //add in if search is empty
         else {
           query = `${search}`;
         }
       }
-      console.log("query: " + queryInput);
+      console.log('query: ' + queryInput);
       queryText();
       apiCall();
       makeArray();
@@ -291,14 +297,14 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
         }}
       >
         <FormInput
-          name="queryInput"
-          type="text"
-          placeholder="Search for card..."
+          name='queryInput'
+          type='text'
+          placeholder='Search for card...'
           value={values.queryInput}
           onChange={handleFormChange}
         />
 
-        <Button type="submit">Search</Button>
+        <Button type='submit'>Search</Button>
       </Form>
 
       <Toggle>
@@ -328,7 +334,7 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful }) => {
                     <FormLabel key={index}>
                       <CheckboxInput
                         name={cmc.name}
-                        type="checkbox"
+                        type='checkbox'
                         checked={checkboxes[cmc.name]}
                         onChange={handleCheckboxChange}
                       />

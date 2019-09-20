@@ -1,6 +1,8 @@
+//* Packages
 import React from 'react';
 import styled from 'styled-components';
-import ManaSymbol from './ManaSymbol';
+
+//* Utilities
 import {
     spacing,
     manaWhite,
@@ -14,6 +16,9 @@ import {
     manaGreen,
     manaGreen2,
 } from 'utilities';
+
+//* Elements
+import ManaSymbol from './ManaSymbol';
 
 const Banner = () => {
     const ManaSymbols = [
@@ -54,6 +59,7 @@ const Banner = () => {
 
 export default Banner;
 
+//* Styled Components
 const ManaBanner = styled.div`
     display: flex;
     justify-content: space-evenly;

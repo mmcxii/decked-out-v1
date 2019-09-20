@@ -1,4 +1,7 @@
+//* Packages
 import React, { useState, useEffect, useRef } from 'react';
+
+//* Elements
 import { Button, CardBody, CardHeader, Form, FormInput, Modal } from 'elements';
 
 const SetLifeModal = ({ isToggled, setToggle, lifeTotal, handleNewLifeTotal }) => {

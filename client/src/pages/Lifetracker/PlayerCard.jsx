@@ -1,9 +1,15 @@
+//* Packages
 import React, { useReducer } from 'react';
 import styled from 'styled-components';
+
+//* Utilities
 import { spacing, absolute, Toggle } from 'utilities';
+
+//* Elements
 import { Button, Card, CardHeader, CardBody } from 'elements';
 import SetLifeModal from './SetLifeModal';
 
+// Reducer to consolidate modification of life total
 const modifyLifeTotal = (currentLifeTotal, { action, value }) => {
     switch (action) {
         case 'increment':
@@ -63,6 +69,7 @@ const PlayerCard = ({ player, removePlayer }) => {
 
 export default PlayerCard;
 
+//* Styled Components
 const Wrapper = styled(Card).attrs({ as: 'article' })`
     position: relative;
 `;

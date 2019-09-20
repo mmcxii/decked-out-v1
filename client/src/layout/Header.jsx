@@ -1,8 +1,13 @@
+//* Packages
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Banner, ButtonLink } from 'elements';
+
+//* Utilities
 import { spacing, dark } from 'utilities';
+
+//* Elements
+import { Banner, ButtonLink } from 'elements';
 
 const Header = ({ user }) => {
     return (
@@ -22,6 +27,7 @@ const Header = ({ user }) => {
 
 export default Header;
 
+//* Styled Components
 const HeaderWrapper = styled.header`
     grid-area: header;
     text-align: center;
