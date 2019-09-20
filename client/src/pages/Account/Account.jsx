@@ -1,14 +1,19 @@
+//* Packages
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useFetch } from 'hooks';
-import { ButtonLink } from 'elements';
+//* Utilities
+import { absolute, spacing } from 'utilities';
+
+//* Elements
+import { Button, ButtonLink } from 'elements';
 import DeckItem from './DeckItem';
 
-const Account = ({ user }) => {
+const Account = ({ history, user, setUser }) => {
     const [userDecks, setUserDecks] = useState([]);
     const [fetchDecks, setFetchDecks] = useState(false);
+    const [userLoggedOut, setUserLoggedOut] = useState(false);
 
     useEffect(() => {
         fetch('/account', {
@@ -25,12 +30,27 @@ const Account = ({ user }) => {
         setFetchDecks(false);
     }, [fetchDecks]);
 
+    useEffect(() => {
+        const logout = async () => {
+            const res = await fetch('/logout', { method: 'GET' });
+
+            if (res.status === 200) {
+                setUser(null);
+                return history.push('/');
+            }
+        };
+
+        if (userLoggedOut) {
+            logout();
+        }
+    }, [userLoggedOut]);
+
     return (
         <>
             <UserName>{user.username}</UserName>
             <hr />
 
-            <section>
+            <ProfileWrapper>
                 <SectionHeader>Decks:</SectionHeader>
                 <ButtonLink as={Link} to='/createdeck'>
                     Add New Deck
@@ -48,13 +68,16 @@ const Account = ({ user }) => {
                         <Link to='/createdeck'> go make one?</Link>
                     </p>
                 )}
-            </section>
+
+                <LogoutButton onClick={() => setUserLoggedOut(true)}>Log Out</LogoutButton>
+            </ProfileWrapper>
         </>
     );
 };
 
-export default Account;
+export default withRouter(Account);
 
+//* Styled Components
 const UserName = styled.h2`
     font-size: 1.75rem;
     text-align: center;
@@ -64,7 +87,16 @@ const SectionHeader = styled.h3`
     font-size: 1.5rem;
 `;
 
+const ProfileWrapper = styled.section`
+    position: relative;
+`;
+
 const UserDecks = styled.section`
     display: flex;
     flex-direction: column;
+`;
+
+const LogoutButton = styled(Button)`
+    ${absolute({ x: 'right' })};
+    top: ${spacing.sm};
 `;

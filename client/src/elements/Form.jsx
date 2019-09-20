@@ -1,6 +1,10 @@
+//* Packages
 import styled from 'styled-components';
+
+//* Utilities
 import { rounded, spacing, dark, manaBlue2, manaBlue } from 'utilities';
 
+//* Styled Components
 export const Form = styled.form`
     display: flex;
     flex-direction: column;

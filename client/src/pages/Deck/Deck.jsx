@@ -1,8 +1,12 @@
+//* Packages
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { Button } from 'elements';
+//* Utilities
 import { absolute, spacing, Toggle } from 'utilities';
+
+//* Elements
+import { Button, ButtonGroup } from 'elements';
 import EditDeckModal from './EditDeckModal';
 import RemoveCardsModal from './RemoveCardsModal';
 
@@ -12,6 +16,7 @@ const Deck = ({
     },
 }) => {
     const deckName = deckname.split('-').join(' ');
+    const [reducedDeckList, setReducedDeckList] = useState({ main: [], sideboard: [] });
     const [deckList, setDeckList] = useState({ main: [], sideboard: [] });
     const [fetchDeck, setFetchDeck] = useState(false);
 
@@ -43,15 +48,11 @@ const Deck = ({
                 return map;
             };
 
-            console.log(data.main);
-
-            const reducedMain = reduceDuplicates(data.main);
-            const reducedSideboard = reduceDuplicates(data.sideboard);
-
-            console.log(reducedMain);
-            console.log(reducedSideboard);
-
-            setDeckList({ main: reducedMain, sideboard: reducedSideboard });
+            setDeckList(data);
+            setReducedDeckList({
+                main: reduceDuplicates(data.main),
+                sideboard: reduceDuplicates(data.sideboard),
+            });
             setFetchDeck(false);
         };
 
@@ -59,31 +60,7 @@ const Deck = ({
     }, [fetchDeck]);
 
     return (
-        <DeckList>
-            <DeckTitle>{deckName}</DeckTitle>
-
-            <Mainboard>
-                <h3>Main</h3>
-                <ul>
-                    {Object.keys(deckList.main).map((card, index) => (
-                        <li key={index}>
-                            {deckList.main[card]} {[card]}
-                        </li>
-                    ))}
-                </ul>
-            </Mainboard>
-
-            <Sideboard>
-                <h3>Sideboard</h3>
-                <ul>
-                    {Object.keys(deckList.sideboard).map((card, index) => (
-                        <li key={index}>
-                            {deckList.sideboard[card]} {[card]}
-                        </li>
-                    ))}
-                </ul>
-            </Sideboard>
-
+        <Wrapper>
             <EditDeckButtons>
                 <Toggle>
                     {({ isToggled, setToggle }) => (
@@ -110,6 +87,7 @@ const Deck = ({
                             {isToggled && (
                                 <RemoveCardsModal
                                     deckName={deckName}
+                                    reducedDeckList={reducedDeckList}
                                     deckList={deckList}
                                     setFetchDeck={setFetchDeck}
                                     isToggled={isToggled}
@@ -120,40 +98,92 @@ const Deck = ({
                     )}
                 </Toggle>
             </EditDeckButtons>
-        </DeckList>
+
+            <DeckList>
+                <DeckTitle>{deckName}</DeckTitle>
+
+                <Mainboard>
+                    <h3>Main</h3>
+                    <Board>
+                        {Object.keys(reducedDeckList.main).map((card, index) => (
+                            <CardItem key={index}>
+                                {reducedDeckList.main[card]} {[card]}
+                            </CardItem>
+                        ))}
+                    </Board>
+                </Mainboard>
+
+                <Sideboard>
+                    <h3>Sideboard</h3>
+                    <Board>
+                        {Object.keys(reducedDeckList.sideboard).map((card, index) => (
+                            <CardItem key={index}>
+                                {reducedDeckList.sideboard[card]} {[card]}
+                            </CardItem>
+                        ))}
+                    </Board>
+                </Sideboard>
+            </DeckList>
+        </Wrapper>
     );
 };
 
 export default Deck;
 
+//* Styled Components
+const Wrapper = styled.div`
+    position: relative;
+`;
+
 const DeckList = styled.section`
     display: grid;
-    grid-template-rows: max-content 1fr;
-    grid-template-columns: 3fr 1fr;
+    grid-template-rows: repeat(3, max-content);
+    grid-template-columns: 1fr;
     grid-template-areas:
-        'title title'
-        'mainboard sideboard';
+        'title'
+        'mainboard'
+        'sideboard';
+    grid-gap: ${spacing.md};
     height: 100%;
     position: relative;
+
+    @media screen and (min-width: 768px) {
+        grid-template-rows: max-content 1fr;
+        grid-template-columns: 3fr 1fr;
+        grid-template-areas:
+            'title title'
+            'mainboard sideboard';
+    }
 `;
 
 const DeckTitle = styled.h2`
     grid-area: title;
-    margin-bottom: ${spacing.md};
+
+    @media screen and (min-width: 768px) {
+        margin-bottom: ${spacing.xl};
+    }
 `;
 
 const Mainboard = styled.section`
     grid-area: mainboard;
 `;
 
+export const Board = styled.ul`
+    list-style: none;
+`;
+
+export const CardItem = styled.li`
+    font-size: 1.5rem;
+`;
+
 const Sideboard = styled.section`
     grid-area: sideboard;
 `;
 
-const EditDeckButtons = styled.section`
-    ${absolute({ x: 'right' })};
+const EditDeckButtons = styled(ButtonGroup)`
+    z-index: 2;
 
-    > button {
-        margin: 0 ${spacing.xs};
+    @media screen and (min-width: 768px) {
+        ${absolute({ x: 'right' })};
     }
 `;

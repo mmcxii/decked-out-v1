@@ -1,5 +1,7 @@
+//* Packages
 import React, { useState, useEffect } from 'react';
 
+//* Elements
 import { Button, CardBody, CardDisplay, CardHeader, CardImage, CardSearchForm, Modal } from 'elements';
 
 const EditDeckModal = ({ isToggled, setToggle, deckName, setFetchDeck }) => {

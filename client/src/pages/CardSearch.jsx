@@ -1,7 +1,12 @@
+//* Packages
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Card, CardHeader, CardBody, CardDisplay, CardImage, CardSearchForm, Modal } from 'elements';
+
+//* Utilities
 import { Toggle, spacing } from 'utilities';
+
+//* Elements
+import { Card, CardHeader, CardBody, CardDisplay, CardImage, CardSearchForm, Modal } from 'elements';
 
 const CardSearch = () => {
     const [searchWasSuccessful, setSearchWasSuccessful] = useState(false);
@@ -58,6 +63,7 @@ const CardSearch = () => {
 
 export default CardSearch;
 
+//* Styled Components
 const ResultsCard = styled(Card)`
     margin: ${spacing.lg} 0;
 `;
