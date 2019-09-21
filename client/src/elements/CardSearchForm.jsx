@@ -66,6 +66,9 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful, setDataIsLoa
         const card = [];
 
         function apiCall() {
+            setSearchWasSuccessful(false);
+            setDataIsLoading(true);
+
             fetch(`https://api.scryfall.com/cards/search?q=${query}`)
                 .then(function(response) {
                     return response.json();
@@ -295,7 +298,6 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful, setDataIsLoa
                 onSubmit={e => {
                     e.preventDefault();
 
-                    setDataIsLoading(true);
                     setFormSubmitted(true);
                 }}
             >

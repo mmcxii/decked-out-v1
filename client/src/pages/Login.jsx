@@ -24,7 +24,6 @@ const Login = ({ history, location, setUser }) => {
     const [formIsSubmitted, setFormIsSubmitted] = useState(false);
     const [userMadeError, setUserMadeError] = useState(false);
     const [values, handleChange] = useForm({ username: '', password: '' });
-
     const errorMessages = [
         'You know a lot of people who play White Weenies get this question wrong...',
         'You were probably just thinking about how much skill it takes to say "draw, go."',
@@ -32,7 +31,9 @@ const Login = ({ history, location, setUser }) => {
         'Try again! You probably play Red Deck Wins though so just keep at it.',
         'Hurr durr big creatures. Yeah we get it, try again though.',
     ];
-    const errorMessage = errorMessages[Math.floor(Math.random() * errorMessages.length)];
+    const [errorMessage, setErrorMessage] = useState(
+        errorMessages[Math.floor(Math.random() * errorMessages.length)]
+    );
 
     useEffect(() => {
         const signIn = async () => {
@@ -60,6 +61,10 @@ const Login = ({ history, location, setUser }) => {
                 // If the user attempted to access a protected route
                 // redirect them after they sign in
                 if (from) {
+                    if (from.pathName === '/reset') {
+                        return history.push('/account');
+                    }
+
                     return history.push(from);
                 }
 
@@ -71,6 +76,7 @@ const Login = ({ history, location, setUser }) => {
 
         if (formIsSubmitted) {
             signIn();
+            setErrorMessage(errorMessages[Math.floor(Math.random() * errorMessages.length)]);
         }
     }, [formIsSubmitted]);
 
@@ -83,7 +89,9 @@ const Login = ({ history, location, setUser }) => {
                         <CardHeader as='h4'>Error: Username or Password was incorrect</CardHeader>
                         <CardBody>
                             <p>{errorMessage}</p>
-                            <p><Link to='/reset'>Reset Password?</Link></p>
+                            <p>
+                                <Link to='/reset'>Reset Password?</Link>
+                            </p>
                         </CardBody>
                     </CardError>
                 )}

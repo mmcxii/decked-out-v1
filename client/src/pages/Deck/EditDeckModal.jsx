@@ -50,7 +50,7 @@ const EditDeckModal = ({ isToggled, setToggle, deckName, setFetchDeck }) => {
     return (
         <Modal isToggled={isToggled} setToggle={setToggle}>
             <CardHeader as='h2'>{deckName}</CardHeader>
-            <CardBody style={{ 'max-height': 'calc(100vh - 210px)', 'overflow-y': 'auto' }}>
+            <CardBody>
                 <CardSearchForm
                     setDataIsLoading={setDataIsLoading}
                     setSearchResults={setSearchResults}
