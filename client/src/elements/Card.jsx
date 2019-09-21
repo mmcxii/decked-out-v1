@@ -7,13 +7,18 @@ import {
     spacing,
     manaWhite,
     manaWhite2,
+    manaBlue,
+    manaBlue2,
+    manaBlack,
+    manaBlack2,
     manaRed,
     manaRed2,
-    elevation,
-    transition,
-    dark,
     manaGreen,
     manaGreen2,
+    elevation,
+    transition,
+    light,
+    dark,
 } from 'utilities';
 
 //* Styled Components
@@ -63,5 +68,41 @@ export const CardSuccess = styled(Card)`
 
     ${CardHeader} {
         background: ${manaGreen};
+    }
+`;
+
+export const CardColor = styled(Card)`
+    background: ${props => `mana${props.color}`};
+    background: ${props => {
+        switch (props.color) {
+            case 'White':
+                return manaWhite2;
+            case 'Blue':
+                return manaBlue2;
+            case 'Black':
+                return manaBlack2;
+            case 'Red':
+                return manaRed2;
+            case 'Green':
+                return manaGreen2;
+        }
+    }};
+    color: ${props => (props.color === 'Black' ? light : dark)};
+
+    ${CardHeader} {
+        background: ${props => {
+            switch (props.color) {
+                case 'White':
+                    return manaWhite;
+                case 'Blue':
+                    return manaBlue;
+                case 'Black':
+                    return manaBlack;
+                case 'Red':
+                    return manaRed;
+                case 'Green':
+                    return manaGreen;
+            }
+        }};
     }
 `;

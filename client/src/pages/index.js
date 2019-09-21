@@ -6,5 +6,6 @@ import Deck from './Deck';
 import Lifetracker from './Lifetracker';
 import Login from './Login';
 import ResetPassword from './ResetPassword';
+import TeamTaco from './TeamTaco';
 
-export { Account, CardSearch, CreateDeck, CreateUser, Deck, Lifetracker, Login, ResetPassword };
+export { Account, CardSearch, CreateDeck, CreateUser, Deck, Lifetracker, Login, ResetPassword, TeamTaco };

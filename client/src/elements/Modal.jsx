@@ -59,6 +59,8 @@ const ModalCard = styled(animated(Card))`
     position: relative;
     z-index: 10;
     min-width: 300px;
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
 
     @media screen and (min-width: 576px) {
         min-width: 500px;

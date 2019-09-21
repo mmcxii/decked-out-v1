@@ -1,11 +1,12 @@
 //* Packages
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Footer = () => {
     return (
         <FooterWrapper>
-            <ByLine>The Taco Bout It Team &copy;2019</ByLine>
+            <ByLine to='/teamtaco'>Team Taco &copy;2019</ByLine>
 
             <Disclaimer>
                 Magic the Gathering, FNM is TM and copyright Wizards of the Coast, Inc, a subsidiary of
@@ -24,7 +25,7 @@ const FooterWrapper = styled.footer`
     text-align: center;
 `;
 
-const ByLine = styled.p`
+const ByLine = styled(Link)`
     text-transform: capitalize;
 `;
 

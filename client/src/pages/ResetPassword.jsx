@@ -76,6 +76,13 @@ const ResetPassword = ({ history }) => {
                     return setFormIsSubmitted(false);
                 }
 
+                setErrors({
+                    userMadeError: false,
+                    secretIsIncorrect: false,
+                    userDoesNotExist: false,
+                    passwordsDoNotMatch: false,
+                });
+
                 setTimeout(() => {
                     history.push('/account');
                 }, 2500);

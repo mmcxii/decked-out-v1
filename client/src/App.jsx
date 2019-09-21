@@ -11,7 +11,17 @@ import { light, spacing, PrivateRoute } from 'utilities';
 import { Container, Footer, Header, Navbar } from 'layout';
 
 //* Pages
-import { Account, CardSearch, CreateDeck, CreateUser, Deck, Lifetracker, Login, ResetPassword } from 'pages';
+import {
+    Account,
+    CardSearch,
+    CreateDeck,
+    CreateUser,
+    Deck,
+    Lifetracker,
+    Login,
+    ResetPassword,
+    TeamTaco,
+} from 'pages';
 
 const App = () => {
     //* App Level State:
@@ -45,6 +55,7 @@ const App = () => {
                         <Route path='/createuser' render={() => <CreateUser setUser={setUser} />} />
                         <Route path='/createdeck' component={CreateDeck} />
                         <Route path='/cardsearch' component={CardSearch} />
+                        <Route path='/teamtaco' component={TeamTaco} />
                     </Switch>
                 </PageWrapper>
 
