@@ -15,11 +15,15 @@ import {
     manaRed2,
     manaGreen,
     manaGreen2,
+    absolute,
     elevation,
     transition,
     light,
     dark,
 } from 'utilities';
+
+//* Elements
+import ManaSymbol from './ManaSymbol';
 
 //* Styled Components
 export const Card = styled.div`
@@ -72,7 +76,6 @@ export const CardSuccess = styled(Card)`
 `;
 
 export const CardColor = styled(Card)`
-    background: ${props => `mana${props.color}`};
     background: ${props => {
         switch (props.color) {
             case 'White':
@@ -87,6 +90,7 @@ export const CardColor = styled(Card)`
                 return manaGreen2;
         }
     }};
+
     color: ${props => (props.color === 'Black' ? light : dark)};
 
     ${CardHeader} {
