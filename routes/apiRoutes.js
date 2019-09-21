@@ -44,6 +44,47 @@ router.post("/api/createuser", (req, res) => {
     });
 });
 
+router.post('/api/changepass', (req, res) => {
+  console.log('working');
+  const {newPassword, secretQuestion} = req.body
+  const username = req.body.username.toLowerCase();
+
+
+  db.User.findOne({
+    where: {
+      username: username
+    }
+  })
+  .then( user => {
+
+    if(user){
+      if(secretQuestion === user.secret_answer){
+        bCrypt.hash(newPassword, 10, (err, hash) => {
+          if (err) throw err;
+          hash;
+
+          db.User.update(
+            {password: hash},
+            {where: {
+              username: username
+            }
+          }).then(response => {
+              res.json(response);
+          })
+        })
+      }else{
+        res.json({
+          message: "Secret was Incorrect"
+        })
+      }
+    }else{
+      res.json({
+        message: "User doesn't exist"
+      })
+    }
+  })
+});
+
 
 
 module.exports = router;
