@@ -24,15 +24,15 @@ const ResetPassword = () => {
 
     useEffect(()=> {
         const resetPassword = async () => {
-            const { username, secret, password } = values;
+            const { username, secretQuestion, newPassword } = values;
 
-            const res = await fetch('/reset', {
+            const res = await fetch('/api/changepass', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     Accept: 'application/json'
                 },
-                body: { username, secret, password }
+                body: { username, secretQuestion, newPassword }
             })
         }
 
@@ -69,13 +69,13 @@ const ResetPassword = () => {
 
                     <FormGroupWithIcon>
                         <FormLabel htmlFor='secret'>Favorite Card</FormLabel>
-                        <FormInput name='secret' type='text' required placeholder='What is your favorite Magic Card?' value={values.secret} onChange={handleChange} />
+                        <FormInput name='secretQuestion' type='text' required placeholder='What is your favorite Magic Card?' value={values.secret} onChange={handleChange} />
                         <i className='fad fa-hat-witch' />
                     </FormGroupWithIcon>
                     
                     <FormGroupWithIcon>
                         <FormLabel htmlFor='password'>New Password</FormLabel>    
-                        <FormInput name='password' type='password' required placeholder='Enter new password' value={values.password} onChange={handleChange} />
+                        <FormInput name='newPassword' type='password' required placeholder='Enter new password' value={values.password} onChange={handleChange} />
                         <i className='fad fa-lock-alt' />
                     </FormGroupWithIcon>
 
