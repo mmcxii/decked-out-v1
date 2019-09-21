@@ -79,6 +79,8 @@ const CardSearchForm = ({ setSearchResults, setSearchWasSuccessful, setDataIsLoa
                             let oracle;
                             if (data[i].oracle_text) {
                                 oracle = data[i].oracle_text;
+                            } else if (data[i].card_faces[0].oracle_text) {
+                                oracle = data[i].card_faces[0].oracle_text;
                             } else {
                                 oracle = '';
                             }

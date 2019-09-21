@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 //* Elements
 import { CardBody, CardHeader, CardImage, Modal } from 'elements';
-import { spacing } from 'utilities';
+import { spacing, elevation } from 'utilities';
 
 const SingleCardModal = ({ isToggled, setToggle, card }) => {
     const formattedOracleText = card.oracle_text.split('\n');
@@ -42,6 +42,7 @@ const CardInfo = styled(CardBody)`
         grid-area: card;
         position: relative;
         top: -5rem;
+        ${elevation[3]}
     }
 `;
 
@@ -60,6 +61,6 @@ const OracleText = styled.section`
 
     > p {
         font-weight: bolder;
-        margin: ${spacing.xs} 0;
+        margin: ${spacing.sm} 0;
     }
 `;

@@ -1,5 +1,6 @@
 //* Packages
 import React, { useEffect, useState } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 
 //* Hooks
 import { useForm } from 'hooks';
@@ -11,29 +12,78 @@ import {
     CardBody,
     CardHeader,
     CardError,
+    CardSuccess,
     Form,
     FormGroupWithIcon,
     FormInput,
     FormLabel,
 } from 'elements';
 
-const ResetPassword = () => {
-    const [values, handleChange] = useForm({ username: '', secret: '', password: '', password_confirm: '' });
+const ResetPassword = ({ history }) => {
+    const [values, handleChange] = useForm({
+        username: '',
+        secretQuestion: '',
+        newPassword: '',
+        newPassword_confirm: '',
+    });
+    const [resetWasSuccessful, setResetWasSuccessful] = useState(false);
+    const [errors, setErrors] = useState({
+        userMadeError: false,
+        passwordsDoNotMatch: false,
+        secretIsIncorrect: false,
+        userDoesNotExist: false,
+    });
+    const errorMessage = errors.passwordsDoNotMatch
+        ? 'Passwords must match'
+        : errors.secretIsIncorrect
+        ? 'Secret Answer is incorrect'
+        : errors.userDoesNotExist
+        ? 'User does not exist in database'
+        : 'Unknown error';
     const [formIsSubmitted, setFormIsSubmitted] = useState(false);
-    const [userMadeError, setUserMadeError] = useState(false);
 
     useEffect(() => {
         const resetPassword = async () => {
             const { username, secretQuestion, newPassword } = values;
 
-            const res = await fetch('/api/changepass', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                },
-                body: { username, secret, password },
-            });
+            try {
+                const res = await fetch('/api/changepass', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                    },
+                    body: JSON.stringify({ username, secretQuestion, newPassword }),
+                });
+
+                const data = await res.json();
+
+                if (data.message === "User doesn't exist") {
+                    setErrors({
+                        userMadeError: true,
+                        secretIsIncorrect: false,
+                        userDoesNotExist: true,
+                        passwordsDoNotMatch: false,
+                    });
+                    return setFormIsSubmitted(false);
+                } else if (data.message === 'Secret was Incorrect') {
+                    setErrors({
+                        userMadeError: true,
+                        secretIsIncorrect: true,
+                        userDoesNotExist: false,
+                        passwordsDoNotMatch: false,
+                    });
+                    return setFormIsSubmitted(false);
+                }
+
+                setTimeout(() => {
+                    history.push('/account');
+                }, 2500);
+
+                return setResetWasSuccessful(true);
+            } catch (e) {
+                console.log(e);
+            }
         };
 
         if (formIsSubmitted) {
@@ -45,14 +95,41 @@ const ResetPassword = () => {
         <Card>
             <CardHeader as='h2'>Reset Password</CardHeader>
             <CardBody>
+                {errors.userMadeError && (
+                    <CardError>
+                        <CardHeader>Error</CardHeader>
+                        <CardBody>Error: {errorMessage}.</CardBody>
+                    </CardError>
+                )}
+
+                {resetWasSuccessful && (
+                    <CardSuccess>
+                        <CardHeader>Reset Successful</CardHeader>
+                        <CardBody>
+                            <p>
+                                Password for <strong>{values.username}</strong> was successfully reset!
+                            </p>
+                            <p>
+                                You should be redirected in a few moments. If you aren't,
+                                <Link to='/account'> click here</Link>
+                            </p>
+                        </CardBody>
+                    </CardSuccess>
+                )}
+
                 <Form
                     onSubmit={e => {
                         e.preventDefault();
 
-                        if (values.password === values.password_confirm) {
+                        if (values.newPassword === values.newPassword_confirm) {
                             setFormIsSubmitted(true);
                         } else {
-                            setUserMadeError(true);
+                            setErrors({
+                                userMadeError: true,
+                                secretIsIncorrect: false,
+                                userDoesNotExist: false,
+                                passwordsDoNotMatch: true,
+                            });
                         }
                     }}
                 >
@@ -70,13 +147,15 @@ const ResetPassword = () => {
                     </FormGroupWithIcon>
 
                     <FormGroupWithIcon>
-                        <FormLabel htmlFor='secretQuestion'>Favorite Card</FormLabel>
+                        <FormLabel htmlFor='secretQuestion'>
+                            Favorite Card <br /> <small>It's case sensitive!</small>
+                        </FormLabel>
                         <FormInput
                             name='secretQuestion'
                             type='text'
                             required
                             placeholder='What is your favorite Magic Card?'
-                            value={values.secret}
+                            value={values.secretQuestion}
                             onChange={handleChange}
                         />
                         <i className='fad fa-hat-witch' />
@@ -89,20 +168,20 @@ const ResetPassword = () => {
                             type='password'
                             required
                             placeholder='Enter new password'
-                            value={values.password}
+                            value={values.newPassword}
                             onChange={handleChange}
                         />
                         <i className='fad fa-lock-alt' />
                     </FormGroupWithIcon>
 
                     <FormGroupWithIcon>
-                        <FormLabel htmlFor='password_confirm'>Confirm Password</FormLabel>
+                        <FormLabel htmlFor='newPassword_confirm'>Confirm Password</FormLabel>
                         <FormInput
-                            name='password_confirm'
+                            name='newPassword_confirm'
                             type='password'
                             required
                             placeholder='Reenter your new password'
-                            value={values.password_confirm}
+                            value={values.newPassword_confirm}
                             onChange={handleChange}
                         />
                         <i className='fad fa-lock-alt' />
@@ -115,4 +194,4 @@ const ResetPassword = () => {
     );
 };
 
-export default ResetPassword;
+export default withRouter(ResetPassword);

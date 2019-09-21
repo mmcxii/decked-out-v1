@@ -12,6 +12,8 @@ import {
     elevation,
     transition,
     dark,
+    manaGreen,
+    manaGreen2,
 } from 'utilities';
 
 //* Styled Components
@@ -48,5 +50,18 @@ export const CardError = styled(Card)`
 
     ${CardHeader} {
         background: ${manaRed};
+    }
+`;
+
+export const CardSuccess = styled(Card)`
+    background: ${manaGreen2};
+    box-shadow: none;
+
+    &:hover {
+        box-shadow: none;
+    }
+
+    ${CardHeader} {
+        background: ${manaGreen};
     }
 `;
