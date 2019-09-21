@@ -18,11 +18,11 @@ import {
 } from 'elements';
 
 const ResetPassword = () => {
-    const [values, handleChange] = useForm({ username: '', secret: '', password: '', password_confirm:'' });
+    const [values, handleChange] = useForm({ username: '', secret: '', password: '', password_confirm: '' });
     const [formIsSubmitted, setFormIsSubmitted] = useState(false);
     const [userMadeError, setUserMadeError] = useState(false);
 
-    useEffect(()=> {
+    useEffect(() => {
         const resetPassword = async () => {
             const { username, secret, password } = values;
 
@@ -30,30 +30,32 @@ const ResetPassword = () => {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    Accept: 'application/json'
+                    Accept: 'application/json',
                 },
-                body: { username, secret, password }
-            })
-        }
+                body: { username, secret, password },
+            });
+        };
 
         if (formIsSubmitted) {
             resetPassword();
         }
-    },[formIsSubmitted])
+    }, [formIsSubmitted]);
 
     return (
         <Card>
             <CardHeader as='h2'>Reset Password</CardHeader>
             <CardBody>
-                <Form onSubmit={e => {
-                    e.preventDefault();
+                <Form
+                    onSubmit={e => {
+                        e.preventDefault();
 
-                    if (values.password === values.password_confirm) {
-                        setFormIsSubmitted(true);
-                    } else {
-                        setUserMadeError(true);
-                    }
-                }}>
+                        if (values.password === values.password_confirm) {
+                            setFormIsSubmitted(true);
+                        } else {
+                            setUserMadeError(true);
+                        }
+                    }}
+                >
                     <FormGroupWithIcon>
                         <FormLabel htmlFor='username'>Username</FormLabel>
                         <FormInput
@@ -69,19 +71,40 @@ const ResetPassword = () => {
 
                     <FormGroupWithIcon>
                         <FormLabel htmlFor='secret'>Favorite Card</FormLabel>
-                        <FormInput name='secret' type='text' required placeholder='What is your favorite Magic Card?' value={values.secret} onChange={handleChange} />
+                        <FormInput
+                            name='secret'
+                            type='text'
+                            required
+                            placeholder='What is your favorite Magic Card?'
+                            value={values.secret}
+                            onChange={handleChange}
+                        />
                         <i className='fad fa-hat-witch' />
                     </FormGroupWithIcon>
-                    
+
                     <FormGroupWithIcon>
-                        <FormLabel htmlFor='password'>New Password</FormLabel>    
-                        <FormInput name='password' type='password' required placeholder='Enter new password' value={values.password} onChange={handleChange} />
+                        <FormLabel htmlFor='password'>New Password</FormLabel>
+                        <FormInput
+                            name='password'
+                            type='password'
+                            required
+                            placeholder='Enter new password'
+                            value={values.password}
+                            onChange={handleChange}
+                        />
                         <i className='fad fa-lock-alt' />
                     </FormGroupWithIcon>
 
                     <FormGroupWithIcon>
-                        <FormLabel htmlFor='password_confirm'>Confirm Password</FormLabel>    
-                        <FormInput name='password_confirm' type='password' required placeholder='Reenter your new password' value={values.password_confirm} onChange={handleChange} />
+                        <FormLabel htmlFor='password_confirm'>Confirm Password</FormLabel>
+                        <FormInput
+                            name='password_confirm'
+                            type='password'
+                            required
+                            placeholder='Reenter your new password'
+                            value={values.password_confirm}
+                            onChange={handleChange}
+                        />
                         <i className='fad fa-lock-alt' />
                     </FormGroupWithIcon>
 
