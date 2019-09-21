@@ -11,7 +11,7 @@ import { light, spacing, PrivateRoute } from 'utilities';
 import { Container, Footer, Header, Navbar } from 'layout';
 
 //* Pages
-import { Account, CardSearch, CreateDeck, CreateUser, Deck, Lifetracker, Login } from 'pages';
+import { Account, CardSearch, CreateDeck, CreateUser, Deck, Lifetracker, Login, ResetPassword } from 'pages';
 
 const App = () => {
     //* App Level State:
@@ -41,6 +41,7 @@ const App = () => {
                         />
                         <PrivateRoute isLoggedIn={user} path='/account/:deckname' component={Deck} />
                         <Route path='/login' render={() => <Login setUser={setUser} />} />
+                        <Route path='/reset' render={() => <ResetPassword setUser={setUser} />} />
                         <Route path='/createuser' render={() => <CreateUser setUser={setUser} />} />
                         <Route path='/createdeck' component={CreateDeck} />
                         <Route path='/cardsearch' component={CardSearch} />

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { spacing } from 'utilities';
 
 //* Styled Components
-export const CardDisplay = styled.article`
+export const CardDisplay = styled.section`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -13,7 +13,8 @@ export const CardDisplay = styled.article`
 `;
 
 export const CardImage = styled.img`
-    height: 250px;
+    /* height: 250px; */
+    max-width: 250px;
     margin: ${spacing.xs};
     cursor: pointer;
 `;
